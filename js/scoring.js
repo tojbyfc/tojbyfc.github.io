@@ -31,24 +31,28 @@ export function scoreMatchBet(bet, match) {
     return signRight ? POINTS.SIGN : 0;
 }
 
-// Returns an array of { player, total, matchPoints, bonusPoints, exactCount, signCount }
+// Returns an array of { username, player, total, matchPoints, bonusPoints, exactCount, signCount }
 // sorted by total desc, then exactCount desc, then signCount desc.
+// `player` is the human-readable display_name (falls back to username if a
+// submitted bet somehow lacks one — shouldn't happen since submit requires it).
 export function computeStandings({ matches, matchBets, bonusBets, settings }) {
     const matchesById = new Map(matches.map(m => [m.id, m]));
-    const tally = new Map(); // player → { total, matchPoints, bonusPoints, exactCount, signCount }
+    const tally = new Map(); // username → { display, total, matchPoints, bonusPoints, exactCount, signCount }
 
-    function bucket(name) {
-        if (!tally.has(name)) {
-            tally.set(name, { total: 0, matchPoints: 0, bonusPoints: 0, exactCount: 0, signCount: 0 });
+    function bucket(username, display) {
+        if (!tally.has(username)) {
+            tally.set(username, { display: display || username, total: 0, matchPoints: 0, bonusPoints: 0, exactCount: 0, signCount: 0 });
+        } else if (display && tally.get(username).display === username) {
+            tally.get(username).display = display;
         }
-        return tally.get(name);
+        return tally.get(username);
     }
 
     for (const bet of matchBets) {
         const match = matchesById.get(bet.match_id);
         if (!match) continue;
         const pts = scoreMatchBet(bet, match);
-        const b = bucket(bet.player_name);
+        const b = bucket(bet.username, bet.display_name);
         b.matchPoints += pts;
         b.total += pts;
         if (pts === POINTS.SIGN + POINTS.EXACT) b.exactCount += 1;
@@ -56,7 +60,7 @@ export function computeStandings({ matches, matchBets, bonusBets, settings }) {
     }
 
     for (const bb of bonusBets) {
-        const b = bucket(bb.player_name);
+        const b = bucket(bb.username, bb.display_name);
         if (settings?.champion && bb.champion && bb.champion === settings.champion) {
             b.bonusPoints += POINTS.CHAMPION;
             b.total += POINTS.CHAMPION;
@@ -72,6 +76,6 @@ export function computeStandings({ matches, matchBets, bonusBets, settings }) {
     }
 
     return [...tally.entries()]
-        .map(([player, s]) => ({ player, ...s }))
+        .map(([username, s]) => ({ username, player: s.display, ...s }))
         .sort((a, b) => b.total - a.total || b.exactCount - a.exactCount || b.signCount - a.signCount);
 }

@@ -4,6 +4,7 @@ import {
     loadAllBets,
     loadBetsForPlayer,
     verifyPassword,
+    setDisplayName,
     submitBet,
     submitBonusBet,
     submitAllBets,
@@ -11,7 +12,9 @@ import {
 } from './supabase-client.js';
 import { computeStandings, scoreMatchBet, signFromScore } from './scoring.js';
 
-const SESSION_KEY = 'wcbet.session.v1';
+// v2 bumped from v1 when we split login identity into `username` + display name.
+// Any leftover v1 sessions are silently discarded.
+const SESSION_KEY = 'wcbet.session.v2';
 
 // =============================================================================
 // State
@@ -21,14 +24,16 @@ const state = {
     matches: [],
     players: [],   // tournament squads, loaded from data/players.json
     allBets: { matchBets: [], bonusBets: [] },
-    myBets: { matchBets: [], bonusBet: null },
+    myBets: { matchBets: [], bonusBet: null, displayName: null },
     session: loadSession(),
 };
 
 function loadSession() {
     try {
         const raw = localStorage.getItem(SESSION_KEY);
-        return raw ? JSON.parse(raw) : null;
+        if (!raw) return null;
+        const s = JSON.parse(raw);
+        return s?.username && s?.password ? s : null;
     } catch {
         return null;
     }
@@ -215,9 +220,9 @@ function attachTeamSearchSelects() {
     if (playersR.status === 'fulfilled') state.players = playersR.value;
     else failures.push(['players', playersR.reason]);
 
-    if (state.session?.name) {
+    if (state.session?.username) {
         try {
-            state.myBets = await loadBetsForPlayer(state.session.name);
+            state.myBets = await loadBetsForPlayer(state.session.username);
         } catch (err) {
             failures.push(['myBets', err]);
         }
@@ -265,9 +270,10 @@ function renderAll() {
 function renderSession() {
     const banner = document.getElementById('session-banner');
     const loginCard = document.getElementById('login-card');
-    if (state.session?.name) {
+    if (state.session?.username) {
         banner.style.display = 'flex';
-        banner.querySelector('.session-name').textContent = state.session.name;
+        const label = state.myBets.displayName || state.session.username;
+        banner.querySelector('.session-name').textContent = label;
         loginCard.style.display = 'none';
     } else {
         banner.style.display = 'none';
@@ -326,11 +332,13 @@ function renderBetForm() {
     const card = document.getElementById('bet-form-card');
     const lockedBanner = document.getElementById('lock-banner');
 
-    if (!state.session?.name) {
+    if (!state.session?.username) {
         card.style.display = 'none';
         return;
     }
     card.style.display = 'block';
+
+    document.getElementById('profile-display-name').value = state.myBets.displayName ?? '';
 
     if (isLocked()) {
         lockedBanner.style.display = 'block';
@@ -424,7 +432,7 @@ function renderMatchRow(match, bet) {
         try {
             await submitBet({
                 password: state.session.password,
-                playerName: state.session.name,
+                username: state.session.username,
                 matchId: match.id,
                 sign: s,
                 homeScore: h,
@@ -435,7 +443,7 @@ function renderMatchRow(match, bet) {
             // Update local cache so re-renders keep the value. Autosaves are
             // always drafts — they only become visible to others after submit.
             const idx = state.myBets.matchBets.findIndex(b => b.match_id === match.id);
-            const rec = { player_name: state.session.name, match_id: match.id, sign: s, home_score: h, away_score: a, is_submitted: false };
+            const rec = { username: state.session.username, match_id: match.id, sign: s, home_score: h, away_score: a, is_submitted: false };
             if (idx === -1) state.myBets.matchBets.push(rec);
             else state.myBets.matchBets[idx] = rec;
             renderSubmitStatus();
@@ -492,8 +500,8 @@ const deleteConfirmBtn = document.getElementById('delete-confirm');
 const deleteMyBetsBtn = document.getElementById('delete-my-bets');
 
 function openDeletePopover() {
-    if (!state.session?.name) return;
-    document.getElementById('delete-target-name').textContent = state.session.name;
+    if (!state.session?.username) return;
+    document.getElementById('delete-target-name').textContent = state.myBets.displayName || state.session.username;
     deleteErrorEl.textContent = '';
     deleteConfirmBtn.disabled = false;
     deletePopover.hidden = false;
@@ -533,16 +541,16 @@ document.getElementById('delete-cancel').addEventListener('click', () => {
 
 deleteConfirmBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    if (!state.session?.name) return;
+    if (!state.session?.username) return;
     deleteErrorEl.textContent = '';
     deleteConfirmBtn.disabled = true;
     try {
         await deletePlayer({
             password: state.session.password,
-            playerName: state.session.name,
+            username: state.session.username,
         });
         clearSession();
-        state.myBets = { matchBets: [], bonusBet: null };
+        state.myBets = { matchBets: [], bonusBet: null, displayName: null };
         state.allBets = await loadAllBets();
         closeDeletePopover();
         renderAll();
@@ -590,16 +598,19 @@ function renderResults() {
 // =============================================================================
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('login-name').value.trim();
+    // Normalize to lowercase so the local cache key matches the DB (which
+    // stores usernames lowercased and FK-references them). The original case
+    // the user typed is irrelevant — display_name is what gets shown anywhere.
+    const username = document.getElementById('login-username').value.trim().toLowerCase();
     const password = document.getElementById('login-password').value;
     const errEl = document.getElementById('login-error');
     errEl.textContent = '';
-    if (!name) { errEl.textContent = 'Vänligen ange ditt namn.'; return; }
+    if (!username) { errEl.textContent = 'Vänligen ange ett användarnamn.'; return; }
     try {
         const ok = await verifyPassword(password);
         if (!ok) { errEl.textContent = 'Fel lösenord.'; return; }
-        saveSession({ name, password });
-        state.myBets = await loadBetsForPlayer(name);
+        saveSession({ username, password });
+        state.myBets = await loadBetsForPlayer(username);
         renderAll();
     } catch (err) {
         errEl.textContent = err.message || 'Inloggning misslyckades.';
@@ -608,7 +619,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
 document.getElementById('logout').addEventListener('click', () => {
     clearSession();
-    state.myBets = { matchBets: [], bonusBet: null };
+    state.myBets = { matchBets: [], bonusBet: null, displayName: null };
     renderAll();
 });
 
@@ -616,7 +627,7 @@ document.getElementById('logout').addEventListener('click', () => {
 // Bonus picks autosave (drafts, same model as match bets)
 // =============================================================================
 const debouncedBonusSave = debounce(async () => {
-    if (!state.session?.name) return;
+    if (!state.session?.username) return;
     const status = document.getElementById('bonus-status');
     const champion = document.getElementById('bonus-champion').value.trim();
     const runnerUp = document.getElementById('bonus-runner-up').value.trim();
@@ -626,13 +637,13 @@ const debouncedBonusSave = debounce(async () => {
     try {
         await submitBonusBet({
             password: state.session.password,
-            playerName: state.session.name,
+            username: state.session.username,
             champion, runnerUp, topScorer,
         });
         status.textContent = '✓ sparad (utkast)';
         status.className = 'save-status saved';
         state.myBets.bonusBet = {
-            player_name: state.session.name,
+            username: state.session.username,
             champion: champion || null,
             runner_up: runnerUp || null,
             top_scorer: topScorer || null,
@@ -649,6 +660,50 @@ for (const id of ['bonus-champion', 'bonus-runner-up', 'bonus-top-scorer']) {
     const el = document.getElementById(id);
     el.addEventListener('change', debouncedBonusSave);
     el.addEventListener('input', debouncedBonusSave);
+}
+
+// =============================================================================
+// Display-name autosave. The name is required before submit_all_bets() will
+// publish — see renderSubmitStatus for the gate.
+// =============================================================================
+const debouncedDisplayNameSave = debounce(async () => {
+    if (!state.session?.username) return;
+    const input = document.getElementById('profile-display-name');
+    const status = document.getElementById('profile-status');
+    const displayName = input.value.trim();
+    if (!displayName) {
+        // Don't call the RPC with empty — it would error. Just clear status and
+        // let renderSubmitStatus block the submit button.
+        status.textContent = '';
+        status.className = 'save-status';
+        state.myBets.displayName = null;
+        renderSession();
+        renderSubmitStatus();
+        return;
+    }
+    status.textContent = 'sparar…';
+    status.className = 'save-status saving';
+    try {
+        await setDisplayName({
+            password: state.session.password,
+            username: state.session.username,
+            displayName,
+        });
+        status.textContent = '✓ sparat';
+        status.className = 'save-status saved';
+        state.myBets.displayName = displayName;
+        renderSession();
+        renderSubmitStatus();
+    } catch (err) {
+        status.textContent = '⚠ ' + (err.message || 'sparning misslyckades');
+        status.className = 'save-status error';
+    }
+}, 700);
+
+{
+    const el = document.getElementById('profile-display-name');
+    el.addEventListener('change', debouncedDisplayNameSave);
+    el.addEventListener('input', debouncedDisplayNameSave);
 }
 
 // =============================================================================
@@ -702,6 +757,13 @@ function renderSubmitStatus() {
         btn.disabled = true;
         return;
     }
+    const hasDisplayName = !!state.myBets.displayName?.trim();
+    if (!hasDisplayName) {
+        statusEl.textContent = 'Ange ditt visningsnamn ovan innan du skickar in.';
+        statusEl.className = 'submit-status dirty';
+        btn.disabled = true;
+        return;
+    }
     const drafts = countUnsubmittedDrafts();
     const totalBets = state.myBets.matchBets.length + (state.myBets.bonusBet ? 1 : 0);
     if (totalBets === 0) {
@@ -722,7 +784,7 @@ function renderSubmitStatus() {
 }
 
 submitAllBtn.addEventListener('click', (e) => {
-    if (!state.session?.name || isLocked()) return;
+    if (!state.session?.username || isLocked()) return;
     if (submitPopover.hidden) {
         e.stopPropagation();   // outside-click listener attaches in openSubmitPopover
         openSubmitPopover();
@@ -737,7 +799,7 @@ document.getElementById('submit-cancel').addEventListener('click', () => {
 
 submitConfirmBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    if (!state.session?.name) return;
+    if (!state.session?.username) return;
     submitErrorEl.textContent = '';
     submitConfirmBtn.disabled = true;
     const statusEl = document.getElementById('submit-status');
@@ -746,7 +808,7 @@ submitConfirmBtn.addEventListener('click', async (e) => {
     try {
         await submitAllBets({
             password: state.session.password,
-            playerName: state.session.name,
+            username: state.session.username,
         });
         // Flip local draft flags so the UI reflects the new published state.
         for (const b of state.myBets.matchBets) b.is_submitted = true;

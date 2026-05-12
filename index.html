@@ -464,6 +464,32 @@
         }
         .match-started::after { content: ''; }
 
+        /* Profile (display name) */
+        #profile-section {
+            margin-bottom: 2rem; padding: 1.25rem 1.5rem;
+            background: var(--color-bg); border: 1px solid var(--color-border);
+            border-radius: 14px;
+        }
+        #profile-section h4 {
+            font-family: var(--font-display); font-size: 1.3rem;
+            font-weight: 400; margin-bottom: 0.25rem; color: var(--color-accent-deep);
+        }
+        #profile-section .profile-hint {
+            color: var(--color-text-muted); font-size: 0.9rem;
+            line-height: 1.5; margin-bottom: 0.85rem;
+        }
+        #profile-section .profile-row {
+            display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+        }
+        #profile-section input {
+            flex: 1; min-width: 200px;
+            padding: 0.6rem 0.85rem; border: 1.5px solid var(--color-border);
+            border-radius: 8px; font-family: inherit; font-size: 1rem;
+            background: var(--color-bg-alt);
+        }
+        #profile-section input:focus { outline: none; border-color: var(--color-accent); }
+        #profile-status { font-size: 0.85rem; min-width: 100px; }
+
         /* Bonus */
         #bonus-section {
             margin-top: 2.5rem; padding-top: 2rem;
@@ -849,7 +875,7 @@
     <div class="container">
         <div class="section-header">
             <h2>Lägg dina tips</h2>
-            <p>Logga in med ditt namn och det gemensamma lösenordet. Du kan uppdatera dina tips fram till deadline.</p>
+            <p>Logga in med ditt användarnamn och det gemensamma lösenordet. Du kan uppdatera dina tips fram till deadline.</p>
         </div>
 
         <div id="session-banner">
@@ -859,11 +885,11 @@
 
         <div id="login-card" class="card">
             <h3>Logga in</h3>
-            <p class="lead">Första gången? Skriv bara ett namn du vill använda under hela turneringen.</p>
+            <p class="lead">Välj ett kort användarnamn — det används bara för inloggning och syns inte i ställningen. Ditt riktiga namn fyller du i på nästa sida.</p>
             <form id="login-form">
                 <div class="form-row">
-                    <label for="login-name">Ditt namn</label>
-                    <input type="text" id="login-name" autocomplete="name" required>
+                    <label for="login-username">Användarnamn</label>
+                    <input type="text" id="login-username" autocomplete="username" required>
                 </div>
                 <div class="form-row">
                     <label for="login-password">Lagets lösenord</label>
@@ -901,6 +927,15 @@
                     </div>
                 </div>
                 <p class="prize-note">Andelarna räknas på den totala potten (antal deltagare × 10 €).</p>
+            </div>
+
+            <div id="profile-section">
+                <h4>Ditt visningsnamn</h4>
+                <p class="profile-hint">Det här namnet syns i ställningen för alla deltagare. Det krävs för att skicka in tipsen — du kan ändra det när du vill fram till deadline.</p>
+                <div class="profile-row">
+                    <input type="text" id="profile-display-name" placeholder="t.ex. Anna Andersson" autocomplete="name" maxlength="60">
+                    <span id="profile-status" class="save-status"></span>
+                </div>
             </div>
 
             <div id="match-bets"></div>

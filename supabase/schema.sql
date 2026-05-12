@@ -39,9 +39,13 @@ create table if not exists matches (
 
 create index if not exists matches_kickoff_idx on matches (utc_kickoff);
 
--- Players: created on first bet. The pk is the name (case-insensitive).
+-- Players. `username` is the stable login identifier (lowercased so logins are
+-- case-insensitive). `display_name` is what shows up in the public standings
+-- and can be edited any time before the deadline. It must be set before a
+-- player is allowed to submit their bets.
 create table if not exists players (
-    name            text primary key,
+    username        text primary key,
+    display_name    text,
     created_at      timestamptz not null default now()
 );
 
@@ -51,30 +55,25 @@ create table if not exists players (
 -- only to themselves) from *submitted* bets (visible to everyone in the public
 -- standings). Editing a bet flips it back to draft until the player re-submits.
 create table if not exists bets (
-    player_name     text not null references players(name) on delete cascade,
+    username        text not null references players(username) on delete cascade,
     match_id        bigint not null references matches(id) on delete cascade,
     sign            text not null check (sign in ('1', 'X', '2')),
     home_score      int not null check (home_score >= 0),
     away_score      int not null check (away_score >= 0),
     is_submitted    boolean not null default true,
     updated_at      timestamptz not null default now(),
-    primary key (player_name, match_id)
+    primary key (username, match_id)
 );
 
 -- Tournament-wide bonus picks: champion, runner-up, top scorer.
 create table if not exists bonus_bets (
-    player_name     text primary key references players(name) on delete cascade,
+    username        text primary key references players(username) on delete cascade,
     champion        text,
     runner_up       text,
     top_scorer      text,
     is_submitted    boolean not null default true,
     updated_at      timestamptz not null default now()
 );
-
--- Safe to re-run on an existing DB: add the column if it isn't there yet.
--- Default `true` so any pre-feature rows stay visible to everyone.
-alter table bets       add column if not exists is_submitted boolean not null default true;
-alter table bonus_bets add column if not exists is_submitted boolean not null default true;
 
 -- =============================================================================
 -- Password verification + write RPCs
@@ -94,13 +93,42 @@ as $$
     select now() >= deadline from settings where id = 1;
 $$;
 
+-- Set or update the player's display name. Creates the player row if it
+-- doesn't exist yet, so this can be the very first call after login. Username
+-- is normalized to lowercase so logins are case-insensitive.
+create or replace function set_display_name(
+    p_password      text,
+    p_username      text,
+    p_display_name  text
+) returns void
+language plpgsql security definer
+as $$
+declare
+    v_username  text := lower(trim(p_username));
+    v_display   text := trim(p_display_name);
+begin
+    if not verify_team_password(p_password) then
+        raise exception 'invalid team password';
+    end if;
+    if length(v_username) = 0 then
+        raise exception 'username required';
+    end if;
+    if length(v_display) = 0 then
+        raise exception 'display name required';
+    end if;
+
+    insert into players (username, display_name) values (v_username, v_display)
+        on conflict (username) do update set display_name = excluded.display_name;
+end;
+$$;
+
 -- Autosave a match bet as a *draft* (is_submitted = false). The bet is visible
 -- only to the player themselves until they click "Submit my bets", which calls
 -- submit_all_bets() to flip is_submitted to true. Fails if password is wrong
 -- or the deadline has passed.
 create or replace function submit_bet(
     p_password      text,
-    p_player_name   text,
+    p_username      text,
     p_match_id      bigint,
     p_sign          text,
     p_home_score    int,
@@ -108,6 +136,8 @@ create or replace function submit_bet(
 ) returns void
 language plpgsql security definer
 as $$
+declare
+    v_username text := lower(trim(p_username));
 begin
     if not verify_team_password(p_password) then
         raise exception 'invalid team password';
@@ -115,16 +145,16 @@ begin
     if deadline_passed() then
         raise exception 'betting deadline has passed';
     end if;
-    if length(trim(p_player_name)) = 0 then
-        raise exception 'player name required';
+    if length(v_username) = 0 then
+        raise exception 'username required';
     end if;
 
-    insert into players (name) values (trim(p_player_name))
-        on conflict (name) do nothing;
+    insert into players (username) values (v_username)
+        on conflict (username) do nothing;
 
-    insert into bets (player_name, match_id, sign, home_score, away_score, is_submitted)
-        values (trim(p_player_name), p_match_id, p_sign, p_home_score, p_away_score, false)
-        on conflict (player_name, match_id) do update
+    insert into bets (username, match_id, sign, home_score, away_score, is_submitted)
+        values (v_username, p_match_id, p_sign, p_home_score, p_away_score, false)
+        on conflict (username, match_id) do update
             set sign = excluded.sign,
                 home_score = excluded.home_score,
                 away_score = excluded.away_score,
@@ -138,19 +168,21 @@ $$;
 -- with the team password can do this — same trust model as submit_bet.
 create or replace function delete_player(
     p_password      text,
-    p_player_name   text
+    p_username      text
 ) returns void
 language plpgsql security definer
 as $$
+declare
+    v_username text := lower(trim(p_username));
 begin
     if not verify_team_password(p_password) then
         raise exception 'invalid team password';
     end if;
-    if length(trim(p_player_name)) = 0 then
-        raise exception 'player name required';
+    if length(v_username) = 0 then
+        raise exception 'username required';
     end if;
 
-    delete from players where name = trim(p_player_name);
+    delete from players where username = v_username;
 end;
 $$;
 
@@ -158,13 +190,15 @@ $$;
 -- Same draft/submit model as submit_bet().
 create or replace function submit_bonus_bet(
     p_password      text,
-    p_player_name   text,
+    p_username      text,
     p_champion      text,
     p_runner_up     text,
     p_top_scorer    text
 ) returns void
 language plpgsql security definer
 as $$
+declare
+    v_username text := lower(trim(p_username));
 begin
     if not verify_team_password(p_password) then
         raise exception 'invalid team password';
@@ -172,16 +206,16 @@ begin
     if deadline_passed() then
         raise exception 'betting deadline has passed';
     end if;
-    if length(trim(p_player_name)) = 0 then
-        raise exception 'player name required';
+    if length(v_username) = 0 then
+        raise exception 'username required';
     end if;
 
-    insert into players (name) values (trim(p_player_name))
-        on conflict (name) do nothing;
+    insert into players (username) values (v_username)
+        on conflict (username) do nothing;
 
-    insert into bonus_bets (player_name, champion, runner_up, top_scorer, is_submitted)
-        values (trim(p_player_name), nullif(trim(p_champion), ''), nullif(trim(p_runner_up), ''), nullif(trim(p_top_scorer), ''), false)
-        on conflict (player_name) do update
+    insert into bonus_bets (username, champion, runner_up, top_scorer, is_submitted)
+        values (v_username, nullif(trim(p_champion), ''), nullif(trim(p_runner_up), ''), nullif(trim(p_top_scorer), ''), false)
+        on conflict (username) do update
             set champion = excluded.champion,
                 runner_up = excluded.runner_up,
                 top_scorer = excluded.top_scorer,
@@ -190,14 +224,19 @@ begin
 end;
 $$;
 
--- Publish all of a player's draft bets to the public standings. Idempotent —
--- safe to call repeatedly (the player can re-submit any time before deadline).
+-- Publish all of a player's draft bets to the public standings. Refuses if
+-- the player hasn't set a display name yet — that's how we enforce the
+-- "must have a real name before going public" rule. Idempotent: safe to call
+-- repeatedly (the player can re-submit any time before deadline).
 create or replace function submit_all_bets(
     p_password      text,
-    p_player_name   text
+    p_username      text
 ) returns void
 language plpgsql security definer
 as $$
+declare
+    v_username text := lower(trim(p_username));
+    v_display  text;
 begin
     if not verify_team_password(p_password) then
         raise exception 'invalid team password';
@@ -205,17 +244,22 @@ begin
     if deadline_passed() then
         raise exception 'betting deadline has passed';
     end if;
-    if length(trim(p_player_name)) = 0 then
-        raise exception 'player name required';
+    if length(v_username) = 0 then
+        raise exception 'username required';
+    end if;
+
+    select display_name into v_display from players where username = v_username;
+    if v_display is null or length(trim(v_display)) = 0 then
+        raise exception 'display name required before submitting';
     end if;
 
     update bets
         set is_submitted = true, updated_at = now()
-        where player_name = trim(p_player_name) and is_submitted = false;
+        where username = v_username and is_submitted = false;
 
     update bonus_bets
         set is_submitted = true, updated_at = now()
-        where player_name = trim(p_player_name) and is_submitted = false;
+        where username = v_username and is_submitted = false;
 end;
 $$;
 
@@ -259,6 +303,7 @@ grant select on public_settings to anon, authenticated;
 -- Allow anon to call the verification + RPC functions.
 grant execute on function verify_team_password(text) to anon, authenticated;
 grant execute on function deadline_passed() to anon, authenticated;
+grant execute on function set_display_name(text, text, text) to anon, authenticated;
 grant execute on function submit_bet(text, text, bigint, text, int, int) to anon, authenticated;
 grant execute on function submit_bonus_bet(text, text, text, text, text) to anon, authenticated;
 grant execute on function submit_all_bets(text, text) to anon, authenticated;

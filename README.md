@@ -158,7 +158,7 @@ The standings recompute automatically on the next page load.
 > Player bonus picks are stored as free-text. Make sure the strings match
 > exactly — e.g. if a player typed "Brasil" instead of "Brazil" they won't
 > score. You can audit and normalize via:
-> `select player_name, champion, runner_up, top_scorer from bonus_bets;`
+> `select username, champion, runner_up, top_scorer from bonus_bets;`
 
 ## Layout of this repo
 
