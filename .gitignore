@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+*.log
+
+# OS / editor crud
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,5337 @@
+[
+  {
+    "name": "Aaron Wan-Bissaka",
+    "nationality": "DR Congo",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Abdallah Naseeb",
+    "nationality": "Jordan",
+    "position": "Defence"
+  },
+  {
+    "name": "Abdelhamid Ait Boudlal",
+    "nationality": "Morocco",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Abdoulaye Seck",
+    "nationality": "Senegal",
+    "position": "Defence"
+  },
+  {
+    "name": "Abdukodir Khusanov",
+    "nationality": "Uzbekistan",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Abdul Issahaku",
+    "nationality": "Ghana",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Abdulaziz Hatem",
+    "nationality": "Qatar",
+    "position": "Midfield"
+  },
+  {
+    "name": "Abdulelah Al Amri",
+    "nationality": "Saudi Arabia",
+    "position": "Defence"
+  },
+  {
+    "name": "Abdülkerim Bardakcı",
+    "nationality": "Turkey",
+    "position": "Defence"
+  },
+  {
+    "name": "Abdullah Al-Hamdan",
+    "nationality": "Saudi Arabia",
+    "position": "Player"
+  },
+  {
+    "name": "Achraf Hakimi",
+    "nationality": "Morocco",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Adalberto Carrasquilla",
+    "nationality": "Panama",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Adam Karabec",
+    "nationality": "Czech Republic",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Adam Wharton",
+    "nationality": "England",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Adem Arous",
+    "nationality": "Tunisia",
+    "position": "Defence"
+  },
+  {
+    "name": "Adil Aouchiche",
+    "nationality": "Algeria",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Adrien Rabiot",
+    "nationality": "France",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Agustín Álvarez Martínez",
+    "nationality": "Uruguay",
+    "position": "Offence"
+  },
+  {
+    "name": "Agustín Canobbio",
+    "nationality": "Uruguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Agustin Giay",
+    "nationality": "Argentina",
+    "position": "Defence"
+  },
+  {
+    "name": "Ahmad Assaf",
+    "nationality": "Germany",
+    "position": "Defence"
+  },
+  {
+    "name": "Ahmed Alaaeldin",
+    "nationality": "Qatar",
+    "position": "Player"
+  },
+  {
+    "name": "Ahmed El Fotouh",
+    "nationality": "Egypt",
+    "position": "Defence"
+  },
+  {
+    "name": "Ahmed Fathy",
+    "nationality": "Qatar",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ahmed Koka",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ahmed Maknazi",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Aidan Morris",
+    "nationality": "USA",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Aiden O'Neill",
+    "nationality": "Australia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Aílson Tavares",
+    "nationality": "Cape Verde Islands",
+    "position": "Midfield"
+  },
+  {
+    "name": "Aimar Sher",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Aïssa Mandi",
+    "nationality": "Algeria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ajdin Hrustic",
+    "nationality": "Australia",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Akam Hashem",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Akmal Mozgovoy",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Akram Afif",
+    "nationality": "Qatar",
+    "position": "Offence"
+  },
+  {
+    "name": "Al Hashmi Al Hussain",
+    "nationality": "Spain",
+    "position": "Defence"
+  },
+  {
+    "name": "Alaa Ghram",
+    "nationality": "Tunisia",
+    "position": "Defence"
+  },
+  {
+    "name": "Alan Benitez",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Alan Franco",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Alan Minda",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Alejandro Baena",
+    "nationality": "Spain",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Alejandro Grimaldo",
+    "nationality": "Spain",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Alessandro Circati",
+    "nationality": "Australia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Alessandro Schöpf",
+    "nationality": "Austria",
+    "position": "Midfield"
+  },
+  {
+    "name": "Alessio Da Cruz",
+    "nationality": "Cape Verde Islands",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Alex Arce",
+    "nationality": "Paraguay",
+    "position": "Offence"
+  },
+  {
+    "name": "Alex Freeman",
+    "nationality": "USA",
+    "position": "Defence"
+  },
+  {
+    "name": "Alex Robertson",
+    "nationality": "Australia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Alex Rufer",
+    "nationality": "New Zealand",
+    "position": "Midfield"
+  },
+  {
+    "name": "Alexander Djiku",
+    "nationality": "Ghana",
+    "position": "Defence"
+  },
+  {
+    "name": "Alexander Prass",
+    "nationality": "Austria",
+    "position": "Midfield"
+  },
+  {
+    "name": "Alexander Sørloth",
+    "nationality": "Norway",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Alexandro Maidana",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Alexis Mac Allister",
+    "nationality": "Argentina",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Alexis Saelemaekers",
+    "nationality": "Belgium",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Alexis Vega",
+    "nationality": "Mexico",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ali Ahmed",
+    "nationality": "Canada",
+    "position": "Defence"
+  },
+  {
+    "name": "Ali Al-Hamadi",
+    "nationality": "Iraq",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ali Alipour",
+    "nationality": "Iran",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ali El Abdi",
+    "nationality": "Tunisia",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Ali Jassim El-Aibi",
+    "nationality": "Iraq",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Alisher Odilov",
+    "nationality": "Uzbekistan",
+    "position": "Offence"
+  },
+  {
+    "name": "Alvyn Sanches",
+    "nationality": "Switzerland",
+    "position": "Midfield"
+  },
+  {
+    "name": "Amad Diallo",
+    "nationality": "Ivory Coast",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Amadou Onana",
+    "nationality": "Belgium",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Amar Dedić",
+    "nationality": "Austria",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Amar Memić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Offence"
+  },
+  {
+    "name": "Amin Chiakha",
+    "nationality": "Algeria",
+    "position": "Offence"
+  },
+  {
+    "name": "Amine Adli",
+    "nationality": "Morocco",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Amine Gouiri",
+    "nationality": "Algeria",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Amir Al Ammari",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Amir Hadžiahmetović",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Amirhossein Hosseinzadeh",
+    "nationality": "Iran",
+    "position": "Midfield"
+  },
+  {
+    "name": "Anass Salah-Eddine",
+    "nationality": "Morocco",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Ander Barrenetxea",
+    "nationality": "Spain",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Andre de Jong",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Andreas Schjelderup",
+    "nationality": "Norway",
+    "position": "Midfield"
+  },
+  {
+    "name": "Andrej Kramarić",
+    "nationality": "Croatia",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Andrés Andrade",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "Andrew Robertson",
+    "nationality": "Scotland",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Andrey Santos",
+    "nationality": "Brazil",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Andy Irving",
+    "nationality": "Scotland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ángelo Preciado",
+    "nationality": "Ecuador",
+    "position": "Defence"
+  },
+  {
+    "name": "Angelo Stiller",
+    "nationality": "Germany",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Aníbal Godoy",
+    "nationality": "Panama",
+    "position": "Midfield"
+  },
+  {
+    "name": "Anis Ben Slimane",
+    "nationality": "Tunisia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Anisse Saidi",
+    "nationality": "Tunisia",
+    "position": "Offence"
+  },
+  {
+    "name": "Ante Budimir",
+    "nationality": "Croatia",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ante Šuto",
+    "nationality": "Australia",
+    "position": "Offence"
+  },
+  {
+    "name": "Anthony Elanga",
+    "nationality": "Sweden",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Anthony Gordon",
+    "nationality": "England",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Anthony Ralston",
+    "nationality": "Scotland",
+    "position": "Defence"
+  },
+  {
+    "name": "Anthony Valencia",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Antoine Mendy",
+    "nationality": "Senegal",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Antoine Semenyo",
+    "nationality": "Ghana",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Anton Stach",
+    "nationality": "Germany",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Antonee Robinson",
+    "nationality": "USA",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Antonio Nusa",
+    "nationality": "Norway",
+    "position": "Midfield"
+  },
+  {
+    "name": "Antonio Rüdiger",
+    "nationality": "Germany",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Antonio Sanabria",
+    "nationality": "Paraguay",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Antonio Silva",
+    "nationality": "Portugal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ao Tanaka",
+    "nationality": "Japan",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ar'jany Martha",
+    "nationality": "Curaçao",
+    "position": "Offence"
+  },
+  {
+    "name": "Arda Guler",
+    "nationality": "Turkey",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Ardon Jasari",
+    "nationality": "Switzerland",
+    "position": "Midfield"
+  },
+  {
+    "name": "Aref Aghasi",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Aribim Pepple",
+    "nationality": "Canada",
+    "position": "Offence"
+  },
+  {
+    "name": "Ariya Yousefi",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Armando González",
+    "nationality": "Mexico",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Armando Obispo",
+    "nationality": "Curaçao",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Armin Gigovic",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Arthur Masuaku",
+    "nationality": "DR Congo",
+    "position": "Defence"
+  },
+  {
+    "name": "Arthur Theate",
+    "nationality": "Belgium",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Assane Diao",
+    "nationality": "Senegal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Assim Madibo",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Atakan Karazor",
+    "nationality": "Turkey",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Aubrey Modiba",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "Augustine Boakye",
+    "nationality": "Ghana",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Aurele Amenda",
+    "nationality": "Switzerland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Aurélien Tchouameni",
+    "nationality": "France",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Auston Trusty",
+    "nationality": "USA",
+    "position": "Defence"
+  },
+  {
+    "name": "Awer Mabil",
+    "nationality": "Australia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Axel Tuanzebe",
+    "nationality": "DR Congo",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Axel Witsel",
+    "nationality": "Belgium",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ayase Ueda",
+    "nationality": "Japan",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ayman Yahya",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Aymen Hussein",
+    "nationality": "Iraq",
+    "position": "Offence"
+  },
+  {
+    "name": "Aymeric Laporte",
+    "nationality": "Spain",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ayoni Santos",
+    "nationality": "Netherlands",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ayoub Al-Oui",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Ayoub El Kaabi",
+    "nationality": "Morocco",
+    "position": "Offence"
+  },
+  {
+    "name": "Ayumu Seko",
+    "nationality": "Japan",
+    "position": "Defence"
+  },
+  {
+    "name": "Aziz Behich",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Azizjon Ganiev",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Azzedine Ounahi",
+    "nationality": "Morocco",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Baha' Faisal",
+    "nationality": "Jordan",
+    "position": "Offence"
+  },
+  {
+    "name": "Baris Yilmaz",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Bazoumana Touré",
+    "nationality": "Ivory Coast",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ben Old",
+    "nationality": "New Zealand",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ben Waine",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Ben White",
+    "nationality": "England",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Bénie Traoré",
+    "nationality": "Ivory Coast",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Benjamin Nygren",
+    "nationality": "Sweden",
+    "position": "Offence"
+  },
+  {
+    "name": "Benjamin Tahirovic",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Besfort Zeneli",
+    "nationality": "Sweden",
+    "position": "Midfield"
+  },
+  {
+    "name": "Bilal El Khannouss",
+    "nationality": "Morocco",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Bill Tuiloma",
+    "nationality": "New Zealand",
+    "position": "Defence"
+  },
+  {
+    "name": "Billy Gilmour",
+    "nationality": "Scotland",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Bongokuhle Hlongwane",
+    "nationality": "South Africa",
+    "position": "Offence"
+  },
+  {
+    "name": "Borja Iglesias",
+    "nationality": "Spain",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Boulaye Dia",
+    "nationality": "Senegal",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Brahim Diaz",
+    "nationality": "Morocco",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Braian Ojeda",
+    "nationality": "Paraguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Brandley Kuwas",
+    "nationality": "Curaçao",
+    "position": "Midfield"
+  },
+  {
+    "name": "Brandon Mechele",
+    "nationality": "Belgium",
+    "position": "Defence"
+  },
+  {
+    "name": "Breel Embolo",
+    "nationality": "Switzerland",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Bremer",
+    "nationality": "Brazil",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Brenden Aaronson",
+    "nationality": "USA",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Brian Brobbey",
+    "nationality": "Netherlands",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Brian Cipenga",
+    "nationality": "DR Congo",
+    "position": "Offence"
+  },
+  {
+    "name": "Brian Gutiérrez",
+    "nationality": "Mexico",
+    "position": "Midfield"
+  },
+  {
+    "name": "Brian Rodríguez",
+    "nationality": "Uruguay",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Bruno Fernandes",
+    "nationality": "Portugal",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Bryan Ramírez",
+    "nationality": "Ecuador",
+    "position": "Defence"
+  },
+  {
+    "name": "Bukayo Saka",
+    "nationality": "England",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Caleb Yirenkyi",
+    "nationality": "Ghana",
+    "position": "Midfield"
+  },
+  {
+    "name": "Callan Elliot",
+    "nationality": "New Zealand",
+    "position": "Defence"
+  },
+  {
+    "name": "Callum McCowatt",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Cameron Burgess",
+    "nationality": "Australia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Carl Sainté",
+    "nationality": "Haiti",
+    "position": "Midfield"
+  },
+  {
+    "name": "Carl Starfelt",
+    "nationality": "Sweden",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Carlens Arcus",
+    "nationality": "Haiti",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Carlos Andrés Gómez",
+    "nationality": "Colombia",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Carlos Harvey",
+    "nationality": "Panama",
+    "position": "Midfield"
+  },
+  {
+    "name": "Carlos Soler",
+    "nationality": "Spain",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Carney Chukwuemeka",
+    "nationality": "Austria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Casemiro",
+    "nationality": "Brazil",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Cecilio Waterman",
+    "nationality": "Panama",
+    "position": "Offence"
+  },
+  {
+    "name": "Cédric Bakambu",
+    "nationality": "DR Congo",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "César Blackman",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "César Yanis",
+    "nationality": "Panama",
+    "position": "Midfield"
+  },
+  {
+    "name": "Chadi Riad",
+    "nationality": "Morocco",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Chancel Mbemba",
+    "nationality": "DR Congo",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Charles De Ketelaere",
+    "nationality": "Belgium",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Charles Pickel",
+    "nationality": "DR Congo",
+    "position": "Midfield"
+  },
+  {
+    "name": "Che Adams",
+    "nationality": "Scotland",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Cheikh Ahmadou Dieng",
+    "nationality": "Senegal",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Chemsdine Talbi",
+    "nationality": "Morocco",
+    "position": "Midfield"
+  },
+  {
+    "name": "Cherif Ndiaye",
+    "nationality": "Senegal",
+    "position": "Offence"
+  },
+  {
+    "name": "Chris Führich",
+    "nationality": "Germany",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Chris Richards",
+    "nationality": "USA",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Christ Ravynel Inao Oulaï",
+    "nationality": "Cote d'Ivoire",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Christian Martinez",
+    "nationality": "Panama",
+    "position": "Midfield"
+  },
+  {
+    "name": "Christian Pulisic",
+    "nationality": "USA",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Christian Romero",
+    "nationality": "Argentina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Christoph Baumgartner",
+    "nationality": "Austria",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Christopher Bonsu Baah",
+    "nationality": "Ghana",
+    "position": "Offence"
+  },
+  {
+    "name": "Clement Akpa",
+    "nationality": "Ivory Coast",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Cody Gakpo",
+    "nationality": "Netherlands",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Cole Palmer",
+    "nationality": "England",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Connor Metcalfe",
+    "nationality": "Australia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Cristhian Mosquera",
+    "nationality": "Spain",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Cristian Roldan",
+    "nationality": "USA",
+    "position": "Midfield"
+  },
+  {
+    "name": "Cucurella",
+    "nationality": "Spain",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Cyle Larin",
+    "nationality": "Canada",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Daichi Kamada",
+    "nationality": "Japan",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Daiki Hashioka",
+    "nationality": "Japan",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Dailon Rocha Livramento",
+    "nationality": "Netherlands",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Daizen Maeda",
+    "nationality": "Japan",
+    "position": "Offence"
+  },
+  {
+    "name": "Damian Bobadilla",
+    "nationality": "Paraguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Dan Burn",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Dan Ndoye",
+    "nationality": "Switzerland",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Dani Olmo",
+    "nationality": "Spain",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Daniel Agyei",
+    "nationality": "England",
+    "position": "Offence"
+  },
+  {
+    "name": "Daniel Jebbison",
+    "nationality": "Canada",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Daniel Muñoz",
+    "nationality": "Colombia",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Daniel Svensson",
+    "nationality": "Sweden",
+    "position": "Defence"
+  },
+  {
+    "name": "Danilo",
+    "nationality": "Brazil",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Danilo dos Santos de Oliveira",
+    "nationality": "Brazil",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Danley Jean Jacques",
+    "nationality": "Haiti",
+    "position": "Midfield"
+  },
+  {
+    "name": "Darwin Núñez",
+    "nationality": "Uruguay",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "David Affengruber",
+    "nationality": "Austria",
+    "position": "Defence"
+  },
+  {
+    "name": "David Alaba",
+    "nationality": "Austria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "David Jurásek",
+    "nationality": "Czech Republic",
+    "position": "Left-Back"
+  },
+  {
+    "name": "David Møller Wolfe",
+    "nationality": "Norway",
+    "position": "Left-Back"
+  },
+  {
+    "name": "David Moreira",
+    "nationality": "Portugal",
+    "position": "Defence"
+  },
+  {
+    "name": "David Raum",
+    "nationality": "Germany",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Davinson Sánchez",
+    "nationality": "Colombia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Dayot Upamecano",
+    "nationality": "France",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Dean Huijsen",
+    "nationality": "Spain",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Declan Rice",
+    "nationality": "England",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Deiver Machado",
+    "nationality": "Colombia",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Delentz Pierre",
+    "nationality": "USA",
+    "position": "Defence"
+  },
+  {
+    "name": "Deni Jurić",
+    "nationality": "Australia",
+    "position": "Offence"
+  },
+  {
+    "name": "Denil Castillo",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Denis Višinský",
+    "nationality": "Czech Republic",
+    "position": "Offence"
+  },
+  {
+    "name": "Denis Zakaria",
+    "nationality": "Switzerland",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Deniz Gul",
+    "nationality": "Sweden",
+    "position": "Offence"
+  },
+  {
+    "name": "Deniz Undav",
+    "nationality": "Germany",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Denzel Dumfries",
+    "nationality": "Netherlands",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Derek Cornelius",
+    "nationality": "Canada",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Deroy Duarte",
+    "nationality": "Cape Verde Islands",
+    "position": "Midfield"
+  },
+  {
+    "name": "Derrick Etienne Jr.",
+    "nationality": "Haiti",
+    "position": "Midfield"
+  },
+  {
+    "name": "Derrick Köhn",
+    "nationality": "Ghana",
+    "position": "Defence"
+  },
+  {
+    "name": "Derrick Luckassen",
+    "nationality": "Netherlands",
+    "position": "Defence"
+  },
+  {
+    "name": "Desire Doue",
+    "nationality": "France",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Deveron Fonville",
+    "nationality": "Netherlands",
+    "position": "Defence"
+  },
+  {
+    "name": "Diego Gómez",
+    "nationality": "Paraguay",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Diney Borges",
+    "nationality": "Portugal",
+    "position": "Defence"
+  },
+  {
+    "name": "Diogo Dalot",
+    "nationality": "Portugal",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Djed Spence",
+    "nationality": "England",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Djibril Sow",
+    "nationality": "Switzerland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Dodi Lukebakio",
+    "nationality": "Belgium",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Dominic Calvert-Lewin",
+    "nationality": "England",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Dominic Hyam",
+    "nationality": "Scotland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Dominic Solanke",
+    "nationality": "England",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Donyell Malen",
+    "nationality": "Netherlands",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Dostonbek Xamdamov",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Douglas Santos",
+    "nationality": "Brazil",
+    "position": "Defence"
+  },
+  {
+    "name": "Duckens Nazon",
+    "nationality": "Haiti",
+    "position": "Offence"
+  },
+  {
+    "name": "Duje Ćaleta-Car",
+    "nationality": "Croatia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Duke LaCroix",
+    "nationality": "USA",
+    "position": "Player"
+  },
+  {
+    "name": "Dylan Batubinsika",
+    "nationality": "DR Congo",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Dženis Burnić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Édgar Bárcenas",
+    "nationality": "Panama",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Edin Džeko",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Offence"
+  },
+  {
+    "name": "Edmílson",
+    "nationality": "Belgium",
+    "position": "Offence"
+  },
+  {
+    "name": "Edo Kayembe",
+    "nationality": "DR Congo",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Eduardo Camavinga",
+    "nationality": "France",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ehsan Hajsafi",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "El Hadji Malick Diouf",
+    "nationality": "Senegal",
+    "position": "Defence"
+  },
+  {
+    "name": "Eldor Shomurodov",
+    "nationality": "Uzbekistan",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Elias Legendre Quiñonez",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Elias Saad",
+    "nationality": "Tunisia",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Elijah Just",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Elisha Owusu",
+    "nationality": "Ghana",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Elliot Anderson",
+    "nationality": "England",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Elliot Stroud",
+    "nationality": "Sweden",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ellyes Skhiri",
+    "nationality": "Tunisia",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Emam Ashour",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  },
+  {
+    "name": "Emiliano Martínez",
+    "nationality": "Uruguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Emmanuel Agbadou",
+    "nationality": "Ivory Coast",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Endrick",
+    "nationality": "Brazil",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Enner Valencia",
+    "nationality": "Ecuador",
+    "position": "Offence"
+  },
+  {
+    "name": "Enzo Fernández",
+    "nationality": "Argentina",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Eray Cömert",
+    "nationality": "Switzerland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Éric Davis",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "Eric Smith",
+    "nationality": "Sweden",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Erik Lira",
+    "nationality": "Mexico",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Erling Haaland",
+    "nationality": "Norway",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ermedin Demirovic",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Esmir Bajraktarevic",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Evan N'Dicka",
+    "nationality": "Ivory Coast",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Evann Guessand",
+    "nationality": "Ivory Coast",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Evidence Makgopa",
+    "nationality": "South Africa",
+    "position": "Offence"
+  },
+  {
+    "name": "Evren Eren Elmalı",
+    "nationality": "Turkey",
+    "position": "Defence"
+  },
+  {
+    "name": "Exequiel Palacios",
+    "nationality": "Argentina",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ez Abde",
+    "nationality": "Morocco",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ezri Konsa",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Fabián Balbuena",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Fabian Rieder",
+    "nationality": "Switzerland",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Fabinho",
+    "nationality": "Brazil",
+    "position": "Midfield"
+  },
+  {
+    "name": "Facundo Pellistri",
+    "nationality": "Uruguay",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Facundo Torres Pérez",
+    "nationality": "Uruguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Fares Chaïbi",
+    "nationality": "Algeria",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Farés Ghedjemis",
+    "nationality": "Algeria",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Farrukh Sayfiyev",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "Federico Valverde",
+    "nationality": "Uruguay",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Federico Viñas",
+    "nationality": "Uruguay",
+    "position": "Offence"
+  },
+  {
+    "name": "Felix Myhre",
+    "nationality": "Norway",
+    "position": "Midfield"
+  },
+  {
+    "name": "Félix Torres",
+    "nationality": "Ecuador",
+    "position": "Defence"
+  },
+  {
+    "name": "Ferdi Kadıoğlu",
+    "nationality": "Turkey",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Fermín López",
+    "nationality": "Spain",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ferrán Torres",
+    "nationality": "Spain",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Fikayo Tomori",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Findlay Curtis",
+    "nationality": "Scotland",
+    "position": "Offence"
+  },
+  {
+    "name": "Finn Surman",
+    "nationality": "New Zealand",
+    "position": "Defence"
+  },
+  {
+    "name": "Firas Al-Buraikan",
+    "nationality": "Saudi Arabia",
+    "position": "Player"
+  },
+  {
+    "name": "Firas Chaouat",
+    "nationality": "Tunisia",
+    "position": "Offence"
+  },
+  {
+    "name": "Fiston Mayele",
+    "nationality": "DR Congo",
+    "position": "Offence"
+  },
+  {
+    "name": "Florian Grillitsch",
+    "nationality": "Austria",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Florian Wirtz",
+    "nationality": "Germany",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Folarin Balogun",
+    "nationality": "USA",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Francis Amuzu",
+    "nationality": "Belgium",
+    "position": "Midfield"
+  },
+  {
+    "name": "Francis De Vries",
+    "nationality": "New Zealand",
+    "position": "Midfield"
+  },
+  {
+    "name": "Francisco Conceição",
+    "nationality": "Portugal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Franck Kessié",
+    "nationality": "Ivory Coast",
+    "position": "Midfield"
+  },
+  {
+    "name": "Franco Mastantuono",
+    "nationality": "Argentina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Frans Dhia Putros",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Frantzdy Pierrot",
+    "nationality": "Haiti",
+    "position": "Offence"
+  },
+  {
+    "name": "Fredrik André Björkan",
+    "nationality": "Norway",
+    "position": "Defence"
+  },
+  {
+    "name": "Gabriel Ávalos",
+    "nationality": "Paraguay",
+    "position": "Offence"
+  },
+  {
+    "name": "Gabriel Gudmundsson",
+    "nationality": "Sweden",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Gabriel Rojas",
+    "nationality": "Argentina",
+    "position": "Defence"
+  },
+  {
+    "name": "Gabriel Sara",
+    "nationality": "Brazil",
+    "position": "Midfield"
+  },
+  {
+    "name": "Garry Rodrigues",
+    "nationality": "Cape Verde Islands",
+    "position": "Midfield"
+  },
+  {
+    "name": "George Hirst",
+    "nationality": "Scotland",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Gervane Kastaneer",
+    "nationality": "Curaçao",
+    "position": "Midfield"
+  },
+  {
+    "name": "Gessime Yassine",
+    "nationality": "France",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Ghaith Zaalouni",
+    "nationality": "Tunisia",
+    "position": "Defence"
+  },
+  {
+    "name": "Ghislain Konan",
+    "nationality": "Ivory Coast",
+    "position": "Defence"
+  },
+  {
+    "name": "Gianluca Prestianni",
+    "nationality": "Argentina",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Gideon Mensah",
+    "nationality": "Ghana",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Gilberto Mora",
+    "nationality": "Mexico",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Gilson Tavares",
+    "nationality": "Cape Verde Islands",
+    "position": "Offence"
+  },
+  {
+    "name": "Gio Reyna",
+    "nationality": "USA",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Giorgian De Arrascaeta",
+    "nationality": "Uruguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Giuliano Simeone",
+    "nationality": "Argentina",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Godfried Roemeratoe",
+    "nationality": "Curaçao",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Gonçalo Guedes",
+    "nationality": "Portugal",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Gonçalo Inácio",
+    "nationality": "Portugal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Gonçalo Ramos",
+    "nationality": "Portugal",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Gonzalo Plata",
+    "nationality": "Ecuador",
+    "position": "Offence"
+  },
+  {
+    "name": "Grady Diangana",
+    "nationality": "DR Congo",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Granit Xhaka",
+    "nationality": "Switzerland",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Grant Hanley",
+    "nationality": "Scotland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Gue-Sung Cho",
+    "nationality": "South Korea",
+    "position": "Offence"
+  },
+  {
+    "name": "Guéla Doué",
+    "nationality": "Cote d'Ivoire",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Guillermo Martínez",
+    "nationality": "Mexico",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Guillermo Varela",
+    "nationality": "Uruguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Gustaf Lagerbielke",
+    "nationality": "Sweden",
+    "position": "Defence"
+  },
+  {
+    "name": "Gustaf Nilsson",
+    "nationality": "Sweden",
+    "position": "Offence"
+  },
+  {
+    "name": "Gustav Lundgren",
+    "nationality": "Sweden",
+    "position": "Offence"
+  },
+  {
+    "name": "Gustavo Caballero",
+    "nationality": "Paraguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Gustavo Gómez",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Gustavo Puerta",
+    "nationality": "Colombia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Gustavo Velázquez",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Habib Diallo",
+    "nationality": "Senegal",
+    "position": "Midfield"
+  },
+  {
+    "name": "Habib Diarra",
+    "nationality": "Senegal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Hadj Mahmoud",
+    "nationality": "Tunisia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Haissem Hassan",
+    "nationality": "France",
+    "position": "Midfield"
+  },
+  {
+    "name": "Hakan Çalhanoğlu",
+    "nationality": "Turkey",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Hamdy Fathy",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  },
+  {
+    "name": "Han-bum Lee",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Hannes Delcroix",
+    "nationality": "Haiti",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Haris Tabaković",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Offence"
+  },
+  {
+    "name": "Harry Kane",
+    "nationality": "England",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Harry Maguire",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Harvey Barnes",
+    "nationality": "England",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Hasan Abdulkareem",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Hassan Kadesh",
+    "nationality": "Saudi Arabia",
+    "position": "Defence"
+  },
+  {
+    "name": "Hazem Mastouri",
+    "nationality": "Tunisia",
+    "position": "Offence"
+  },
+  {
+    "name": "Hélio Varela",
+    "nationality": "Cape Verde Islands",
+    "position": "Offence"
+  },
+  {
+    "name": "Henrik Falchener",
+    "nationality": "Norway",
+    "position": "Midfield"
+  },
+  {
+    "name": "Heriberto Tavares",
+    "nationality": "Portugal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Herman Johansson",
+    "nationality": "Sweden",
+    "position": "Midfield"
+  },
+  {
+    "name": "Heung-min Son",
+    "nationality": "South Korea",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Hicham Boudaoui",
+    "nationality": "Algeria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Hiroki Ito",
+    "nationality": "Japan",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Homam Ahmed",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Hossam Abdelmaguid",
+    "nationality": "Egypt",
+    "position": "Defence"
+  },
+  {
+    "name": "Hossein Kanaani",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Houssem Aouar",
+    "nationality": "Algeria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Hugo Ekitike",
+    "nationality": "France",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Hugo Larsson",
+    "nationality": "Sweden",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Hussein Ali",
+    "nationality": "Iraq",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Hwang Heechan",
+    "nationality": "South Korea",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Hyeok-kyu Kwon",
+    "nationality": "South Korea",
+    "position": "Midfield"
+  },
+  {
+    "name": "Hyun-Gyu Oh",
+    "nationality": "South Korea",
+    "position": "Offence"
+  },
+  {
+    "name": "Hyun-jun Yang",
+    "nationality": "South Korea",
+    "position": "Midfield"
+  },
+  {
+    "name": "Hyun-seok Hong",
+    "nationality": "South Korea",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ibrahim Adel",
+    "nationality": "Egypt",
+    "position": "Offence"
+  },
+  {
+    "name": "Ibrahim Bayesh",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ibrahim M'Baye",
+    "nationality": "Senegal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Ibrahim Maza",
+    "nationality": "Algeria",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Ibrahim Saadeh",
+    "nationality": "Jordan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ibrahim Sabra",
+    "nationality": "Jordan",
+    "position": "Offence"
+  },
+  {
+    "name": "Ibrahim Sangaré",
+    "nationality": "Ivory Coast",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Ibrahim Sulemana",
+    "nationality": "Ghana",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Ibrahima Konaté",
+    "nationality": "France",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ibrokhim Ibrokhimov",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Idrissa Gana Guèye",
+    "nationality": "Senegal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ieltsin Camões",
+    "nationality": "Portugal",
+    "position": "Offence"
+  },
+  {
+    "name": "Igor Matanovic",
+    "nationality": "Croatia",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Igor Sergeev",
+    "nationality": "Uzbekistan",
+    "position": "Offence"
+  },
+  {
+    "name": "Iliman Ndiaye",
+    "nationality": "Senegal",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ime Okon",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "In-beom Hwang",
+    "nationality": "South Korea",
+    "position": "Midfield"
+  },
+  {
+    "name": "İrfan Can Kahveci",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Isak Hien",
+    "nationality": "Sweden",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ismaël Baouf",
+    "nationality": "Morocco",
+    "position": "Defence"
+  },
+  {
+    "name": "Ismael Díaz",
+    "nationality": "Panama",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ismaël Gharbi",
+    "nationality": "Tunisia",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Ismaël Koné",
+    "nationality": "Canada",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ismael Saibari",
+    "nationality": "Morocco",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ismail Jakobs",
+    "nationality": "Senegal",
+    "position": "Left-Back"
+  },
+  {
+    "name": "İsmail Yüksek",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ismaïla Sarr",
+    "nationality": "Senegal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Israel Reyes",
+    "nationality": "Mexico",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Issa Diop",
+    "nationality": "France",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ivan Bašić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ivan Perišić",
+    "nationality": "Croatia",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ivan Smolčić",
+    "nationality": "Croatia",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Ivan Šunjić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jacen Russell-Rowe",
+    "nationality": "Canada",
+    "position": "Offence"
+  },
+  {
+    "name": "Jack Hendry",
+    "nationality": "Scotland",
+    "position": "Defence"
+  },
+  {
+    "name": "Jackson Porozo",
+    "nationality": "Ecuador",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Jacob Italiano",
+    "nationality": "Australia",
+    "position": "Offence"
+  },
+  {
+    "name": "Jahkeele Marshall-Rutty",
+    "nationality": "Canada",
+    "position": "Defence"
+  },
+  {
+    "name": "Jakhongir O'rozov",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "James Garner",
+    "nationality": "England",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "James McGarry",
+    "nationality": "New Zealand",
+    "position": "Defence"
+  },
+  {
+    "name": "James Rodríguez",
+    "nationality": "Colombia",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Jaminton Campaz",
+    "nationality": "Colombia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jamiro Monteiro",
+    "nationality": "Cape Verde Islands",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jamshid Iskanderov",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jan Kliment",
+    "nationality": "Czech Republic",
+    "position": "Offence"
+  },
+  {
+    "name": "Jan Paul van Hecke",
+    "nationality": "Netherlands",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Janner Corozo",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jaroslav Zelený",
+    "nationality": "Czech Republic",
+    "position": "Defence"
+  },
+  {
+    "name": "Jarrod Bowen",
+    "nationality": "England",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Jason Geria",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Jassem Gaber Abdulsallam",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Jayden Adams",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jean Michaël Seri",
+    "nationality": "Ivory Coast",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jean-Kevin Duverne",
+    "nationality": "France",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Jean-Ricner Bellegarde",
+    "nationality": "Haiti",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Jearl Margaritha",
+    "nationality": "Curaçao",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jefferson Lerma",
+    "nationality": "Colombia",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Jens Hauge",
+    "nationality": "Norway",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Jerdy Schouten",
+    "nationality": "Netherlands",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Jeremie Frimpong",
+    "nationality": "Netherlands",
+    "position": "Right Midfield"
+  },
+  {
+    "name": "Jeremy",
+    "nationality": "Spain",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jeremy Antonisse",
+    "nationality": "Curaçao",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Jeremy Doku",
+    "nationality": "Belgium",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Jeremy Ngakia",
+    "nationality": "England",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Jerome Opoku",
+    "nationality": "Ghana",
+    "position": "Defence"
+  },
+  {
+    "name": "Jesper Karlström",
+    "nationality": "Sweden",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Jesse Randall",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Jesurun Rak-Sakyi",
+    "nationality": "England",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Jesús Gallardo",
+    "nationality": "Mexico",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Jhon Arias",
+    "nationality": "Colombia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jhon Córdoba",
+    "nationality": "Colombia",
+    "position": "Offence"
+  },
+  {
+    "name": "Jhon Lucumí",
+    "nationality": "Colombia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ji-sung Eom",
+    "nationality": "South Korea",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Jin-Gyu Kim",
+    "nationality": "South Korea",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jin-seob Park",
+    "nationality": "South Korea",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jiovany Ramos",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "João Cancelo",
+    "nationality": "Portugal",
+    "position": "Right-Back"
+  },
+  {
+    "name": "João Félix",
+    "nationality": "Portugal",
+    "position": "Offence"
+  },
+  {
+    "name": "Joao Neves",
+    "nationality": "Portugal",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "João Paulo",
+    "nationality": "Brazil",
+    "position": "Midfield"
+  },
+  {
+    "name": "João Pedro",
+    "nationality": "Brazil",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Joaquín Piquerez",
+    "nationality": "Uruguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Joaquin Seys",
+    "nationality": "Belgium",
+    "position": "Midfield"
+  },
+  {
+    "name": "Joe Bell",
+    "nationality": "New Zealand",
+    "position": "Midfield"
+  },
+  {
+    "name": "Joel Fujita",
+    "nationality": "Japan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Joel Monteiro",
+    "nationality": "Switzerland",
+    "position": "Offence"
+  },
+  {
+    "name": "Joel Ordoñez",
+    "nationality": "Ecuador",
+    "position": "Defence"
+  },
+  {
+    "name": "Joel Waterman",
+    "nationality": "Canada",
+    "position": "Defence"
+  },
+  {
+    "name": "Johan Carbonero",
+    "nationality": "Colombia",
+    "position": "Offence"
+  },
+  {
+    "name": "Johan Manzambi",
+    "nationality": "Switzerland",
+    "position": "Offence"
+  },
+  {
+    "name": "Johan Mojica",
+    "nationality": "Colombia",
+    "position": "Left-Back"
+  },
+  {
+    "name": "John McGinn",
+    "nationality": "Scotland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "John Mercado",
+    "nationality": "Ecuador",
+    "position": "Offence"
+  },
+  {
+    "name": "John Souttar",
+    "nationality": "Scotland",
+    "position": "Defence"
+  },
+  {
+    "name": "John Stones",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "John Yeboah",
+    "nationality": "Ecuador",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Johnny",
+    "nationality": "USA",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Jójó",
+    "nationality": "Cape Verde Islands",
+    "position": "Defence"
+  },
+  {
+    "name": "Jonas Adjei Adjetey",
+    "nationality": "Ghana",
+    "position": "Defence"
+  },
+  {
+    "name": "Jonathan David",
+    "nationality": "Canada",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Jonathan Osorio",
+    "nationality": "Canada",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jonathan Tah",
+    "nationality": "Germany",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Joon-ho Bae",
+    "nationality": "South Korea",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Jordan Ayew",
+    "nationality": "Ghana",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Jordan Bos",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Jordan Henderson",
+    "nationality": "England",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Jordan Mendes Correia",
+    "nationality": "Cape Verde Islands",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jordy Alcívar",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jordy Caicedo",
+    "nationality": "Ecuador",
+    "position": "Offence"
+  },
+  {
+    "name": "Jorge Carrascal",
+    "nationality": "Colombia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Jorge Gutiérrez",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "Jørgen Larsen",
+    "nationality": "Norway",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Jorginho Soares",
+    "nationality": "Netherlands",
+    "position": "Defence"
+  },
+  {
+    "name": "Joris Kayembe",
+    "nationality": "Belgium",
+    "position": "Defence"
+  },
+  {
+    "name": "Jorrel Hato",
+    "nationality": "Netherlands",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "José Canale",
+    "nationality": "Paraguay",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "José Cordoba",
+    "nationality": "Panama",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "José Fajardo",
+    "nationality": "Panama",
+    "position": "Offence"
+  },
+  {
+    "name": "José Hurtado",
+    "nationality": "Ecuador",
+    "position": "Defence"
+  },
+  {
+    "name": "José Luis Rodríguez",
+    "nationality": "Uruguay",
+    "position": "Defence"
+  },
+  {
+    "name": "José Luis Rodríguez",
+    "nationality": "Panama",
+    "position": "Left Winger"
+  },
+  {
+    "name": "José Manuel López",
+    "nationality": "Argentina",
+    "position": "Midfield"
+  },
+  {
+    "name": "José Maria Giménez",
+    "nationality": "Uruguay",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Joseph Scally",
+    "nationality": "USA",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Josha Vagnoman",
+    "nationality": "Germany",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Joshua Brenet",
+    "nationality": "Curaçao",
+    "position": "Defence"
+  },
+  {
+    "name": "Joshua Kimmich",
+    "nationality": "Germany",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Josip Stanišić",
+    "nationality": "Croatia",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Josip Šutalo",
+    "nationality": "Croatia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Josué Casimir",
+    "nationality": "Haiti",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Jovane Cabral",
+    "nationality": "Cape Verde Islands",
+    "position": "Offence"
+  },
+  {
+    "name": "Ju-sung Kim",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Juan Cabal",
+    "nationality": "Colombia",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Juan Cáceres",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Juan Fernando Quintero",
+    "nationality": "Colombia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Juan Sanabria",
+    "nationality": "Uruguay",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Jude Bellingham",
+    "nationality": "England",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Julián Álvarez",
+    "nationality": "Argentina",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Julian Ryerson",
+    "nationality": "Norway",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Julio Enciso",
+    "nationality": "Paraguay",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Juninho Bacuna",
+    "nationality": "Curaçao",
+    "position": "Defence"
+  },
+  {
+    "name": "Júnior Alonso",
+    "nationality": "Paraguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Junior Hoilett",
+    "nationality": "Canada",
+    "position": "Midfield"
+  },
+  {
+    "name": "Junnosuke Suzuki",
+    "nationality": "Japan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Junya Ito",
+    "nationality": "Japan",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Jürgen Locadia",
+    "nationality": "Curaçao",
+    "position": "Offence"
+  },
+  {
+    "name": "Juriën Gaari",
+    "nationality": "Curaçao",
+    "position": "Defence"
+  },
+  {
+    "name": "Kaan Ayhan",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kadir Barría",
+    "nationality": "Panama",
+    "position": "Offence"
+  },
+  {
+    "name": "Kai Havertz",
+    "nationality": "Germany",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Kai Trewin",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Kaiki",
+    "nationality": "Brazil",
+    "position": "Defence"
+  },
+  {
+    "name": "Kaishu Sano",
+    "nationality": "Japan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kalidou Koulibaly",
+    "nationality": "Senegal",
+    "position": "Defence"
+  },
+  {
+    "name": "Kamal Deen Sulemana",
+    "nationality": "Ghana",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Kamal Miller",
+    "nationality": "Canada",
+    "position": "Defence"
+  },
+  {
+    "name": "Kaoru Mitoma",
+    "nationality": "Japan",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Karar Nabeel",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kasra Taheri",
+    "nationality": "Iran",
+    "position": "Offence"
+  },
+  {
+    "name": "Kees Smit",
+    "nationality": "Netherlands",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Keisuke Goto",
+    "nationality": "Japan",
+    "position": "Offence"
+  },
+  {
+    "name": "Keito Nakamura",
+    "nationality": "Japan",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Kelvin Pires",
+    "nationality": "Cape Verde Islands",
+    "position": "Defence"
+  },
+  {
+    "name": "Kenan Yıldız",
+    "nationality": "Turkey",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Kenji Gorré",
+    "nationality": "Curaçao",
+    "position": "Offence"
+  },
+  {
+    "name": "Kenny McLean",
+    "nationality": "Scotland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Kento Shiogai",
+    "nationality": "Japan",
+    "position": "Offence"
+  },
+  {
+    "name": "Kerim Alajbegović",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kevin Castaño",
+    "nationality": "Colombia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kevin Danso",
+    "nationality": "Austria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Kevin De Bruyne",
+    "nationality": "Belgium",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Kevin Felida",
+    "nationality": "Curaçao",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Kevin Pina",
+    "nationality": "Cape Verde",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kevin Schade",
+    "nationality": "Germany",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Kevin Yakob",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Khaled Ayari",
+    "nationality": "Tunisia",
+    "position": "Offence"
+  },
+  {
+    "name": "Khaled Sobhy",
+    "nationality": "Egypt",
+    "position": "Defence"
+  },
+  {
+    "name": "Khalid Al Ghannam",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Khalid Ali Sabah",
+    "nationality": "Qatar",
+    "position": "Offence"
+  },
+  {
+    "name": "Khodjiakbar Alijonov",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "Khuliso Mudau",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Khulumani Ndamane",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "Kieran Tierney",
+    "nationality": "Scotland",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Kobbie Mainoo",
+    "nationality": "England",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Kodai Sano",
+    "nationality": "Japan",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Kojo Peprah Oppong",
+    "nationality": "Ghana",
+    "position": "Defence"
+  },
+  {
+    "name": "Koki Ogawa",
+    "nationality": "Japan",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Koni De Winter",
+    "nationality": "Belgium",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Konrad Laimer",
+    "nationality": "Austria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Kosta Barbarouses",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Krépin Diatta",
+    "nationality": "Senegal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Kristian Thorstvedt",
+    "nationality": "Norway",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Kristijan Jakić",
+    "nationality": "Croatia",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Kristoffer Ajer",
+    "nationality": "Norway",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Kwasi Sibo",
+    "nationality": "Ghana",
+    "position": "Midfield"
+  },
+  {
+    "name": "Kye Rowles",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Kylian Mbappé",
+    "nationality": "France",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Lachlan Bayliss",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Ladislav Krejčí",
+    "nationality": "Czech Republic",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Lamine Camara",
+    "nationality": "Senegal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Lamine Yamal",
+    "nationality": "Spain",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Laros Duarte",
+    "nationality": "Cape Verde Islands",
+    "position": "Midfield"
+  },
+  {
+    "name": "Leandro Bacuna",
+    "nationality": "Curaçao",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Leandro Paredes",
+    "nationality": "Argentina",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Lee Jaesung",
+    "nationality": "Korea, South",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Lee Kangin",
+    "nationality": "Korea, South",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Lennart Karl",
+    "nationality": "Germany",
+    "position": "Midfield"
+  },
+  {
+    "name": "Lennon Miller",
+    "nationality": "Scotland",
+    "position": "Midfield"
+  },
+  {
+    "name": "Leo Østigård",
+    "nationality": "Norway",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Léo Pereira",
+    "nationality": "Brazil",
+    "position": "Defence"
+  },
+  {
+    "name": "Leon Goretzka",
+    "nationality": "Germany",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Leonardo Realpe",
+    "nationality": "Ecuador",
+    "position": "Defence"
+  },
+  {
+    "name": "Leroy Sané",
+    "nationality": "Germany",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Leverton Pierre",
+    "nationality": "Haiti",
+    "position": "Midfield"
+  },
+  {
+    "name": "Lewis Ferguson",
+    "nationality": "Scotland",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Lewis Hall",
+    "nationality": "England",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Liam Millar",
+    "nationality": "Canada",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Lionel Messi",
+    "nationality": "Argentina",
+    "position": "Midfield"
+  },
+  {
+    "name": "Livano Comenencia",
+    "nationality": "Curaçao",
+    "position": "Defence"
+  },
+  {
+    "name": "Logan Rogerson",
+    "nationality": "New Zealand",
+    "position": "Offence"
+  },
+  {
+    "name": "Loïs Openda",
+    "nationality": "Belgium",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Louey Ben Farhat",
+    "nationality": "Tunisia",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Louicius Don Deedson",
+    "nationality": "Haiti",
+    "position": "Offence"
+  },
+  {
+    "name": "Lovro Majer",
+    "nationality": "Croatia",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Luc De Fougerolles",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Luca Jaquez",
+    "nationality": "Switzerland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Lucas Bergvall",
+    "nationality": "Sweden",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Lucas Digne",
+    "nationality": "France",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Lucas Hernández",
+    "nationality": "France",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Lucas Herrington",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Lucas Martínez Quarta",
+    "nationality": "Argentina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Lucas Mendes",
+    "nationality": "Brazil",
+    "position": "Defence"
+  },
+  {
+    "name": "Lucas Romero",
+    "nationality": "Paraguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Lucas Stassin",
+    "nationality": "Belgium",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Luciano Valente",
+    "nationality": "Netherlands",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Luis Díaz",
+    "nationality": "Colombia",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Luis Romo",
+    "nationality": "Mexico",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Luis Suárez",
+    "nationality": "Colombia",
+    "position": "Offence"
+  },
+  {
+    "name": "Luiz Henrique",
+    "nationality": "Brazil",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Luka Modrić",
+    "nationality": "Croatia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Luka Sučić",
+    "nationality": "Croatia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Luka Vušković",
+    "nationality": "Croatia",
+    "position": "Defence"
+  },
+  {
+    "name": "Lukáš Červ",
+    "nationality": "Czech Republic",
+    "position": "Midfield"
+  },
+  {
+    "name": "Lukáš Provod",
+    "nationality": "Czech Republic",
+    "position": "Midfield"
+  },
+  {
+    "name": "Lutsharel Geertruida",
+    "nationality": "Netherlands",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Lyle Foster",
+    "nationality": "South Africa",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Lyndon Dykes",
+    "nationality": "Scotland",
+    "position": "Offence"
+  },
+  {
+    "name": "Maghnes Akliouche",
+    "nationality": "France",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Mahmoud Al Mardi",
+    "nationality": "Jordan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mahmoud Saber",
+    "nationality": "Egypt",
+    "position": "Offence"
+  },
+  {
+    "name": "Malick Thiaw",
+    "nationality": "Germany",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Malik Tillman",
+    "nationality": "USA",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Malo Gusto",
+    "nationality": "France",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Mamadou Diakhon",
+    "nationality": "France",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Mamadou Sarr",
+    "nationality": "Senegal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Manaf Younis",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Manu Duah",
+    "nationality": "Ghana",
+    "position": "Midfield"
+  },
+  {
+    "name": "Manuel Akanji",
+    "nationality": "Switzerland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Manuel Ugarte",
+    "nationality": "Uruguay",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Marc Guéhi",
+    "nationality": "England",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Marcel Sabitzer",
+    "nationality": "Austria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Marcelo Flores",
+    "nationality": "Mexico",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Marco Friedl",
+    "nationality": "Austria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Marco Pašalić",
+    "nationality": "Croatia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Marcos Acuña",
+    "nationality": "Argentina",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Marcos Llorente",
+    "nationality": "Spain",
+    "position": "Right Midfield"
+  },
+  {
+    "name": "Marcos Senesi",
+    "nationality": "Argentina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Marcus Pedersen",
+    "nationality": "Norway",
+    "position": "Right Midfield"
+  },
+  {
+    "name": "Marcus Rashford",
+    "nationality": "England",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Marcus Thuram-Ulien",
+    "nationality": "France",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Marin Pongračić",
+    "nationality": "Croatia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Mario Pašalić",
+    "nationality": "Croatia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Mark McKenzie",
+    "nationality": "USA",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Marko Arnautovic",
+    "nationality": "Austria",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Marko Farji",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Marko Stamenic",
+    "nationality": "New Zealand",
+    "position": "Midfield"
+  },
+  {
+    "name": "Marquinhos",
+    "nationality": "Brazil",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Martial Godo",
+    "nationality": "England",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Martin Baturina",
+    "nationality": "Croatia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Martin Boyle",
+    "nationality": "Australia",
+    "position": "Offence"
+  },
+  {
+    "name": "Martin Erlic",
+    "nationality": "Croatia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Martin Expérience",
+    "nationality": "Haiti",
+    "position": "Defence"
+  },
+  {
+    "name": "Martín Krug",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "Martin Vitík",
+    "nationality": "Czech Republic",
+    "position": "Defence"
+  },
+  {
+    "name": "Martín Zubimendi",
+    "nationality": "Spain",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Martinelli",
+    "nationality": "Brazil",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Marvin Senaya",
+    "nationality": "Ghana",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Marwan Al Sahafi",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Marwan Attia",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mateus Fernandes",
+    "nationality": "Portugal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Matheus Cunha",
+    "nationality": "Brazil",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Matheus Nunes",
+    "nationality": "Portugal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Mathías Olivera",
+    "nationality": "Uruguay",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Mathieu Choinière",
+    "nationality": "Canada",
+    "position": "Midfield"
+  },
+  {
+    "name": "Matías Galarza",
+    "nationality": "Paraguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Matías Viña",
+    "nationality": "Uruguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Mattias Svanberg",
+    "nationality": "Sweden",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Mauricio",
+    "nationality": "Brazil",
+    "position": "Midfield"
+  },
+  {
+    "name": "Max Arfsten",
+    "nationality": "USA",
+    "position": "Offence"
+  },
+  {
+    "name": "Maxence Lacroix",
+    "nationality": "France",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Maxim De Cuyper",
+    "nationality": "Belgium",
+    "position": "Defence"
+  },
+  {
+    "name": "Maximilian Wöber",
+    "nationality": "Austria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Maximiliano Araújo",
+    "nationality": "Uruguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Maximo Perrone",
+    "nationality": "Argentina",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Maytham Jabbar",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Mbekezeli Mbokazi",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "Mehdi Dorval",
+    "nationality": "Algeria",
+    "position": "Defence"
+  },
+  {
+    "name": "Mehdi Hashemnejad",
+    "nationality": "Iran",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mehdi Torabi",
+    "nationality": "Iran",
+    "position": "Midfield"
+  },
+  {
+    "name": "Merchas Doski",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Merih Demiral",
+    "nationality": "Turkey",
+    "position": "Defence"
+  },
+  {
+    "name": "Mert Müldür",
+    "nationality": "Turkey",
+    "position": "Defence"
+  },
+  {
+    "name": "Meschack Elia",
+    "nationality": "DR Congo",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Michael Gregoritsch",
+    "nationality": "Austria",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Michael Murillo",
+    "nationality": "Panama",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Michael Olise",
+    "nationality": "France",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Michael Svoboda",
+    "nationality": "Austria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Michal Sadílek",
+    "nationality": "Czech Republic",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Michel Aebischer",
+    "nationality": "Switzerland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Mickey van de Ven",
+    "nationality": "Netherlands",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Miguel Almirón",
+    "nationality": "Paraguay",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Mika Godts",
+    "nationality": "Belgium",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Mikel Oyarzabal",
+    "nationality": "Spain",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Milad Mohammadi",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Miles Robinson",
+    "nationality": "USA",
+    "position": "Defence"
+  },
+  {
+    "name": "Miloš Degenek",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Min-Jae Kim",
+    "nationality": "South Korea",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Miro Muheim",
+    "nationality": "Switzerland",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Mohamed Abdelmonem",
+    "nationality": "Egypt",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Mohamed Alaa",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Mohamed Amine Ben Hamida",
+    "nationality": "Tunisia",
+    "position": "Defence"
+  },
+  {
+    "name": "Mohamed Hany",
+    "nationality": "Egypt",
+    "position": "Defence"
+  },
+  {
+    "name": "Mohamed Kanno",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mohamed Khaled Gouda",
+    "nationality": "Qatar",
+    "position": "Offence"
+  },
+  {
+    "name": "Mohamed Rabie Hrimat",
+    "nationality": "Morocco",
+    "position": "null"
+  },
+  {
+    "name": "Mohammad Abu Hasheesh",
+    "nationality": "Jordan",
+    "position": "Defence"
+  },
+  {
+    "name": "Mohammad Abualnadi",
+    "nationality": "USA",
+    "position": "Defence"
+  },
+  {
+    "name": "Mohammed Amoura",
+    "nationality": "Algeria",
+    "position": "Offence"
+  },
+  {
+    "name": "Mohammed Muntari",
+    "nationality": "Qatar",
+    "position": "Offence"
+  },
+  {
+    "name": "Mohammed Waad",
+    "nationality": "Qatar",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mohanad Ali",
+    "nationality": "Iraq",
+    "position": "Offence"
+  },
+  {
+    "name": "Mohanad Lashin",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mohannad Abu Taha",
+    "nationality": "Jordan",
+    "position": "Offence"
+  },
+  {
+    "name": "Moisés Caicedo",
+    "nationality": "Ecuador",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Mojmír Chytil",
+    "nationality": "Czech Republic",
+    "position": "Offence"
+  },
+  {
+    "name": "Moon-hwan Kim",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Morgan Rogers",
+    "nationality": "England",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Mortadha Ben Ouanes",
+    "nationality": "Tunisia",
+    "position": "Defence"
+  },
+  {
+    "name": "Morten Thorsby",
+    "nationality": "Norway",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Mostafa Mohamed",
+    "nationality": "Egypt",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Moussa Niakhaté",
+    "nationality": "Senegal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Moutaz Neffati",
+    "nationality": "Tunisia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Muhammed Kerem Aktürkoğlu",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mukhammadkodir Khamraliev",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "Musa Al Taamari",
+    "nationality": "Jordan",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Musab Al Juwayr",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Mustafa Eskihellaç",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Muteb Al Mufarrij",
+    "nationality": "Saudi Arabia",
+    "position": "Defence"
+  },
+  {
+    "name": "N'Golo Kanté",
+    "nationality": "France",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nadhir Benbouali",
+    "nationality": "Algeria",
+    "position": "Offence"
+  },
+  {
+    "name": "Nahuel Molina",
+    "nationality": "Argentina",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Nathan Aké",
+    "nationality": "Netherlands",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Nathan De Cat",
+    "nationality": "Belgium",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nathan Ngoy",
+    "nationality": "Belgium",
+    "position": "Defence"
+  },
+  {
+    "name": "Nathan Patterson",
+    "nationality": "Scotland",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Nathan-Dylan Saliba",
+    "nationality": "Canada",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nathanael Mbuku",
+    "nationality": "DR Congo",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Nathaniel Brown",
+    "nationality": "Germany",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Neil El Aynaoui",
+    "nationality": "Morocco",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Nestory Irankunda",
+    "nationality": "Australia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ngal'ayel Mukau",
+    "nationality": "DR Congo",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Niall Mason",
+    "nationality": "England",
+    "position": "Defence"
+  },
+  {
+    "name": "Nick Woltemade",
+    "nationality": "Germany",
+    "position": "Offence"
+  },
+  {
+    "name": "Nico Elvedi",
+    "nationality": "Switzerland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Nico O'Reilly",
+    "nationality": "England",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nico Paz",
+    "nationality": "Argentina",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Nico Schlotterbeck",
+    "nationality": "Germany",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Nicolas  Seiwald",
+    "nationality": "Austria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Nicolas de la Cruz",
+    "nationality": "Uruguay",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nicolás Fernández",
+    "nationality": "Uruguay",
+    "position": "Defence"
+  },
+  {
+    "name": "Nicolas Fonseca",
+    "nationality": "Uruguay",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Nicolás González",
+    "nationality": "Argentina",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Nicolas Jackson",
+    "nationality": "Senegal",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Nicolás Otamendi",
+    "nationality": "Argentina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Nicolas Pépé",
+    "nationality": "Ivory Coast",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Nicolas Raskin",
+    "nationality": "Belgium",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nicolás Tagliafico",
+    "nationality": "Argentina",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Nidal Čelik",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Nihad Mujakić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Defence"
+  },
+  {
+    "name": "Niko Sigur",
+    "nationality": "Canada",
+    "position": "Defence"
+  },
+  {
+    "name": "Nikola Katić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Defence"
+  },
+  {
+    "name": "Nikola Moro",
+    "nationality": "Croatia",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Nikola Vlašić",
+    "nationality": "Croatia",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Nishan Velupillay",
+    "nationality": "Australia",
+    "position": "Offence"
+  },
+  {
+    "name": "Nizar Al Rashdan",
+    "nationality": "Jordan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Nkosinathi Sibisi",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "Noa Lang",
+    "nationality": "Netherlands",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Noah Okafor",
+    "nationality": "Switzerland",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Noah Sadiki",
+    "nationality": "DR Congo",
+    "position": "Defence"
+  },
+  {
+    "name": "Nobel Mendy",
+    "nationality": "Senegal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Noni Madueke",
+    "nationality": "England",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Noor Al Rawabdeh",
+    "nationality": "Jordan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Noussair Mazraoui",
+    "nationality": "Morocco",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Nuno Da Costa",
+    "nationality": "Cape Verde Islands",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Nuno Mendes",
+    "nationality": "Portugal",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Odiljon Hamrobekov",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Odilon Kossounou",
+    "nationality": "Ivory Coast",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Odin Lurås Bjørtuft",
+    "nationality": "Norway",
+    "position": "Midfield"
+  },
+  {
+    "name": "Oguz Aydin",
+    "nationality": "Turkey",
+    "position": "Midfield"
+  },
+  {
+    "name": "Omar Alderete",
+    "nationality": "Paraguay",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Omar Marmoush",
+    "nationality": "Egypt",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Omar Rekik",
+    "nationality": "Tunisia",
+    "position": "Defence"
+  },
+  {
+    "name": "Omid Noorafkan",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Orkun Kökçü",
+    "nationality": "Turkey",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Oscar Bobb",
+    "nationality": "Norway",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Oston Urunov",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Oswin Appollis",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Otabek Shukurov",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ousmane Dembélé",
+    "nationality": "France",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Ousmane Diomande",
+    "nationality": "Cote d'Ivoire",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Oussama Targhalline",
+    "nationality": "Morocco",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ozan Kabak",
+    "nationality": "Turkey",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Pablo Fornals",
+    "nationality": "Spain",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Paik Seungho",
+    "nationality": "Korea Republic",
+    "position": "Midfield"
+  },
+  {
+    "name": "Pape Gueye",
+    "nationality": "Senegal",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Pape Sarr",
+    "nationality": "Senegal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Parfait Guiagon",
+    "nationality": "Ivory Coast",
+    "position": "Midfield"
+  },
+  {
+    "name": "Pascal Groß",
+    "nationality": "Germany",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Pathé Ciss",
+    "nationality": "Senegal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Patric Pfeiffer",
+    "nationality": "Ghana",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Patrick Agyemang",
+    "nationality": "USA",
+    "position": "Offence"
+  },
+  {
+    "name": "Patrick Berg",
+    "nationality": "Norway",
+    "position": "Midfield"
+  },
+  {
+    "name": "Patrick Wimmer",
+    "nationality": "Austria",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Patrick Yazbek",
+    "nationality": "Australia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Patrik Schick",
+    "nationality": "Czech Republic",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Pau Cubarsí",
+    "nationality": "Spain",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Paul Okon-Engstler",
+    "nationality": "Australia",
+    "position": "Defence"
+  },
+  {
+    "name": "Paul Wanner",
+    "nationality": "Austria",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Paulinho",
+    "nationality": "Portugal",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Pavel Šulc",
+    "nationality": "Czech Republic",
+    "position": "Midfield"
+  },
+  {
+    "name": "Pedri",
+    "nationality": "Spain",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Pedro Gonçalves",
+    "nationality": "Portugal",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Pedro Neto",
+    "nationality": "Portugal",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Pedro Porro",
+    "nationality": "Spain",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Pedro Vite",
+    "nationality": "Ecuador",
+    "position": "Offence"
+  },
+  {
+    "name": "Pervis Estupiñán",
+    "nationality": "Ecuador",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Petar Musa",
+    "nationality": "Croatia",
+    "position": "Offence"
+  },
+  {
+    "name": "Petar Sucic",
+    "nationality": "Croatia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Peter Gwargis",
+    "nationality": "Sweden",
+    "position": "Midfield"
+  },
+  {
+    "name": "Phil Foden",
+    "nationality": "England",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Philipp Lienhart",
+    "nationality": "Austria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Philipp Mwene",
+    "nationality": "Austria",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Piero Hincapié",
+    "nationality": "Ecuador",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Pierre Kalulu",
+    "nationality": "France",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Prince Adu",
+    "nationality": "Ghana",
+    "position": "Offence"
+  },
+  {
+    "name": "Quinten Timber",
+    "nationality": "Netherlands",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Rafael Borré",
+    "nationality": "Colombia",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Rafik Belghali",
+    "nationality": "Algeria",
+    "position": "Defence"
+  },
+  {
+    "name": "Ralph Priso-Mbongue",
+    "nationality": "Canada",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ramin Rezaeian",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Ramiz Zerrouki",
+    "nationality": "Algeria",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Ramón Sosa",
+    "nationality": "Paraguay",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ramy Bensebaini",
+    "nationality": "Algeria",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Ramy Rabia",
+    "nationality": "Egypt",
+    "position": "Defence"
+  },
+  {
+    "name": "Randal Kolo Muani",
+    "nationality": "France",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Rani Khedira",
+    "nationality": "Germany",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Ransford Königsdörffer",
+    "nationality": "Ghana",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ray Paez",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Rayan",
+    "nationality": "Brazil",
+    "position": "Offence"
+  },
+  {
+    "name": "Rayan Aït Nouri",
+    "nationality": "Algeria",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Rayan Cherki",
+    "nationality": "France",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Rayan Elloumi",
+    "nationality": "Canada",
+    "position": "Offence"
+  },
+  {
+    "name": "Rayane Bounida",
+    "nationality": "Belgium",
+    "position": "Midfield"
+  },
+  {
+    "name": "Rayane Hamed",
+    "nationality": "Saudi Arabia",
+    "position": "Defence"
+  },
+  {
+    "name": "Rebin Sulaka",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Redouane Halhal",
+    "nationality": "France",
+    "position": "Defence"
+  },
+  {
+    "name": "Relebohile Mofokeng",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Remo Freuler",
+    "nationality": "Switzerland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Renato Veiga",
+    "nationality": "Portugal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ricardo",
+    "nationality": "Portugal",
+    "position": "Defence"
+  },
+  {
+    "name": "Ricardo Adé",
+    "nationality": "Haiti",
+    "position": "Defence"
+  },
+  {
+    "name": "Ricardo Horta",
+    "nationality": "Portugal",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Ricardo Pepi",
+    "nationality": "USA",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Ricardo Rodriguez",
+    "nationality": "Switzerland",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Richard Rios",
+    "nationality": "Colombia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Richie Laryea",
+    "nationality": "Canada",
+    "position": "Defence"
+  },
+  {
+    "name": "Riechedly Bazoer",
+    "nationality": "Curaçao",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Riley McGree",
+    "nationality": "Australia",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ritsu Doan",
+    "nationality": "Japan",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Riyad Mahrez",
+    "nationality": "Algeria",
+    "position": "Midfield"
+  },
+  {
+    "name": "Roberto Alvarado",
+    "nationality": "Mexico",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Roberto Lopes",
+    "nationality": "Cape Verde Islands",
+    "position": "Defence"
+  },
+  {
+    "name": "Robin Hranac",
+    "nationality": "Czech Republic",
+    "position": "Defence"
+  },
+  {
+    "name": "Rocky Bushiri",
+    "nationality": "DR Congo",
+    "position": "Defence"
+  },
+  {
+    "name": "Roderick Miller",
+    "nationality": "Panama",
+    "position": "Defence"
+  },
+  {
+    "name": "Rodri",
+    "nationality": "Spain",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Rodrigo Aguirre",
+    "nationality": "Uruguay",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Rodrigo de Paul",
+    "nationality": "Argentina",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Roger Ibañez",
+    "nationality": "Brazil",
+    "position": "Defence"
+  },
+  {
+    "name": "Romano Schmid",
+    "nationality": "Austria",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Ronald Araújo",
+    "nationality": "Uruguay",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Roony Bardghji",
+    "nationality": "Sweden",
+    "position": "Midfield"
+  },
+  {
+    "name": "Roozbeh Cheshmi",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Roshon van Eijma",
+    "nationality": "Curaçao",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Ross McCrorie",
+    "nationality": "Scotland",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Rúben Neves",
+    "nationality": "Portugal",
+    "position": "Midfield"
+  },
+  {
+    "name": "Ruben Providence",
+    "nationality": "Haiti",
+    "position": "Offence"
+  },
+  {
+    "name": "Ruben Vargas",
+    "nationality": "Switzerland",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Rustam Ashurmatov",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "Ryan Christie",
+    "nationality": "Scotland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ryan Gravenberch",
+    "nationality": "Netherlands",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Ryan Mendes",
+    "nationality": "Cape Verde Islands",
+    "position": "Offence"
+  },
+  {
+    "name": "Ryan Thomas",
+    "nationality": "New Zealand",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Ryunosuke Sato",
+    "nationality": "Japan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Saleem Obaid",
+    "nationality": "Jordan",
+    "position": "Defence"
+  },
+  {
+    "name": "Saleh Al-Shehri",
+    "nationality": "Saudi Arabia",
+    "position": "Player"
+  },
+  {
+    "name": "Saleh Hardani",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Salih Özcan",
+    "nationality": "Turkey",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Salman Al-Faraj",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Samed Bazdar",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Offence"
+  },
+  {
+    "name": "Samet Akaydın",
+    "nationality": "Turkey",
+    "position": "Defence"
+  },
+  {
+    "name": "Samir El Mourabet",
+    "nationality": "Morocco",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Samuel Almeida Costa",
+    "nationality": "Portugal",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Samuel Moutoussamy",
+    "nationality": "DR Congo",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Samukelo Kabini",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "Sander Berge",
+    "nationality": "Norway",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Santiago Arias",
+    "nationality": "Colombia",
+    "position": "Defence"
+  },
+  {
+    "name": "Santiago Bueno",
+    "nationality": "Uruguay",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Saša Kalajdžić",
+    "nationality": "Austria",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Saud Abdulhamid",
+    "nationality": "Saudi Arabia",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Sayfallah Ltaief",
+    "nationality": "Tunisia",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Scott McKenna",
+    "nationality": "Scotland",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Scott McTominay",
+    "nationality": "Scotland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Sead Kolašinac",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Sebastian Berhalter",
+    "nationality": "USA",
+    "position": "Midfield"
+  },
+  {
+    "name": "Sebastían Cáceres",
+    "nationality": "Uruguay",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Sebastian Tounekti",
+    "nationality": "Tunisia",
+    "position": "Offence"
+  },
+  {
+    "name": "Seko Fofana",
+    "nationality": "France",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Sepe Elye Wahi",
+    "nationality": "France",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Serge Gnabry",
+    "nationality": "Germany",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Sheral Floranus",
+    "nationality": "Curaçao",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Sherzod Nasrullayev",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "Shogo Taniguchi",
+    "nationality": "Japan",
+    "position": "Defence"
+  },
+  {
+    "name": "Shoja Khalilzadeh",
+    "nationality": "Iran",
+    "position": "Defence"
+  },
+  {
+    "name": "Shurandy Sambo",
+    "nationality": "Curaçao",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Shuto Machino",
+    "nationality": "Japan",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Sidny Lopes Cabral",
+    "nationality": "Netherlands",
+    "position": "Defence"
+  },
+  {
+    "name": "Silvan Widmer",
+    "nationality": "Switzerland",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Simon Adingra",
+    "nationality": "Ivory Coast",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Simon Banza",
+    "nationality": "DR Congo",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Sohaib Nair",
+    "nationality": "Algeria",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Sontje Hansen",
+    "nationality": "Curaçao",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Souffian El Karouani",
+    "nationality": "Morocco",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Soufiane Rahimi",
+    "nationality": "Morocco",
+    "position": "Offence"
+  },
+  {
+    "name": "Sphephelo Sithole",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Stefan de Vrij",
+    "nationality": "Netherlands",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Stefan Posch",
+    "nationality": "Austria",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Štěpán Chaloupek",
+    "nationality": "Czech Republic",
+    "position": "Defence"
+  },
+  {
+    "name": "Steve Kapuadi",
+    "nationality": "France",
+    "position": "Defence"
+  },
+  {
+    "name": "Steven Moreira",
+    "nationality": "Cape Verde Islands",
+    "position": "Defence"
+  },
+  {
+    "name": "Stjepan Radeljić",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Defence"
+  },
+  {
+    "name": "Stopira",
+    "nationality": "Cape Verde Islands",
+    "position": "Defence"
+  },
+  {
+    "name": "Sultan Al Brake",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Sultan Mandash",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Tae-hyeon Kim",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Tae-seok Lee",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Taha Ali",
+    "nationality": "Sweden",
+    "position": "Midfield"
+  },
+  {
+    "name": "Tahith Chong",
+    "nationality": "Curaçao",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Tajon Buchanan",
+    "nationality": "Canada",
+    "position": "Right Midfield"
+  },
+  {
+    "name": "Tani Oluwaseyi",
+    "nationality": "Canada",
+    "position": "Offence"
+  },
+  {
+    "name": "Tanner Tessmann",
+    "nationality": "USA",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Tarek Salman",
+    "nationality": "Qatar",
+    "position": "Defence"
+  },
+  {
+    "name": "Tarik Muharemović",
+    "nationality": "Bosnia-Herzegovina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Teboho Mokoena",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Telmo Arcanjo",
+    "nationality": "Portugal",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Teun Koopmeiners",
+    "nationality": "Netherlands",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Thalente Mbatha",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Thapelo Maseko",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Themba Zwane",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Theo Bongonda",
+    "nationality": "DR Congo",
+    "position": "Offence"
+  },
+  {
+    "name": "Theo Hernández",
+    "nationality": "France",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Thiago",
+    "nationality": "Brazil",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Thiago Almada",
+    "nationality": "Argentina",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Tholo Matuludi",
+    "nationality": "South Africa",
+    "position": "Defence"
+  },
+  {
+    "name": "Thomas Meunier",
+    "nationality": "Belgium",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Thomas Partey",
+    "nationality": "Ghana",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Tiago Palacios",
+    "nationality": "Argentina",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Tijjani Reijnders",
+    "nationality": "Netherlands",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Tim Payne",
+    "nationality": "New Zealand",
+    "position": "Defence"
+  },
+  {
+    "name": "Tim Ream",
+    "nationality": "USA",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Tim Weah",
+    "nationality": "USA",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Timothy Castagne",
+    "nationality": "Belgium",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Tomas Araujo",
+    "nationality": "Portugal",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Tomáš Chorý",
+    "nationality": "Czech Republic",
+    "position": "Offence"
+  },
+  {
+    "name": "Tomáš Holeš",
+    "nationality": "Czech Republic",
+    "position": "Defence"
+  },
+  {
+    "name": "Tomáš Ladra",
+    "nationality": "Czech Republic",
+    "position": "Midfield"
+  },
+  {
+    "name": "Tomáš Souček",
+    "nationality": "Czech Republic",
+    "position": "Defensive Midfield"
+  },
+  {
+    "name": "Tommy Conway",
+    "nationality": "Scotland",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Toni Fruk",
+    "nationality": "Croatia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Torbjørn Heggem",
+    "nationality": "Norway",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Trezeguet",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  },
+  {
+    "name": "Trincão",
+    "nationality": "Portugal",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Tshepang Moremi",
+    "nationality": "South Africa",
+    "position": "Midfield"
+  },
+  {
+    "name": "Tsuyoshi Watanabe",
+    "nationality": "Japan",
+    "position": "Defence"
+  },
+  {
+    "name": "Turki Al Ammar",
+    "nationality": "Saudi Arabia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Tyler Bindon",
+    "nationality": "New Zealand",
+    "position": "Defence"
+  },
+  {
+    "name": "Tyrese Noslin",
+    "nationality": "Curaçao",
+    "position": "Defence"
+  },
+  {
+    "name": "Umar Eshmurodov",
+    "nationality": "Uzbekistan",
+    "position": "Defence"
+  },
+  {
+    "name": "Umarali Rahmonaliyev",
+    "nationality": "Uzbekistan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Valentin Barco",
+    "nationality": "Argentina",
+    "position": "Left-Back"
+  },
+  {
+    "name": "Valentino Livramento",
+    "nationality": "England",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Víctor Muñoz",
+    "nationality": "Spain",
+    "position": "Offence"
+  },
+  {
+    "name": "Victor Nilsson-Lindelöf",
+    "nationality": "Sweden",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Viktor Gyökeres",
+    "nationality": "Sweden",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Vincent Sierro",
+    "nationality": "Switzerland",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Vinicius Junior",
+    "nationality": "Brazil",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Virgil van Dijk",
+    "nationality": "Netherlands",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Vitinha",
+    "nationality": "Portugal",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Vitor Reis",
+    "nationality": "Brazil",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Vladimir Coufal",
+    "nationality": "Czech Republic",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Vladimír Darida",
+    "nationality": "Czech Republic",
+    "position": "Midfield"
+  },
+  {
+    "name": "Wagner Pina",
+    "nationality": "Cape Verde Islands",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Waldemar Anton",
+    "nationality": "Germany",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Warren Zaïre-Emery",
+    "nationality": "France",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Weston McKennie",
+    "nationality": "USA",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Wilfried Singo",
+    "nationality": "Ivory Coast",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Wilguens Paugain",
+    "nationality": "Haiti",
+    "position": "Defence"
+  },
+  {
+    "name": "William Pacho",
+    "nationality": "Ecuador",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Williot Swedberg",
+    "nationality": "Sweden",
+    "position": "Left Winger"
+  },
+  {
+    "name": "Willy Semedo",
+    "nationality": "Cape Verde Islands",
+    "position": "Offence"
+  },
+  {
+    "name": "Wilson Isidor",
+    "nationality": "France",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Woobens Pacius",
+    "nationality": "Haiti",
+    "position": "Midfield"
+  },
+  {
+    "name": "Wout Weghorst",
+    "nationality": "Netherlands",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Xaver Schlager",
+    "nationality": "Austria",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Xavi Simons",
+    "nationality": "Netherlands",
+    "position": "Attacking Midfield"
+  },
+  {
+    "name": "Yacine Titraoui",
+    "nationality": "Algeria",
+    "position": "Midfield"
+  },
+  {
+    "name": "Yaimar Medina",
+    "nationality": "Ecuador",
+    "position": "Midfield"
+  },
+  {
+    "name": "Yan Valery",
+    "nationality": "Tunisia",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Yasin Ayari",
+    "nationality": "Sweden",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Yasser Ibrahim",
+    "nationality": "Egypt",
+    "position": "Defence"
+  },
+  {
+    "name": "Yassin Fortune",
+    "nationality": "Haiti",
+    "position": "Offence"
+  },
+  {
+    "name": "Yassine Chikhaoui",
+    "nationality": "Tunisia",
+    "position": "Midfield"
+  },
+  {
+    "name": "Yassir Zabiri",
+    "nationality": "Morocco",
+    "position": "Midfield"
+  },
+  {
+    "name": "Yazan Al Arab",
+    "nationality": "Jordan",
+    "position": "Defence"
+  },
+  {
+    "name": "Yeremi Pino",
+    "nationality": "Spain",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Yerson Mosquera",
+    "nationality": "Colombia",
+    "position": "Centre-Back"
+  },
+  {
+    "name": "Yoane Wissa",
+    "nationality": "DR Congo",
+    "position": "Centre-Forward"
+  },
+  {
+    "name": "Young-woo Seol",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Youri Tielemans",
+    "nationality": "Belgium",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Yousef Abu Al Jazar",
+    "nationality": "Jordan",
+    "position": "Defence"
+  },
+  {
+    "name": "Yousef Ayman",
+    "nationality": "Qatar",
+    "position": "Midfield"
+  },
+  {
+    "name": "Yousef Qashi",
+    "nationality": "Jordan",
+    "position": "Midfield"
+  },
+  {
+    "name": "Youssef Amyn",
+    "nationality": "Iraq",
+    "position": "Midfield"
+  },
+  {
+    "name": "Yu-min Cho",
+    "nationality": "South Korea",
+    "position": "Defence"
+  },
+  {
+    "name": "Yuito Suzuki",
+    "nationality": "Japan",
+    "position": "Offence"
+  },
+  {
+    "name": "Yukinari Sugawara",
+    "nationality": "Japan",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Yunus Akgün",
+    "nationality": "Turkey",
+    "position": "Right Winger"
+  },
+  {
+    "name": "Zaid Ismail",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Zaid Tahseen",
+    "nationality": "Iraq",
+    "position": "Defence"
+  },
+  {
+    "name": "Zakaria El Ouahdi",
+    "nationality": "Morocco",
+    "position": "Offence"
+  },
+  {
+    "name": "Zeki Çelik",
+    "nationality": "Turkey",
+    "position": "Right-Back"
+  },
+  {
+    "name": "Zeno Debast",
+    "nationality": "Belgium",
+    "position": "Defence"
+  },
+  {
+    "name": "Zidane Iqbal",
+    "nationality": "Iraq",
+    "position": "Central Midfield"
+  },
+  {
+    "name": "Zinédine Belaïd",
+    "nationality": "Algeria",
+    "position": "Defence"
+  },
+  {
+    "name": "Zizo",
+    "nationality": "Egypt",
+    "position": "Midfield"
+  }
+]

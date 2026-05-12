@@ -1,0 +1,13 @@
+{
+  "name": "world-cup-betting",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed": "node scripts/seed-fixtures.mjs",
+    "update": "node scripts/update-results.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "ws": "^8.18.0"
+  }
+}

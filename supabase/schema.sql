@@ -1,0 +1,284 @@
+-- World Cup 2026 betting — Supabase schema
+-- Run this once in the Supabase SQL editor (Project → SQL → New query → paste → Run).
+-- It is safe to re-run: every statement is idempotent.
+
+create extension if not exists pgcrypto;
+
+-- =============================================================================
+-- Tables
+-- =============================================================================
+
+-- One row of global settings. Holds the shared team password (hashed) and the
+-- bet-submission deadline. Edit values via the SQL editor after running this
+-- script — see the "INITIAL SETUP" section at the bottom of this file.
+create table if not exists settings (
+    id              int primary key default 1,
+    team_password   text not null,        -- bcrypt hash, never plaintext
+    deadline        timestamptz not null, -- 1 hour before first match
+    top_scorer      text,                 -- filled in after tournament
+    champion        text,                 -- filled in after tournament
+    runner_up       text,                 -- filled in after tournament
+    constraint settings_singleton check (id = 1)
+);
+
+-- Matches (fixtures + results). Populated by scripts/seed-fixtures.mjs and
+-- kept up to date by scripts/update-results.mjs.
+create table if not exists matches (
+    id              bigint primary key,         -- football-data.org match id
+    utc_kickoff     timestamptz not null,
+    matchday        int,
+    stage           text,                       -- GROUP_STAGE, LAST_16, etc.
+    group_name      text,                       -- 'A', 'B', ... (group stage only)
+    home_team       text not null,
+    away_team       text not null,
+    home_score      int,                        -- null until full-time
+    away_score      int,
+    status          text not null default 'SCHEDULED',  -- SCHEDULED, IN_PLAY, FINISHED
+    updated_at      timestamptz not null default now()
+);
+
+create index if not exists matches_kickoff_idx on matches (utc_kickoff);
+
+-- Players: created on first bet. The pk is the name (case-insensitive).
+create table if not exists players (
+    name            text primary key,
+    created_at      timestamptz not null default now()
+);
+
+-- Per-match bets.
+--
+-- `is_submitted` separates *draft* bets (autosaved as the player types, visible
+-- only to themselves) from *submitted* bets (visible to everyone in the public
+-- standings). Editing a bet flips it back to draft until the player re-submits.
+create table if not exists bets (
+    player_name     text not null references players(name) on delete cascade,
+    match_id        bigint not null references matches(id) on delete cascade,
+    sign            text not null check (sign in ('1', 'X', '2')),
+    home_score      int not null check (home_score >= 0),
+    away_score      int not null check (away_score >= 0),
+    is_submitted    boolean not null default true,
+    updated_at      timestamptz not null default now(),
+    primary key (player_name, match_id)
+);
+
+-- Tournament-wide bonus picks: champion, runner-up, top scorer.
+create table if not exists bonus_bets (
+    player_name     text primary key references players(name) on delete cascade,
+    champion        text,
+    runner_up       text,
+    top_scorer      text,
+    is_submitted    boolean not null default true,
+    updated_at      timestamptz not null default now()
+);
+
+-- Safe to re-run on an existing DB: add the column if it isn't there yet.
+-- Default `true` so any pre-feature rows stay visible to everyone.
+alter table bets       add column if not exists is_submitted boolean not null default true;
+alter table bonus_bets add column if not exists is_submitted boolean not null default true;
+
+-- =============================================================================
+-- Password verification + write RPCs
+-- =============================================================================
+
+create or replace function verify_team_password(supplied text)
+returns boolean
+language sql stable security definer
+as $$
+    select crypt(supplied, team_password) = team_password from settings where id = 1;
+$$;
+
+create or replace function deadline_passed()
+returns boolean
+language sql stable security definer
+as $$
+    select now() >= deadline from settings where id = 1;
+$$;
+
+-- Autosave a match bet as a *draft* (is_submitted = false). The bet is visible
+-- only to the player themselves until they click "Submit my bets", which calls
+-- submit_all_bets() to flip is_submitted to true. Fails if password is wrong
+-- or the deadline has passed.
+create or replace function submit_bet(
+    p_password      text,
+    p_player_name   text,
+    p_match_id      bigint,
+    p_sign          text,
+    p_home_score    int,
+    p_away_score    int
+) returns void
+language plpgsql security definer
+as $$
+begin
+    if not verify_team_password(p_password) then
+        raise exception 'invalid team password';
+    end if;
+    if deadline_passed() then
+        raise exception 'betting deadline has passed';
+    end if;
+    if length(trim(p_player_name)) = 0 then
+        raise exception 'player name required';
+    end if;
+
+    insert into players (name) values (trim(p_player_name))
+        on conflict (name) do nothing;
+
+    insert into bets (player_name, match_id, sign, home_score, away_score, is_submitted)
+        values (trim(p_player_name), p_match_id, p_sign, p_home_score, p_away_score, false)
+        on conflict (player_name, match_id) do update
+            set sign = excluded.sign,
+                home_score = excluded.home_score,
+                away_score = excluded.away_score,
+                is_submitted = false,
+                updated_at = now();
+end;
+$$;
+
+-- Delete a player and all of their bets. Cascades via the FKs on bets /
+-- bonus_bets, so this wipes every trace of the player from the pool. Anyone
+-- with the team password can do this — same trust model as submit_bet.
+create or replace function delete_player(
+    p_password      text,
+    p_player_name   text
+) returns void
+language plpgsql security definer
+as $$
+begin
+    if not verify_team_password(p_password) then
+        raise exception 'invalid team password';
+    end if;
+    if length(trim(p_player_name)) = 0 then
+        raise exception 'player name required';
+    end if;
+
+    delete from players where name = trim(p_player_name);
+end;
+$$;
+
+-- Autosave tournament-wide bonus bets as a *draft* (is_submitted = false).
+-- Same draft/submit model as submit_bet().
+create or replace function submit_bonus_bet(
+    p_password      text,
+    p_player_name   text,
+    p_champion      text,
+    p_runner_up     text,
+    p_top_scorer    text
+) returns void
+language plpgsql security definer
+as $$
+begin
+    if not verify_team_password(p_password) then
+        raise exception 'invalid team password';
+    end if;
+    if deadline_passed() then
+        raise exception 'betting deadline has passed';
+    end if;
+    if length(trim(p_player_name)) = 0 then
+        raise exception 'player name required';
+    end if;
+
+    insert into players (name) values (trim(p_player_name))
+        on conflict (name) do nothing;
+
+    insert into bonus_bets (player_name, champion, runner_up, top_scorer, is_submitted)
+        values (trim(p_player_name), nullif(trim(p_champion), ''), nullif(trim(p_runner_up), ''), nullif(trim(p_top_scorer), ''), false)
+        on conflict (player_name) do update
+            set champion = excluded.champion,
+                runner_up = excluded.runner_up,
+                top_scorer = excluded.top_scorer,
+                is_submitted = false,
+                updated_at = now();
+end;
+$$;
+
+-- Publish all of a player's draft bets to the public standings. Idempotent —
+-- safe to call repeatedly (the player can re-submit any time before deadline).
+create or replace function submit_all_bets(
+    p_password      text,
+    p_player_name   text
+) returns void
+language plpgsql security definer
+as $$
+begin
+    if not verify_team_password(p_password) then
+        raise exception 'invalid team password';
+    end if;
+    if deadline_passed() then
+        raise exception 'betting deadline has passed';
+    end if;
+    if length(trim(p_player_name)) = 0 then
+        raise exception 'player name required';
+    end if;
+
+    update bets
+        set is_submitted = true, updated_at = now()
+        where player_name = trim(p_player_name) and is_submitted = false;
+
+    update bonus_bets
+        set is_submitted = true, updated_at = now()
+        where player_name = trim(p_player_name) and is_submitted = false;
+end;
+$$;
+
+-- =============================================================================
+-- Row-Level Security
+-- =============================================================================
+-- Everyone can READ matches, bets, bonus_bets, players, and the non-sensitive
+-- bits of settings (deadline, final results) — but the team_password column is
+-- NOT exposed because we use a view to filter it out. Writes go only through
+-- the SECURITY DEFINER functions above, which check the password.
+
+alter table settings    enable row level security;
+alter table matches     enable row level security;
+alter table players     enable row level security;
+alter table bets        enable row level security;
+alter table bonus_bets  enable row level security;
+
+-- Read policies (anon).
+drop policy if exists matches_read on matches;
+create policy matches_read on matches for select using (true);
+
+drop policy if exists players_read on players;
+create policy players_read on players for select using (true);
+
+drop policy if exists bets_read on bets;
+create policy bets_read on bets for select using (true);
+
+drop policy if exists bonus_bets_read on bonus_bets;
+create policy bonus_bets_read on bonus_bets for select using (true);
+
+-- settings: no direct anon access. Frontend reads via the view below.
+drop policy if exists settings_read on settings;
+create policy settings_read on settings for select using (false);
+
+-- Public view exposes only non-sensitive settings columns.
+create or replace view public_settings as
+    select deadline, top_scorer, champion, runner_up from settings where id = 1;
+
+grant select on public_settings to anon, authenticated;
+
+-- Allow anon to call the verification + RPC functions.
+grant execute on function verify_team_password(text) to anon, authenticated;
+grant execute on function deadline_passed() to anon, authenticated;
+grant execute on function submit_bet(text, text, bigint, text, int, int) to anon, authenticated;
+grant execute on function submit_bonus_bet(text, text, text, text, text) to anon, authenticated;
+grant execute on function submit_all_bets(text, text) to anon, authenticated;
+grant execute on function delete_player(text, text) to anon, authenticated;
+
+-- =============================================================================
+-- INITIAL SETUP — edit these two values, then run the block once.
+-- =============================================================================
+-- The deadline below is 1 hour before kickoff of the World Cup 2026 opening
+-- match (Mexico vs South Africa, 11 June 2026, 19:00 UTC, verified from
+-- football-data.org). Adjust if FIFA shifts the schedule. Change 'change-me'
+-- to your real team password.
+
+insert into settings (id, team_password, deadline) values (
+    1,
+    crypt('change-me', gen_salt('bf')),
+    timestamptz '2026-06-11 18:00:00+00'   -- 1 h before 19:00 UTC kickoff
+) on conflict (id) do nothing;
+
+-- To CHANGE the password later, run:
+--   update settings set team_password = crypt('new-password', gen_salt('bf')) where id = 1;
+-- To CHANGE the deadline later, run:
+--   update settings set deadline = timestamptz '2026-06-11 18:00:00+00' where id = 1;

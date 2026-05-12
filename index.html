@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotbolls-VM 2026 Tippning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #f8f9fa;
+            --color-bg-alt: #ffffff;
+            --color-text: #1a1a2e;
+            --color-text-muted: #4a4a68;
+            --color-accent: #15803d;          /* pitch green */
+            --color-accent-light: #4ade80;
+            --color-accent-deep: #064e3b;
+            --color-highlight: #d1fae5;
+            --color-border: #e1e5eb;
+            --color-warn: #b45309;
+            --color-warn-bg: #fef3c7;
+            --color-error: #b91c1c;
+            --color-saved: #15803d;
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(248, 249, 250, 0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 1000; border-bottom: 1px solid var(--color-border);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem; color: var(--color-accent);
+            text-decoration: none; font-weight: 400;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--color-text-muted); text-decoration: none;
+            font-size: 0.95rem; font-weight: 500; transition: color 0.2s ease;
+        }
+        .nav-links a:hover { color: var(--color-accent); }
+
+        /* Hero */
+        .hero {
+            display: flex; align-items: center; justify-content: center;
+            padding: 7rem 2rem 3rem;
+            background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, var(--color-highlight) 0%, transparent 70%);
+            opacity: 0.5; pointer-events: none;
+        }
+        .hero-content { max-width: 900px; text-align: center; position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-block; padding: 0.5rem 1.25rem;
+            background: var(--color-highlight); color: var(--color-accent-deep);
+            border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+            letter-spacing: 0.03em; margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: 400; line-height: 1.1; margin-bottom: 1.5rem;
+        }
+        .hero h1 em { color: var(--color-accent); font-style: italic; }
+        .hero-subtitle {
+            font-size: 1.2rem; color: var(--color-text-muted);
+            max-width: 620px; margin: 0 auto 2.5rem;
+        }
+
+        /* Countdown */
+        #countdown {
+            display: inline-flex; gap: 1rem; padding: 1.5rem 2.5rem;
+            background: var(--color-bg-alt); border: 1px solid var(--color-border);
+            border-radius: 16px; box-shadow: 0 12px 32px rgba(21, 128, 61, 0.08);
+            margin-bottom: 1.5rem;
+        }
+        #countdown span { display: flex; flex-direction: column; align-items: center; min-width: 64px; }
+        #countdown strong {
+            font-family: var(--font-display); font-size: 2.4rem;
+            color: var(--color-accent-deep); font-weight: 400; line-height: 1;
+        }
+        #countdown small {
+            text-transform: uppercase; letter-spacing: 0.1em;
+            font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.4rem;
+        }
+        #countdown.locked {
+            font-family: var(--font-display); font-size: 1.4rem;
+            color: var(--color-warn); padding: 1.5rem 2.5rem;
+        }
+        #deadline-text {
+            color: var(--color-text-muted); font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.85rem 1.75rem; border-radius: 8px;
+            font-size: 1rem; font-weight: 500; text-decoration: none;
+            transition: all 0.2s ease; cursor: pointer; border: none;
+            font-family: inherit;
+        }
+        .btn-primary { background: var(--color-accent); color: white; }
+        .btn-primary:hover:not(:disabled) {
+            background: var(--color-accent-deep);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(21, 128, 61, 0.25);
+        }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-secondary {
+            background: transparent; color: var(--color-text);
+            border: 1.5px solid var(--color-border);
+        }
+        .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+        .btn-ghost {
+            background: transparent; color: var(--color-text-muted);
+            font-size: 0.9rem; padding: 0.4rem 0.8rem;
+        }
+        .btn-ghost:hover { color: var(--color-accent); }
+
+        /* Sections */
+        section { padding: 5rem 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 2.75rem; font-weight: 400; margin-bottom: 0.75rem;
+        }
+        .section-header p {
+            color: var(--color-text-muted);
+            max-width: 600px; margin: 0 auto; font-size: 1.05rem;
+        }
+
+        /* Rules */
+        #rules { background: var(--color-bg-alt); }
+        .rules-wrap {
+            max-width: 760px; margin: 0 auto;
+            display: flex; flex-direction: column; gap: 2.5rem;
+        }
+        .rules-group h3 {
+            font-family: var(--font-display); font-size: 1.5rem;
+            font-weight: 400; margin-bottom: 1rem; color: var(--color-accent-deep);
+        }
+        .rules-subgroup { margin-top: 1.25rem; }
+        .rules-subgroup:first-of-type { margin-top: 0.5rem; }
+        .rules-subgroup h4 {
+            font-size: 0.85rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--color-text-muted); margin-bottom: 0.5rem;
+        }
+        .rules-table {
+            width: 100%; border-collapse: collapse;
+            background: var(--color-bg); border-radius: 14px; overflow: hidden;
+            border: 1px solid var(--color-border);
+        }
+        .rules-table thead th {
+            background: var(--color-bg-alt);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            font-size: 0.75rem; font-weight: 600;
+            color: var(--color-text-muted); text-align: left;
+            padding: 0.65rem 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .rules-table thead th.points-head { text-align: center; width: 4.5rem; }
+        .rules-table tbody tr + tr { border-top: 1px solid var(--color-border); }
+        .rules-table td {
+            padding: 1rem 1.25rem; vertical-align: middle;
+        }
+        .rules-table td.points-cell {
+            width: 4.5rem; text-align: center;
+            font-family: var(--font-display); font-size: 1.75rem;
+            color: var(--color-accent); line-height: 1;
+        }
+        .rules-table td.points-cell .plus { font-size: 1.15rem; vertical-align: super; margin-right: 0.1em; color: var(--color-accent); }
+        .rules-table td.points-cell .unit {
+            display: block; font-family: var(--font-body); font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--color-text-muted); font-weight: 600; margin-top: 0.15rem;
+        }
+        .rules-table .rule-name { font-weight: 600; display: block; margin-bottom: 0.15rem; }
+        .rules-table .rule-note { color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.45; }
+
+        .prizes {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+        }
+        .prize-tile {
+            background: var(--color-bg); border: 1px solid var(--color-border);
+            border-radius: 14px; padding: 1.25rem 1rem; text-align: center;
+            display: flex; flex-direction: column; gap: 0.25rem;
+        }
+        .prize-tile .medal { font-size: 1.75rem; line-height: 1; margin-bottom: 0.25rem; }
+        .prize-tile .place {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--color-text-muted); font-weight: 600;
+        }
+        .prize-tile .share {
+            font-family: var(--font-display); font-size: 2rem;
+            color: var(--color-accent); line-height: 1;
+        }
+        .prize-lede {
+            color: var(--color-text-muted); margin-bottom: 1.25rem;
+            font-size: 0.98rem; line-height: 1.6;
+        }
+        .prize-note {
+            margin-top: 0.85rem; text-align: center;
+            color: var(--color-text-muted); font-size: 0.9rem;
+        }
+        @media (max-width: 520px) {
+            .prizes { grid-template-columns: 1fr; }
+        }
+
+        /* Pot info inside the bet form (moved out of the public rules section) */
+        .pot-info {
+            background: var(--color-bg); border: 1px solid var(--color-border);
+            border-radius: 14px; padding: 1.5rem 1.5rem 1.75rem;
+            margin-bottom: 2rem;
+        }
+        .pot-info .pot-lede {
+            color: var(--color-text); font-size: 0.98rem;
+            line-height: 1.6; margin-bottom: 1.25rem;
+        }
+        .pot-info .pot-heading {
+            font-family: var(--font-display); font-size: 1.4rem;
+            font-weight: 400; color: var(--color-accent-deep); margin-bottom: 0.4rem;
+        }
+        .pot-info .prize-lede {
+            color: var(--color-text-muted); font-size: 0.95rem;
+            line-height: 1.55; margin-bottom: 1rem;
+        }
+        .pot-info .prizes { margin-bottom: 0.5rem; }
+        .pot-info .prize-tile { background: var(--color-bg-alt); }
+        .pot-info .prize-note { margin-top: 0.5rem; font-size: 0.88rem; }
+
+        /* Submit-my-bets zone */
+        #submit-zone {
+            margin-top: 2.5rem; padding: 1.5rem;
+            background: var(--color-highlight); border: 1px solid var(--color-accent-light);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1.25rem; flex-wrap: wrap;
+        }
+        #submit-zone .submit-summary { flex: 1; min-width: 240px; }
+        #submit-zone .submit-headline {
+            font-family: var(--font-display); font-size: 1.25rem;
+            color: var(--color-accent-deep); margin-bottom: 0.15rem;
+        }
+        #submit-zone .submit-status {
+            font-size: 0.92rem; color: var(--color-accent-deep);
+        }
+        #submit-zone .submit-status.dirty { color: var(--color-warn); font-weight: 500; }
+        #submit-zone .submit-status.clean { color: var(--color-saved); font-weight: 500; }
+        #submit-zone .submit-status.saving { font-style: italic; }
+        #submit-zone .submit-status.error { color: var(--color-error); }
+        #submit-zone .submit-hint {
+            margin-top: 0.4rem; font-size: 0.85rem; line-height: 1.45;
+            color: var(--color-text-muted);
+        }
+
+        /* Popover anchored to the submit button */
+        #submit-zone .submit-action-wrap {
+            position: relative;
+            display: flex; align-items: center;
+        }
+        .submit-popover {
+            position: absolute;
+            bottom: calc(100% + 0.75rem);
+            right: 0;
+            width: min(380px, calc(100vw - 3rem));
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            padding: 1.25rem;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
+            z-index: 50;
+            text-align: left;
+        }
+        .submit-popover[hidden] { display: none; }
+        .submit-popover::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; right: 56px;
+            width: 14px; height: 14px;
+            background: var(--color-bg-alt);
+            border-right: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+            transform: rotate(45deg);
+        }
+        .submit-popover .popover-title {
+            font-family: var(--font-display); font-size: 1.25rem;
+            font-weight: 400; color: var(--color-text); margin-bottom: 0.4rem;
+        }
+        .submit-popover .popover-text {
+            color: var(--color-text-muted); font-size: 0.95rem;
+            margin-bottom: 0.85rem; line-height: 1.5;
+        }
+        .submit-popover #submit-error {
+            color: var(--color-error); font-size: 0.9rem;
+            min-height: 0; margin-bottom: 0.5rem;
+        }
+        .submit-popover #submit-error:empty { display: none; }
+        .submit-popover .popover-actions {
+            display: flex; gap: 0.5rem; justify-content: flex-end;
+        }
+        .submit-popover .popover-actions .btn {
+            padding: 0.55rem 1rem; font-size: 0.92rem;
+        }
+        @media (max-width: 600px) {
+            .submit-popover { right: auto; left: 0; }
+            .submit-popover::after { right: auto; left: 32px; }
+        }
+
+        .rules-example {
+            background: var(--color-highlight); border: 1px solid var(--color-accent-light);
+            border-radius: 14px; padding: 1.5rem 1.75rem;
+        }
+        .rules-example h4 {
+            font-family: var(--font-display); font-weight: 400; font-size: 1.3rem;
+            color: var(--color-accent-deep); margin-bottom: 0.25rem;
+        }
+        .rules-example .example-lede {
+            color: var(--color-accent-deep); font-size: 0.95rem; margin-bottom: 1rem;
+        }
+        .example-rows {
+            display: flex; flex-direction: column; gap: 0.5rem;
+        }
+        .example-row {
+            display: grid; grid-template-columns: 1fr auto auto;
+            align-items: center; gap: 1rem;
+            padding: 0.65rem 0.9rem; background: var(--color-bg-alt);
+            border-radius: 10px; border: 1px solid rgba(21, 128, 61, 0.15);
+        }
+        .example-row .who { font-weight: 600; }
+        .example-row .tip { font-family: var(--font-display); font-size: 1.15rem; color: var(--color-text); }
+        .example-row .pts {
+            font-family: var(--font-display); font-size: 1.4rem; color: var(--color-accent);
+            min-width: 3rem; text-align: right;
+        }
+        .example-row .pts.zero { color: var(--color-text-muted); }
+        @media (max-width: 520px) {
+            .example-row { grid-template-columns: 1fr auto; }
+            .example-row .tip { grid-column: 1 / 2; grid-row: 2; font-size: 1rem; }
+            .example-row .pts { grid-row: 1 / 3; }
+        }
+
+        /* Cards generally */
+        .card {
+            background: var(--color-bg-alt); border: 1px solid var(--color-border);
+            border-radius: 20px; padding: 2.5rem; margin: 0 auto;
+            max-width: 720px;
+        }
+        .card h3 {
+            font-family: var(--font-display); font-size: 1.75rem;
+            font-weight: 400; margin-bottom: 0.5rem;
+        }
+        .card p.lead { color: var(--color-text-muted); margin-bottom: 1.5rem; }
+
+        /* Login */
+        #login-card .form-row { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+        #login-card label {
+            font-size: 0.85rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--color-text-muted);
+        }
+        #login-card input {
+            padding: 0.75rem 1rem; border: 1.5px solid var(--color-border);
+            border-radius: 8px; font-family: inherit; font-size: 1rem;
+            background: var(--color-bg); transition: border-color 0.2s;
+        }
+        #login-card input:focus { outline: none; border-color: var(--color-accent); }
+        #login-error { color: var(--color-error); font-size: 0.9rem; min-height: 1.2em; margin-bottom: 0.5rem; }
+
+        #session-banner {
+            display: none; align-items: center; justify-content: space-between;
+            background: var(--color-highlight); color: var(--color-accent-deep);
+            padding: 1rem 1.5rem; border-radius: 12px;
+            max-width: 720px; margin: 0 auto;
+        }
+        #session-banner .session-name { font-weight: 600; }
+
+        #lock-banner {
+            display: none; background: var(--color-warn-bg); color: var(--color-warn);
+            border: 1px solid #fcd34d; padding: 1rem 1.25rem; border-radius: 12px;
+            margin-bottom: 2rem; font-size: 0.95rem;
+        }
+
+        /* Bet form */
+        #betting { background: var(--color-bg); }
+        #bet-form-card { max-width: 900px; }
+        .match-day { margin-bottom: 2rem; }
+        .match-day h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem; font-weight: 400;
+            color: var(--color-accent-deep);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.5rem; margin-bottom: 1rem;
+        }
+        .match-row {
+            display: grid;
+            grid-template-columns: 130px 1fr auto;
+            align-items: center; gap: 1rem;
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .match-row:last-child { border-bottom: none; }
+        .match-time {
+            font-size: 0.85rem; color: var(--color-text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+        .match-teams { display: flex; align-items: center; gap: 0.75rem; font-size: 0.98rem; }
+        .match-teams .team { flex: 1; }
+        .match-teams .home { text-align: right; font-weight: 500; }
+        .match-teams .away { text-align: left; font-weight: 500; }
+        .match-teams .vs { color: var(--color-text-muted); font-size: 0.85rem; }
+        .match-inputs {
+            display: flex; align-items: center; gap: 0.4rem;
+            font-variant-numeric: tabular-nums;
+        }
+        .match-inputs .score {
+            width: 48px; padding: 0.4rem; text-align: center;
+            border: 1.5px solid var(--color-border); border-radius: 6px;
+            font-family: inherit; font-size: 1rem; background: var(--color-bg-alt);
+        }
+        .match-inputs .score:focus { outline: none; border-color: var(--color-accent); }
+        .match-inputs .score::-webkit-outer-spin-button,
+        .match-inputs .score::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .match-inputs .dash { color: var(--color-text-muted); }
+        .match-inputs .sign {
+            padding: 0.4rem 0.6rem;
+            border: 1.5px solid var(--color-border); border-radius: 6px;
+            background: var(--color-bg-alt); font-family: inherit; font-size: 0.95rem;
+        }
+        .match-inputs .sign:focus { outline: none; border-color: var(--color-accent); }
+        .save-status {
+            font-size: 0.8rem; min-width: 60px; text-align: left;
+            color: var(--color-text-muted);
+        }
+        .save-status.saving { color: var(--color-text-muted); font-style: italic; }
+        .save-status.saved { color: var(--color-saved); }
+        .save-status.error { color: var(--color-error); }
+        .match-started {
+            opacity: 0.6;
+        }
+        .match-started::after { content: ''; }
+
+        /* Bonus */
+        #bonus-section {
+            margin-top: 2.5rem; padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        #bonus-section h4 {
+            font-family: var(--font-display); font-size: 1.4rem;
+            font-weight: 400; margin-bottom: 1rem; color: var(--color-accent-deep);
+        }
+        .bonus-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin-bottom: 1rem;
+        }
+        .bonus-grid .form-row { display: flex; flex-direction: column; gap: 0.4rem; }
+        .bonus-grid label {
+            font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--color-text-muted);
+        }
+        .bonus-grid input {
+            padding: 0.6rem 0.8rem; border: 1.5px solid var(--color-border);
+            border-radius: 8px; font-family: inherit; font-size: 0.95rem;
+            background: var(--color-bg);
+        }
+        .bonus-grid input:focus { outline: none; border-color: var(--color-accent); }
+        #bonus-controls { display: flex; align-items: center; gap: 1rem; }
+
+        /* Searchable dropdown (used by Champion / Runner-up bonus picks) */
+        .search-select-wrap { position: relative; }
+        .search-options {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: var(--color-bg-alt);
+            border: 1.5px solid var(--color-border);
+            border-radius: 8px;
+            margin-top: 4px;
+            max-height: 260px; overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            padding: 0.25rem;
+        }
+        .search-option {
+            padding: 0.55rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            line-height: 1.4;
+        }
+        .search-option:hover,
+        .search-option.active {
+            background: var(--color-highlight);
+            color: var(--color-accent-deep);
+        }
+        .search-option strong {
+            color: var(--color-accent-deep);
+            font-weight: 600;
+            background: rgba(74, 222, 128, 0.18);
+            border-radius: 3px;
+        }
+        .search-option-label { display: block; }
+        .search-option-hint {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--color-text-muted);
+            margin-top: 0.1rem;
+        }
+        .search-option:hover .search-option-hint,
+        .search-option.active .search-option-hint {
+            color: var(--color-accent);
+        }
+        .search-options-more {
+            padding: 0.55rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            font-style: italic;
+            border-top: 1px solid var(--color-border);
+            margin-top: 0.25rem;
+        }
+
+        /* Standings */
+        #standings { background: var(--color-bg-alt); }
+        .standings-wrap { max-width: 720px; margin: 0 auto; }
+        table.standings {
+            width: 100%; border-collapse: collapse;
+            background: var(--color-bg); border: 1px solid var(--color-border);
+            border-radius: 16px; overflow: hidden;
+        }
+        table.standings th {
+            text-align: left; padding: 1rem 1.25rem;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--color-text-muted); font-weight: 600;
+            background: var(--color-bg-alt); border-bottom: 1px solid var(--color-border);
+        }
+        table.standings td {
+            padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--color-border);
+            font-variant-numeric: tabular-nums;
+        }
+        table.standings tr:last-child td { border-bottom: none; }
+        table.standings .rank {
+            font-family: var(--font-display); font-size: 1.25rem;
+            color: var(--color-accent); width: 50px;
+        }
+        table.standings .num { text-align: right; }
+        table.standings .total { font-weight: 600; color: var(--color-accent-deep); }
+        table.standings th.num { text-align: right; }
+        table.standings .muted { color: var(--color-text-muted); text-align: center; font-style: italic; }
+
+        /* Danger zone — delete-my-bet inside the bet form */
+        #danger-zone {
+            margin-top: 2.5rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1rem; flex-wrap: wrap;
+        }
+        #danger-zone .danger-text {
+            font-size: 0.9rem; color: var(--color-text-muted);
+        }
+        .btn-danger {
+            background: transparent; color: var(--color-error);
+            border: 1.5px solid #fecaca;
+            padding: 0.55rem 1.1rem; border-radius: 8px;
+            font-family: inherit; font-size: 0.9rem; font-weight: 500;
+            cursor: pointer; transition: all 0.15s ease;
+        }
+        .btn-danger:hover:not(:disabled) {
+            background: var(--color-error); color: white; border-color: var(--color-error);
+        }
+        .btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Delete-tips popover (anchored to the "Ta bort mina tips" button) */
+        #danger-zone .delete-action-wrap {
+            position: relative;
+            display: flex; align-items: center;
+        }
+        .delete-popover {
+            position: absolute;
+            bottom: calc(100% + 0.75rem);
+            right: 0;
+            width: min(380px, calc(100vw - 3rem));
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            padding: 1.25rem;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
+            z-index: 50;
+            text-align: left;
+        }
+        .delete-popover[hidden] { display: none; }
+        .delete-popover::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; right: 56px;
+            width: 14px; height: 14px;
+            background: var(--color-bg-alt);
+            border-right: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+            transform: rotate(45deg);
+        }
+        .delete-popover .popover-title {
+            font-family: var(--font-display); font-size: 1.25rem;
+            font-weight: 400; color: var(--color-text); margin-bottom: 0.4rem;
+        }
+        .delete-popover .popover-text {
+            color: var(--color-text-muted); font-size: 0.95rem;
+            margin-bottom: 0.85rem; line-height: 1.5;
+        }
+        .delete-popover .popover-text strong { color: var(--color-text); }
+        .delete-popover #delete-error {
+            color: var(--color-error); font-size: 0.9rem;
+            min-height: 0; margin-bottom: 0.5rem;
+        }
+        .delete-popover #delete-error:empty { display: none; }
+        .delete-popover .popover-actions {
+            display: flex; gap: 0.5rem; justify-content: flex-end;
+        }
+        .delete-popover .popover-actions .btn,
+        .delete-popover .popover-actions .btn-danger {
+            padding: 0.55rem 1rem; font-size: 0.92rem;
+        }
+        .delete-popover .popover-actions .btn-danger {
+            background: var(--color-error); color: white;
+            border-radius: 8px; border: none;
+            font-family: inherit; font-weight: 500; cursor: pointer;
+        }
+        .delete-popover .popover-actions .btn-danger:hover:not(:disabled) { background: #991b1b; }
+        @media (max-width: 600px) {
+            .delete-popover { right: auto; left: 0; }
+            .delete-popover::after { right: auto; left: 32px; }
+        }
+
+        /* Results */
+        #results { background: var(--color-bg); }
+        #results-list {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem; max-width: 1000px; margin: 0 auto;
+        }
+        .result-card {
+            background: var(--color-bg-alt); border: 1px solid var(--color-border);
+            border-radius: 12px; padding: 1.25rem;
+        }
+        .result-meta {
+            font-size: 0.8rem; color: var(--color-text-muted);
+            margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .live-pill {
+            background: var(--color-error); color: white;
+            padding: 0.1rem 0.5rem; border-radius: 100px;
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+        }
+        .result-teams {
+            display: grid; grid-template-columns: 1fr auto 1fr;
+            gap: 0.75rem; align-items: center;
+        }
+        .result-teams .team { font-weight: 500; }
+        .result-teams .team:first-child { text-align: right; }
+        .result-teams .score {
+            font-family: var(--font-display); font-size: 1.5rem;
+            color: var(--color-accent-deep); padding: 0 0.5rem;
+        }
+        .muted { color: var(--color-text-muted); text-align: center; font-style: italic; }
+
+        /* Footer */
+        footer {
+            background: var(--color-text); color: white;
+            padding: 3rem 2rem 2rem; text-align: center;
+        }
+        footer p { opacity: 0.7; font-size: 0.9rem; }
+        footer a { color: white; }
+
+        /* Boot error */
+        #boot-error {
+            display: none; max-width: 720px; margin: 7rem auto 2rem;
+            padding: 1.5rem; background: #fee2e2; color: #991b1b;
+            border-radius: 12px; text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links { display: none; }
+            .match-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem; padding: 1rem 0;
+            }
+            .match-inputs { justify-content: flex-start; flex-wrap: wrap; }
+            #countdown { padding: 1rem 1.25rem; gap: 0.5rem; }
+            #countdown strong { font-size: 1.8rem; }
+            section { padding: 3.5rem 1.25rem; }
+            .hero { padding: 6rem 1.25rem 3rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <a href="#" class="nav-logo">⚽ VM 2026 Tippning</a>
+        <ul class="nav-links">
+            <li><a href="#rules">Regler</a></li>
+            <li><a href="#betting">Tippa</a></li>
+            <li><a href="#standings">Ställning</a></li>
+            <li><a href="#results">Resultat</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="boot-error"></div>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">⚽ Intern lagtippning</span>
+        <h1>Fotbolls-VM <em>2026</em><br>Tippning</h1>
+        <p class="hero-subtitle">Tippa resultatet för varje match och välj guld- och silvermedaljör samt skyttekung. Tippningen låses 1 timme innan första matchen.</p>
+
+        <div id="countdown"></div>
+        <div id="deadline-text"></div>
+
+        <div>
+            <a href="#betting" class="btn btn-primary">Lägg dina tips →</a>
+            <a href="#standings" class="btn btn-secondary">Se ställning</a>
+        </div>
+    </div>
+</section>
+
+<section id="rules">
+    <div class="container">
+        <div class="section-header">
+            <h2>Regler</h2>
+            <p>Så här fungerar tippningen och hur poängen räknas.</p>
+        </div>
+        <div class="rules-wrap">
+            <div class="rules-group">
+                <h3>Så får du poäng</h3>
+                <div class="rules-subgroup">
+                    <h4>Per match</h4>
+                    <table class="rules-table">
+                        <thead>
+                            <tr>
+                                <th class="points-head">Poäng</th>
+                                <th>Regel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="points-cell">1<span class="unit">poäng</span></td>
+                                <td>
+                                    <span class="rule-name">Rätt tecken</span>
+                                    <span class="rule-note">Rätt 1, X eller 2-utfall</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="points-cell">3<span class="unit">poäng</span></td>
+                                <td>
+                                    <span class="rule-name">Exakt resultat</span>
+                                    <span class="rule-note">Både hemma- och bortamål rätt</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rules-subgroup">
+                    <h4>Turneringsbonus</h4>
+                    <table class="rules-table">
+                        <thead>
+                            <tr>
+                                <th class="points-head">Poäng</th>
+                                <th>Regel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="points-cell">5<span class="unit">poäng</span></td>
+                                <td>
+                                    <span class="rule-name">Guldmedaljör</span>
+                                    <span class="rule-note">Tippa turneringens vinnare</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="points-cell">5<span class="unit">poäng</span></td>
+                                <td>
+                                    <span class="rule-name">Silvermedaljör</span>
+                                    <span class="rule-note">Tippa finalförloraren</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="points-cell">5<span class="unit">poäng</span></td>
+                                <td>
+                                    <span class="rule-name">Skyttekung</span>
+                                    <span class="rule-note">Tippa turneringens skyttekung</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="rules-example">
+                <h4>Exempel</h4>
+                <p class="example-lede">Slutresultat: <strong>Sverige 2 – 1 Spanien</strong></p>
+                <div class="example-rows">
+                    <div class="example-row">
+                        <span class="who">Anna tippade</span>
+                        <span class="tip">1 (Sverige vinner)</span>
+                        <span class="pts">1 p</span>
+                    </div>
+                    <div class="example-row">
+                        <span class="who">Bo tippade</span>
+                        <span class="tip">2–1 till Sverige</span>
+                        <span class="pts">4 p</span>
+                    </div>
+                    <div class="example-row">
+                        <span class="who">Cilla tippade</span>
+                        <span class="tip">X (oavgjort)</span>
+                        <span class="pts zero">0 p</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="betting">
+    <div class="container">
+        <div class="section-header">
+            <h2>Lägg dina tips</h2>
+            <p>Logga in med ditt namn och det gemensamma lösenordet. Du kan uppdatera dina tips fram till deadline.</p>
+        </div>
+
+        <div id="session-banner">
+            <div>Inloggad som <span class="session-name"></span></div>
+            <button id="logout" class="btn btn-ghost">Logga ut</button>
+        </div>
+
+        <div id="login-card" class="card">
+            <h3>Logga in</h3>
+            <p class="lead">Första gången? Skriv bara ett namn du vill använda under hela turneringen.</p>
+            <form id="login-form">
+                <div class="form-row">
+                    <label for="login-name">Ditt namn</label>
+                    <input type="text" id="login-name" autocomplete="name" required>
+                </div>
+                <div class="form-row">
+                    <label for="login-password">Lagets lösenord</label>
+                    <input type="password" id="login-password" autocomplete="current-password" required>
+                </div>
+                <div id="login-error"></div>
+                <button type="submit" class="btn btn-primary">Logga in</button>
+            </form>
+        </div>
+
+        <div id="bet-form-card" class="card" style="display: none; margin-top: 2rem;">
+            <div id="lock-banner">
+                ⚠️ Deadline har passerat. Dina tips är låsta för resten av turneringen.
+            </div>
+
+            <div class="pot-info">
+                <p class="pot-lede">Alla som vill vara med satsar <strong>10 €</strong> i potten. Potten delas ut till topplaceringarna efter turneringen.</p>
+                <h4 class="pot-heading">Prispott</h4>
+                <p class="prize-lede">De tre spelarna med högst totalpoäng efter finalen får varsin andel av potten. Vid lika poäng vinner den med flest exakta resultat, därefter flest rätta tecken.</p>
+                <div class="prizes">
+                    <div class="prize-tile">
+                        <div class="medal">🥇</div>
+                        <div class="place">1:a plats</div>
+                        <div class="share">80 %</div>
+                    </div>
+                    <div class="prize-tile">
+                        <div class="medal">🥈</div>
+                        <div class="place">2:a plats</div>
+                        <div class="share">15 %</div>
+                    </div>
+                    <div class="prize-tile">
+                        <div class="medal">🥉</div>
+                        <div class="place">3:e plats</div>
+                        <div class="share">5 %</div>
+                    </div>
+                </div>
+                <p class="prize-note">Andelarna räknas på den totala potten (antal deltagare × 10 €).</p>
+            </div>
+
+            <div id="match-bets"></div>
+
+            <div id="bonus-section">
+                <h4>Bonustips för turneringen</h4>
+                <div class="bonus-grid">
+                    <div class="form-row">
+                        <label for="bonus-champion">Guldmedaljör (5 p)</label>
+                        <input type="text" id="bonus-champion" placeholder="Sök lag…">
+                    </div>
+                    <div class="form-row">
+                        <label for="bonus-runner-up">Silvermedaljör (5 p)</label>
+                        <input type="text" id="bonus-runner-up" placeholder="Sök lag…">
+                    </div>
+                    <div class="form-row">
+                        <label for="bonus-top-scorer">Skyttekung (5 p)</label>
+                        <input type="text" id="bonus-top-scorer" placeholder="Sök spelare…">
+                    </div>
+                </div>
+                <div id="bonus-controls">
+                    <span id="bonus-status" class="save-status"></span>
+                </div>
+            </div>
+
+            <div id="submit-zone">
+                <div class="submit-summary">
+                    <div class="submit-headline">Skicka in dina tips</div>
+                    <div id="submit-status" class="submit-status">Dina ändringar autosparas men syns bara för dig tills du skickar in.</div>
+                    <div class="submit-hint">Du kan trycka på knappen så många gånger du vill ända fram till deadline — varje gång publiceras dina senaste tips på nytt.</div>
+                </div>
+                <div class="submit-action-wrap">
+                    <button type="button" id="submit-all" class="btn btn-primary">Skicka in mina tips</button>
+                    <div id="submit-popover" class="submit-popover" role="dialog" aria-label="Bekräfta inskickning" hidden>
+                        <h3 class="popover-title">Skicka in dina tips</h3>
+                        <p class="popover-text">Genom att skicka in godkänner du att lägga <strong>10 €</strong> i potten. Dina tips blir synliga för alla andra deltagare.</p>
+                        <div id="submit-error"></div>
+                        <div class="popover-actions">
+                            <button type="button" id="submit-cancel" class="btn btn-secondary">Avbryt</button>
+                            <button type="button" id="submit-confirm" class="btn btn-primary">Skicka in &amp; lägg 10 € i potten</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="danger-zone">
+                <div class="danger-text">Vill du börja om från noll? Du kan radera alla dina tips och lägga in dem igen.</div>
+                <div class="delete-action-wrap">
+                    <button type="button" id="delete-my-bets" class="btn-danger">Ta bort mina tips</button>
+                    <div id="delete-popover" class="delete-popover" role="dialog" aria-label="Bekräfta borttagning" hidden>
+                        <h3 class="popover-title">Ta bort dina tips</h3>
+                        <p class="popover-text">Detta tar bort alla tips för <strong id="delete-target-name"></strong> — både matchtips och bonustips. Det går inte att ångra.</p>
+                        <div id="delete-error"></div>
+                        <div class="popover-actions">
+                            <button type="button" id="delete-cancel" class="btn btn-secondary">Avbryt</button>
+                            <button type="button" id="delete-confirm" class="btn-danger">Ta bort allt</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="standings">
+    <div class="container">
+        <div class="section-header">
+            <h2>Ställning</h2>
+            <p>Uppdateras efter varje färdigspelad match. Vid lika antal poäng avgör antal exakta resultat, därefter antal rätta tecken.</p>
+        </div>
+        <div class="standings-wrap">
+            <table class="standings">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Spelare</th>
+                        <th class="num">Exakta</th>
+                        <th class="num">Tecken</th>
+                        <th class="num">Poäng</th>
+                    </tr>
+                </thead>
+                <tbody id="standings-body"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section id="results">
+    <div class="container">
+        <div class="section-header">
+            <h2>Senaste resultaten</h2>
+            <p>Pågående och färdigspelade matcher. Resultaten synkas automatiskt varje timme från football-data.org.</p>
+        </div>
+        <div id="results-list"></div>
+    </div>
+</section>
+
+<footer>
+    <p>Byggd för en intern lagtippning · Drivs av Supabase &amp; football-data.org</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
