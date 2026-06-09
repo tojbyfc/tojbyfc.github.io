@@ -23,7 +23,23 @@ if (!FOOTBALL_TOKEN || !SUPABASE_URL || !SUPABASE_KEY) {
 
 const COMPETITION = 'WC';
 
-const res = await fetch(`https://api.football-data.org/v4/competitions/${COMPETITION}/matches`, {
+// football-data.org occasionally drops the TLS connection mid-handshake
+// (UND_ERR_SOCKET "other side closed"). On an hourly cron a single blip
+// shouldn't fail the whole run, so retry transient network errors with backoff.
+async function fetchWithRetry(url, options, { retries = 4, baseDelayMs = 2000 } = {}) {
+    for (let attempt = 0; ; attempt++) {
+        try {
+            return await fetch(url, options);
+        } catch (err) {
+            if (attempt >= retries) throw err;
+            const delay = baseDelayMs * 2 ** attempt;
+            console.warn(`fetch failed (attempt ${attempt + 1}/${retries + 1}): ${err.cause?.code ?? err.message}. Retrying in ${delay}ms…`);
+            await new Promise(r => setTimeout(r, delay));
+        }
+    }
+}
+
+const res = await fetchWithRetry(`https://api.football-data.org/v4/competitions/${COMPETITION}/matches`, {
     headers: { 'X-Auth-Token': FOOTBALL_TOKEN },
 });
 logRateLimit(res);
