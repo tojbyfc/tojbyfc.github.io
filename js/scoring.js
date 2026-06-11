@@ -55,8 +55,9 @@ export function computeStandings({ matches, matchBets, bonusBets, settings }) {
         const b = bucket(bet.username, bet.display_name);
         b.matchPoints += pts;
         b.total += pts;
+        // An exact hit includes the correct sign, so it ticks both columns.
         if (pts === POINTS.SIGN + POINTS.EXACT) b.exactCount += 1;
-        else if (pts === POINTS.SIGN) b.signCount += 1;
+        if (pts >= POINTS.SIGN) b.signCount += 1;
     }
 
     for (const bb of bonusBets) {
