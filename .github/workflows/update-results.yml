@@ -13,13 +13,30 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      # The final is 19 July 2026; after end of July there is nothing left to
+      # sync, so scheduled runs become no-ops instead of burning API quota
+      # forever. Manual dispatch still runs regardless, e.g. for late result
+      # corrections.
+      - name: Check tournament window
+        id: window
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%Y%m%d)" -le 20260731 ]; then
+            echo "active=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Tournament is over — skipping scheduled sync."
+            echo "active=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/checkout@v5
+        if: steps.window.outputs.active == 'true'
       - uses: actions/setup-node@v5
+        if: steps.window.outputs.active == 'true'
         with:
           node-version: '22'
       - name: Install deps
-        run: npm install @supabase/supabase-js
+        if: steps.window.outputs.active == 'true'
+        run: npm ci
       - name: Sync match data
+        if: steps.window.outputs.active == 'true'
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

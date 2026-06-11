@@ -8,7 +8,6 @@
 // so the GitHub Action output tells you what happened.
 
 import { createClient } from '@supabase/supabase-js';
-import WebSocket from 'ws';
 import { loadEnv } from './_env.mjs';
 loadEnv();
 
@@ -79,7 +78,6 @@ const rows = matches.map(m => ({
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false },
-    realtime: { transport: WebSocket },   // Node < 22 has no native WebSocket
 });
 
 const { error } = await supabase.from('matches').upsert(rows, { onConflict: 'id' });

@@ -17,7 +17,6 @@ import { createClient } from '@supabase/supabase-js';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import WebSocket from 'ws';
 import { loadEnv } from './_env.mjs';
 loadEnv();
 
@@ -89,7 +88,6 @@ const rows = payload.matches.map(m => ({
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false },
-    realtime: { transport: WebSocket },   // Node < 22 has no native WebSocket
 });
 
 const { error } = await supabase.from('matches').upsert(rows, { onConflict: 'id' });

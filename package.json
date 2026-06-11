@@ -7,7 +7,6 @@
     "update": "node scripts/update-results.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.45.0",
-    "ws": "^8.18.0"
+    "@supabase/supabase-js": "^2.45.0"
   }
 }
