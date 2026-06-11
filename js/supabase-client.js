@@ -59,6 +59,21 @@ export async function loadAllBets() {
     return { matchBets: flatten(matchBets.data), bonusBets: flatten(bonusBets.data) };
 }
 
+// Pre-deadline participant list: who has submitted, without their picks.
+// Fails soft (empty list) so a missing view — schema not yet re-run — degrades
+// to "nobody yet" instead of an error banner.
+export async function loadSubmittedPlayers() {
+    const { data, error } = await supabase
+        .from('submitted_players')
+        .select('username, display_name')
+        .order('display_name');
+    if (error) {
+        console.warn('loadSubmittedPlayers failed:', error);
+        return [];
+    }
+    return data ?? [];
+}
+
 export async function verifyPassword(password) {
     const { data, error } = await supabase.rpc('verify_team_password', { supplied: password });
     if (error) throw error;

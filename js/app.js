@@ -2,6 +2,7 @@ import {
     loadSettings,
     loadMatches,
     loadAllBets,
+    loadSubmittedPlayers,
     loadBetsForPlayer,
     verifyPassword,
     setDisplayName,
@@ -24,6 +25,7 @@ const state = {
     matches: [],
     players: [],   // tournament squads, loaded from data/players.json
     allBets: { matchBets: [], bonusBets: [] },
+    submittedPlayers: [],   // who has submitted (no picks) — shown pre-deadline
     myBets: { matchBets: [], bonusBet: null, displayName: null },
     session: loadSession(),
 };
@@ -208,8 +210,9 @@ function attachTeamSearchSelects() {
         loadMatches(),
         loadAllBets(),
         loadPlayers(),
+        loadSubmittedPlayers(),   // fails soft — never rejects
     ]);
-    const [settingsR, matchesR, allBetsR, playersR] = results;
+    const [settingsR, matchesR, allBetsR, playersR, submittedR] = results;
     const failures = [];
     if (settingsR.status === 'fulfilled') state.settings = settingsR.value;
     else failures.push(['settings', settingsR.reason]);
@@ -219,6 +222,7 @@ function attachTeamSearchSelects() {
     else failures.push(['allBets', allBetsR.reason]);
     if (playersR.status === 'fulfilled') state.players = playersR.value;
     else failures.push(['players', playersR.reason]);
+    if (submittedR.status === 'fulfilled') state.submittedPlayers = submittedR.value;
 
     if (state.session?.username) {
         try {
@@ -245,9 +249,12 @@ function attachTeamSearchSelects() {
 
 async function refreshLive() {
     try {
-        const [matches, allBets] = await Promise.all([loadMatches(), loadAllBets()]);
+        const [matches, allBets, submitted] = await Promise.all([
+            loadMatches(), loadAllBets(), loadSubmittedPlayers(),
+        ]);
         state.matches = matches;
         state.allBets = allBets;
+        state.submittedPlayers = submitted;
         renderStandings();
         renderResults();
     } catch (err) {
@@ -474,6 +481,32 @@ function renderMatchRow(match, bet) {
 function renderStandings() {
     const tbody = document.getElementById('standings-body');
     tbody.innerHTML = '';
+
+    // Before the deadline, RLS hides everyone's picks, so there is no real
+    // standings data yet. Instead, list who has submitted — the picks stay
+    // secret but everyone can see who's in the pool.
+    if (!isLocked()) {
+        if (state.submittedPlayers.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="muted">Ingen har skickat in sina tips ännu.</td></tr>';
+            return;
+        }
+        const note = document.createElement('tr');
+        note.innerHTML = `<td colspan="5" class="muted">${state.submittedPlayers.length} deltagare har skickat in sina tips. Tipsen är hemliga och poängen visas när tippningen har låsts.</td>`;
+        tbody.appendChild(note);
+        for (const p of state.submittedPlayers) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="rank">✓</td>
+                <td>${escapeHtml(p.display_name || p.username)}</td>
+                <td class="num">–</td>
+                <td class="num">–</td>
+                <td class="num total">–</td>
+            `;
+            tbody.appendChild(tr);
+        }
+        return;
+    }
+
     const standings = computeStandings({
         matches: state.matches,
         matchBets: state.allBets.matchBets,
@@ -481,11 +514,7 @@ function renderStandings() {
         settings: state.settings,
     });
     if (standings.length === 0) {
-        // Before the deadline, RLS hides everyone's bets, so an empty list
-        // doesn't mean nobody has submitted — explain that instead.
-        tbody.innerHTML = isLocked()
-            ? '<tr><td colspan="5" class="muted">Inga tips lagda ännu.</td></tr>'
-            : '<tr><td colspan="5" class="muted">Alla tips är hemliga tills tippningen låses — ställningen visas här efter deadline.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="muted">Inga tips lagda ännu.</td></tr>';
         return;
     }
     for (let i = 0; i < standings.length; i++) {
@@ -562,7 +591,9 @@ deleteConfirmBtn.addEventListener('click', async (e) => {
         });
         clearSession();
         state.myBets = { matchBets: [], bonusBet: null, displayName: null };
-        state.allBets = await loadAllBets();
+        [state.allBets, state.submittedPlayers] = await Promise.all([
+            loadAllBets(), loadSubmittedPlayers(),
+        ]);
         closeDeletePopover();
         renderAll();
     } catch (err) {
@@ -825,8 +856,11 @@ submitConfirmBtn.addEventListener('click', async (e) => {
         for (const b of state.myBets.matchBets) b.is_submitted = true;
         if (state.myBets.bonusBet) state.myBets.bonusBet.is_submitted = true;
         closeSubmitPopover();
-        // Refresh public standings so the player sees their bets appear there.
-        state.allBets = await loadAllBets();
+        // Refresh the public data so the player sees themselves appear in the
+        // standings section (as a participant pre-deadline, with points after).
+        [state.allBets, state.submittedPlayers] = await Promise.all([
+            loadAllBets(), loadSubmittedPlayers(),
+        ]);
         renderSubmitStatus();
         renderStandings();
     } catch (err) {

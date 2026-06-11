@@ -339,6 +339,21 @@ create or replace view public_settings as
 
 grant select on public_settings to anon, authenticated;
 
+-- WHO has submitted — but not WHAT they picked. Powers the pre-deadline
+-- participant list in the standings section. Like public_settings, this view
+-- runs with owner privileges and so deliberately bypasses the RLS that hides
+-- bets before the deadline; the only fact it leaks is that a player has
+-- submitted something.
+create or replace view submitted_players as
+    select p.username, p.display_name
+    from players p
+    where exists (select 1 from bets b
+                  where b.username = p.username and b.is_submitted)
+       or exists (select 1 from bonus_bets bb
+                  where bb.username = p.username and bb.is_submitted);
+
+grant select on submitted_players to anon, authenticated;
+
 -- Allow anon to call the verification + RPC functions.
 grant execute on function verify_team_password(text) to anon, authenticated;
 grant execute on function deadline_passed() to anon, authenticated;

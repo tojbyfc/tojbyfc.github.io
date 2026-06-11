@@ -25,7 +25,8 @@ hour and standings update automatically.
   safe to ship to browsers. Row-level security keeps every bet unreadable until
   it is submitted *and* the deadline has passed — nobody can peek at (or copy)
   other players' picks beforehand, not even with direct API calls. Players read
-  their own drafts back through a password-checked RPC.
+  their own drafts back through a password-checked RPC, and a public view
+  (`submitted_players`) exposes *who* has submitted — but not what.
 - **Live scores** — a GitHub Action runs `scripts/update-results.mjs` hourly,
   pulling from football-data.org with a private API key (stored as a GitHub
   secret) and upserting into Supabase.
@@ -137,8 +138,9 @@ python3 -m http.server 8000
    that only you can see.
 4. Fill in champion / runner-up / top scorer. These autosave the same way.
 5. When you're ready, click **"Skicka in mina tips"** — a dialog confirms that
-   you agree to add 10 € to the pot. Submitted tips stay hidden from the other
-   players until the deadline passes; after that they appear in the standings.
+   you agree to add 10 € to the pot. Your name then shows up in the standings
+   section as a participant, but your actual picks stay hidden from the other
+   players until the deadline passes.
 6. Come back any time before the deadline to tweak picks and resubmit. Edits
    flip the affected bet back to draft until you submit again.
 7. Watch the standings during the tournament.
