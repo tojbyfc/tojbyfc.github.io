@@ -4,6 +4,7 @@ import {
     loadAllBets,
     loadSubmittedPlayers,
     loadBetsForPlayer,
+    playerExists,
     verifyPassword,
     setDisplayName,
     submitBet,
@@ -638,6 +639,10 @@ function renderResults() {
 // =============================================================================
 // Login / logout
 // =============================================================================
+// Username the player has confirmed as "yes, I'm new" — submitting the same
+// unknown username twice proceeds; changing it re-arms the warning.
+let confirmedNewUsername = null;
+
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     // Normalize to lowercase so the local cache key matches the DB (which
@@ -647,10 +652,28 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
     const errEl = document.getElementById('login-error');
     errEl.textContent = '';
+    errEl.classList.remove('warn');
     if (!username) { errEl.textContent = 'Vänligen ange ett användarnamn.'; return; }
     try {
         const ok = await verifyPassword(password);
         if (!ok) { errEl.textContent = 'Fel lösenord.'; return; }
+        // Warn when the username has no bets yet — most likely a typo by
+        // someone re-logging on a second device. Fails open: a hiccup in the
+        // existence check must not block login.
+        if (confirmedNewUsername !== username) {
+            let exists = true;
+            try {
+                exists = await playerExists(username);
+            } catch (err) {
+                console.warn('playerExists check failed:', err);
+            }
+            if (!exists) {
+                confirmedNewUsername = username;
+                errEl.classList.add('warn');
+                errEl.textContent = 'Okänt användarnamn — ny spelare? Har du redan tippat, kontrollera stavningen. Tryck "Logga in" igen för att fortsätta som ny spelare.';
+                return;
+            }
+        }
         saveSession({ username, password });
         state.myBets = await loadBetsForPlayer({ username, password });
         renderAll();

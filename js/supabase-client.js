@@ -74,6 +74,18 @@ export async function loadSubmittedPlayers() {
     return data ?? [];
 }
 
+// The players table is publicly readable, so login can warn when a username
+// doesn't exist yet — catches typos before they create a duplicate player.
+export async function playerExists(username) {
+    const { data, error } = await supabase
+        .from('players')
+        .select('username')
+        .eq('username', username)
+        .maybeSingle();
+    if (error) throw error;
+    return data !== null;
+}
+
 export async function verifyPassword(password) {
     const { data, error } = await supabase.rpc('verify_team_password', { supplied: password });
     if (error) throw error;
