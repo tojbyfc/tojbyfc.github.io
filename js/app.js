@@ -259,6 +259,7 @@ async function refreshLive() {
         state.submittedPlayers = submitted;
         renderStandings();
         renderResults();
+        renderUpcoming();
         renderTipsView();
     } catch (err) {
         console.warn('Background refresh failed:', err);
@@ -275,6 +276,7 @@ function renderAll() {
     renderSubmitStatus();
     renderStandings();
     renderResults();
+    renderUpcoming();
     renderTipsView();
 }
 
@@ -783,6 +785,48 @@ function renderResults() {
             <div class="result-teams">
                 <span class="team">${escapeHtml(m.home_team)}</span>
                 <span class="score">${m.home_score ?? '–'} : ${m.away_score ?? '–'}</span>
+                <span class="team">${escapeHtml(m.away_team)}</span>
+            </div>
+        `;
+        container.appendChild(card);
+    }
+}
+
+function renderUpcoming() {
+    const container = document.getElementById('upcoming-list');
+    container.innerHTML = '';
+    // Not finished, not live — i.e. still waiting for kickoff. A match that
+    // has kicked off but where the API still says TIMED (scores are delayed
+    // on the free tier) stays here, flagged "startad", instead of vanishing
+    // from both lists.
+    const upcoming = state.matches
+        .filter(m => m.status !== 'FINISHED' && !isLiveStatus(m.status))
+        .filter(m => m.home_team !== 'TBD' && m.away_team !== 'TBD')
+        .sort((a, b) => new Date(a.utc_kickoff) - new Date(b.utc_kickoff));
+    if (upcoming.length === 0) {
+        container.innerHTML = '<p class="muted">Inga kommande matcher på schemat.</p>';
+        return;
+    }
+
+    const now = new Date();
+    for (const m of upcoming.slice(0, 12)) {
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        const kickoff = new Date(m.utc_kickoff);
+        const date = kickoff.toLocaleDateString('sv-SE', {
+            weekday: 'short', day: 'numeric', month: 'short',
+        });
+        const time = kickoff.toLocaleTimeString('sv-SE', {
+            hour: '2-digit', minute: '2-digit',
+        });
+        const started = kickoff <= now;
+        card.innerHTML = `
+            <div class="result-meta">
+                ${escapeHtml(date)}${stageLabel(m) ? ' · ' + escapeHtml(stageLabel(m)) : ''}${started ? ' · startad' : ''}
+            </div>
+            <div class="result-teams">
+                <span class="team">${escapeHtml(m.home_team)}</span>
+                <span class="score upcoming-time">${escapeHtml(time)}</span>
                 <span class="team">${escapeHtml(m.away_team)}</span>
             </div>
         `;

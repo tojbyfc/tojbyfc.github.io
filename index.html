@@ -742,11 +742,21 @@
             .delete-popover::after { right: auto; left: 32px; }
         }
 
-        /* Results */
+        /* Results & upcoming matches */
         #results { background: var(--color-bg); }
-        #results-list {
+        #results-list, #upcoming-list {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1rem; max-width: 1000px; margin: 0 auto;
+        }
+        .results-subhead {
+            font-family: var(--font-display); font-size: 1.5rem; font-weight: 400;
+            color: var(--color-accent-deep);
+            max-width: 1000px; margin: 0 auto 1rem;
+            border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;
+        }
+        #results-list + .results-subhead { margin-top: 3rem; }
+        .result-teams .score.upcoming-time {
+            font-size: 1.15rem; color: var(--color-text-muted);
         }
         .result-card {
             background: var(--color-bg-alt); border: 1px solid var(--color-border);
@@ -917,7 +927,7 @@
             <li><a href="#rules">Regler</a></li>
             <li><a href="#betting">Tippa</a></li>
             <li><a href="#standings">Ställning</a></li>
-            <li><a href="#results">Resultat</a></li>
+            <li><a href="#results">Matcher</a></li>
             <li><a href="#all-tips">Allas tips</a></li>
         </ul>
     </div>
@@ -1214,10 +1224,13 @@
 <section id="results">
     <div class="container">
         <div class="section-header">
-            <h2>Senaste resultaten</h2>
-            <p>Pågående och färdigspelade matcher. Resultaten synkas automatiskt var 15:e minut från football-data.org.</p>
+            <h2>Matcher</h2>
+            <p>Senaste resultaten och kommande matcher. Resultaten synkas automatiskt var 15:e minut från football-data.org.</p>
         </div>
+        <h3 class="results-subhead">Senaste resultaten</h3>
         <div id="results-list"></div>
+        <h3 class="results-subhead">Kommande matcher</h3>
+        <div id="upcoming-list"></div>
     </div>
 </section>
 
