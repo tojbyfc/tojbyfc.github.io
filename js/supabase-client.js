@@ -23,26 +23,26 @@ export async function loadMatches() {
     return data ?? [];
 }
 
-export async function loadBetsForPlayer(username) {
-    const key = username.toLowerCase().trim();
-    const [player, matchBets, bonusBet] = await Promise.all([
-        supabase.from('players').select('username, display_name').eq('username', key).maybeSingle(),
-        supabase.from('bets').select('*').eq('username', key),
-        supabase.from('bonus_bets').select('*').eq('username', key).maybeSingle(),
-    ]);
-    if (player.error) throw player.error;
-    if (matchBets.error) throw matchBets.error;
-    if (bonusBet.error) throw bonusBet.error;
+// Draft bets are hidden by RLS, so a player's own bets (drafts included) are
+// fetched through the password-checked get_my_bets() RPC instead of plain
+// selects.
+export async function loadBetsForPlayer({ username, password }) {
+    const { data, error } = await supabase.rpc('get_my_bets', {
+        p_password: password,
+        p_username: username,
+    });
+    if (error) throw error;
     return {
-        matchBets: matchBets.data ?? [],
-        bonusBet: bonusBet.data,
-        displayName: player.data?.display_name ?? null,
+        matchBets: data?.match_bets ?? [],
+        bonusBet: data?.bonus_bet ?? null,
+        displayName: data?.display_name ?? null,
     };
 }
 
 export async function loadAllBets() {
-    // Public standings see *submitted* bets only. Drafts (autosaved-but-not-yet-
-    // submitted) stay private to their owner until they click "Submit my bets".
+    // Public standings see *submitted* bets only, and RLS additionally hides
+    // everything until the deadline has passed — before that this returns
+    // empty. The .eq filter is kept as an explicit statement of intent.
     // We join `players` so each bet carries the human-readable display_name —
     // the standings group by username but render display_name.
     const [matchBets, bonusBets] = await Promise.all([

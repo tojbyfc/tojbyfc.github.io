@@ -65,6 +65,12 @@ create table if not exists bets (
     primary key (username, match_id)
 );
 
+-- Sanity cap on score predictions, matching the UI's max="20". Added via
+-- drop/add so re-running this script upgrades existing databases too.
+alter table bets drop constraint if exists bets_score_range;
+alter table bets add constraint bets_score_range
+    check (home_score between 0 and 20 and away_score between 0 and 20);
+
 -- Tournament-wide bonus picks: champion, runner-up, top scorer.
 create table if not exists bonus_bets (
     username        text primary key references players(username) on delete cascade,
@@ -224,6 +230,34 @@ begin
 end;
 $$;
 
+-- Return a player's own bets — drafts included — plus their display name.
+-- This is the only way to read draft bets: the RLS read policies below hide
+-- anything with is_submitted = false (and everything before the deadline), so
+-- players reload their own picks through this password-checked RPC instead of
+-- selecting from the tables directly.
+create or replace function get_my_bets(
+    p_password      text,
+    p_username      text
+) returns jsonb
+language plpgsql stable security definer
+as $$
+declare
+    v_username text := lower(trim(p_username));
+begin
+    if not verify_team_password(p_password) then
+        raise exception 'invalid team password';
+    end if;
+
+    return jsonb_build_object(
+        'display_name', (select display_name from players where username = v_username),
+        'match_bets', coalesce(
+            (select jsonb_agg(to_jsonb(b)) from bets b where b.username = v_username),
+            '[]'::jsonb),
+        'bonus_bet', (select to_jsonb(bb) from bonus_bets bb where bb.username = v_username)
+    );
+end;
+$$;
+
 -- Publish all of a player's draft bets to the public standings. Refuses if
 -- the player hasn't set a display name yet — that's how we enforce the
 -- "must have a real name before going public" rule. Idempotent: safe to call
@@ -266,9 +300,12 @@ $$;
 -- =============================================================================
 -- Row-Level Security
 -- =============================================================================
--- Everyone can READ matches, bets, bonus_bets, players, and the non-sensitive
--- bits of settings (deadline, final results) — but the team_password column is
--- NOT exposed because we use a view to filter it out. Writes go only through
+-- Everyone can READ matches, players, and the non-sensitive bits of settings
+-- (deadline, final results) — the team_password column is NOT exposed because
+-- we use a view to filter it out. Bets and bonus bets become readable only
+-- once they are submitted AND the deadline has passed: before that, nobody can
+-- peek at (or copy) other players' picks through the public anon key. Players
+-- read their own bets back via the get_my_bets() RPC. Writes go only through
 -- the SECURITY DEFINER functions above, which check the password.
 
 alter table settings    enable row level security;
@@ -285,10 +322,12 @@ drop policy if exists players_read on players;
 create policy players_read on players for select using (true);
 
 drop policy if exists bets_read on bets;
-create policy bets_read on bets for select using (true);
+create policy bets_read on bets for select
+    using (is_submitted and deadline_passed());
 
 drop policy if exists bonus_bets_read on bonus_bets;
-create policy bonus_bets_read on bonus_bets for select using (true);
+create policy bonus_bets_read on bonus_bets for select
+    using (is_submitted and deadline_passed());
 
 -- settings: no direct anon access. Frontend reads via the view below.
 drop policy if exists settings_read on settings;
@@ -307,6 +346,7 @@ grant execute on function set_display_name(text, text, text) to anon, authentica
 grant execute on function submit_bet(text, text, bigint, text, int, int) to anon, authenticated;
 grant execute on function submit_bonus_bet(text, text, text, text, text) to anon, authenticated;
 grant execute on function submit_all_bets(text, text) to anon, authenticated;
+grant execute on function get_my_bets(text, text) to anon, authenticated;
 grant execute on function delete_player(text, text) to anon, authenticated;
 
 -- =============================================================================

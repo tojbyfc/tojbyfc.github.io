@@ -222,7 +222,7 @@ function attachTeamSearchSelects() {
 
     if (state.session?.username) {
         try {
-            state.myBets = await loadBetsForPlayer(state.session.username);
+            state.myBets = await loadBetsForPlayer(state.session);
         } catch (err) {
             failures.push(['myBets', err]);
         }
@@ -297,8 +297,15 @@ function startCountdown() {
         if (!state.settings) return;
         const ms = new Date(state.settings.deadline) - new Date();
         if (ms <= 0) {
-            el.textContent = 'Tippningen är låst';
-            el.classList.add('locked');
+            // First tick past the deadline: also disable the bet form, so a
+            // tab left open across the deadline can't keep editing (the server
+            // rejects those saves anyway, but the UI should say why).
+            if (!el.classList.contains('locked')) {
+                el.textContent = 'Tippningen är låst';
+                el.classList.add('locked');
+                renderBetForm();
+                renderSubmitStatus();
+            }
             return;
         }
         const days = Math.floor(ms / 86_400_000);
@@ -474,7 +481,11 @@ function renderStandings() {
         settings: state.settings,
     });
     if (standings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="muted">Inga tips lagda ännu.</td></tr>';
+        // Before the deadline, RLS hides everyone's bets, so an empty list
+        // doesn't mean nobody has submitted — explain that instead.
+        tbody.innerHTML = isLocked()
+            ? '<tr><td colspan="5" class="muted">Inga tips lagda ännu.</td></tr>'
+            : '<tr><td colspan="5" class="muted">Alla tips är hemliga tills tippningen låses — ställningen visas här efter deadline.</td></tr>';
         return;
     }
     for (let i = 0; i < standings.length; i++) {
@@ -610,7 +621,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         const ok = await verifyPassword(password);
         if (!ok) { errEl.textContent = 'Fel lösenord.'; return; }
         saveSession({ username, password });
-        state.myBets = await loadBetsForPlayer(username);
+        state.myBets = await loadBetsForPlayer({ username, password });
         renderAll();
     } catch (err) {
         errEl.textContent = err.message || 'Inloggning misslyckades.';

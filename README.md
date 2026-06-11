@@ -22,7 +22,10 @@ hour and standings update automatically.
 - **Database + auth** — Supabase (Postgres). The team password is bcrypt-hashed
   in the `settings` table; writes go through `SECURITY DEFINER` Postgres
   functions that verify the password server-side, so the public anon key is
-  safe to ship to browsers.
+  safe to ship to browsers. Row-level security keeps every bet unreadable until
+  it is submitted *and* the deadline has passed — nobody can peek at (or copy)
+  other players' picks beforehand, not even with direct API calls. Players read
+  their own drafts back through a password-checked RPC.
 - **Live scores** — a GitHub Action runs `scripts/update-results.mjs` hourly,
   pulling from football-data.org with a private API key (stored as a GitHub
   secret) and upserting into Supabase.
@@ -134,8 +137,8 @@ python3 -m http.server 8000
    that only you can see.
 4. Fill in champion / runner-up / top scorer. These autosave the same way.
 5. When you're ready, click **"Skicka in mina tips"** — a dialog confirms that
-   you agree to add 10 € to the pot, and your tips become visible to everyone
-   in the standings.
+   you agree to add 10 € to the pot. Submitted tips stay hidden from the other
+   players until the deadline passes; after that they appear in the standings.
 6. Come back any time before the deadline to tweak picks and resubmit. Edits
    flip the affected bet back to draft until you submit again.
 7. Watch the standings during the tournament.
