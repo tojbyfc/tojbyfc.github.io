@@ -62,31 +62,106 @@ function logRateLimit(response) {
     }
 }
 
-const rows = matches.map(m => ({
-    id: m.id,
-    utc_kickoff: m.utcDate,
-    matchday: m.matchday,
-    stage: m.stage,
-    group_name: m.group ? m.group.replace(/^GROUP_/, '') : null,
-    home_team: m.homeTeam?.name ?? 'TBD',
-    away_team: m.awayTeam?.name ?? 'TBD',
-    home_score: m.score?.fullTime?.home ?? null,
-    away_score: m.score?.fullTime?.away ?? null,
-    status: m.status,
-    updated_at: new Date().toISOString(),
-}));
+function toRow(m) {
+    return {
+        id: m.id,
+        utc_kickoff: m.utcDate,
+        matchday: m.matchday,
+        stage: m.stage,
+        group_name: m.group ? m.group.replace(/^GROUP_/, '') : null,
+        home_team: m.homeTeam?.name ?? 'TBD',
+        away_team: m.awayTeam?.name ?? 'TBD',
+        home_score: m.score?.fullTime?.home ?? null,
+        away_score: m.score?.fullTime?.away ?? null,
+        status: m.status,
+        updated_at: new Date().toISOString(),
+    };
+}
+
+const rows = matches.map(toRow);
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false },
 });
 
-const { error } = await supabase.from('matches').upsert(rows, { onConflict: 'id' });
+// football-data.org's free tier is served by inconsistent backends: the same
+// request for a finished match randomly returns either the final score or a
+// stale TIMED/null snapshot (observed 14 h after full time). So for matches
+// that kicked off recently but lack a settled score, poll /v4/matches/{id} a
+// few times and accept only a response that carries real information — a
+// score, or a live status. A scoreless FINISHED is the stale node talking;
+// writing it would put a "– : –" card in the results list.
+const { data: existing, error: selectError } = await supabase
+    .from('matches')
+    .select('id, home_score, away_score, status');
+if (selectError) {
+    console.error('Supabase select failed:', selectError);
+    process.exit(1);
+}
+const existingById = new Map((existing ?? []).map(r => [r.id, r]));
+
+const isSettled = r => r != null && r.status === 'FINISHED' && r.home_score != null;
+const now = Date.now();
+const FETCH_WINDOW_MS = 4 * 24 * 3600 * 1000;
+const MAX_SINGLE_FETCHES = 8;   // stay inside the 10 req/min free-tier budget
+
+const stale = rows.filter(r => {
+    const kickoff = new Date(r.utc_kickoff).getTime();
+    return kickoff <= now && kickoff > now - FETCH_WINDOW_MS
+        && !isSettled(r) && !isSettled(existingById.get(r.id));
+});
+if (stale.length > MAX_SINGLE_FETCHES) {
+    console.warn(`${stale.length} matches need a single-match refetch; capping at ${MAX_SINGLE_FETCHES} this run.`);
+}
+
+const LIVE_STATUSES = new Set(['IN_PLAY', 'PAUSED', 'EXTRA_TIME', 'PENALTY_SHOOTOUT']);
+const ATTEMPTS_PER_MATCH = 4;
+
+const rowsById = new Map(rows.map(r => [r.id, r]));
+let rateBudgetLeft = true;
+for (const r of stale.slice(0, MAX_SINGLE_FETCHES)) {
+    if (!rateBudgetLeft) break;
+    for (let attempt = 1; attempt <= ATTEMPTS_PER_MATCH; attempt++) {
+        const singleRes = await fetchWithRetry(`https://api.football-data.org/v4/matches/${r.id}`, {
+            headers: { 'X-Auth-Token': FOOTBALL_TOKEN },
+        });
+        if (parseInt(singleRes.headers.get('X-Requests-Available-Minute') ?? '99', 10) <= 2) {
+            console.warn('Rate limit nearly exhausted — stopping single-match refetches for this run.');
+            rateBudgetLeft = false;
+        }
+        if (!singleRes.ok) {
+            console.warn(`Single-match fetch for ${r.id} returned ${singleRes.status} — keeping bulk data.`);
+            break;
+        }
+        const body = await singleRes.json();
+        const fresh = toRow(body.match ?? body);   // v4 returns the match at top level
+        if (fresh.home_score != null || LIVE_STATUSES.has(fresh.status)) {
+            rowsById.set(fresh.id, fresh);
+            console.log(`Refetched ${fresh.home_team}–${fresh.away_team}: ${fresh.status} ${fresh.home_score ?? '–'}:${fresh.away_score ?? '–'} (attempt ${attempt})`);
+            break;
+        }
+        console.log(`Refetch ${r.home_team}–${r.away_team} attempt ${attempt}: stale node (${fresh.status}, no score)`);
+        if (!rateBudgetLeft) break;
+        await new Promise(res => setTimeout(res, 700));
+    }
+}
+
+// Never let the stale bulk snapshot wipe a score we already have.
+const finalRows = [...rowsById.values()].map(r => {
+    const db = existingById.get(r.id);
+    if (isSettled(db) && r.home_score == null) {
+        return { ...r, home_score: db.home_score, away_score: db.away_score, status: db.status };
+    }
+    return r;
+});
+
+const { error } = await supabase.from('matches').upsert(finalRows, { onConflict: 'id' });
 if (error) {
     console.error('Supabase upsert failed:', error);
     process.exit(1);
 }
 
-const counts = rows.reduce((acc, r) => {
+const counts = finalRows.reduce((acc, r) => {
     acc[r.status] = (acc[r.status] || 0) + 1;
     return acc;
 }, {});

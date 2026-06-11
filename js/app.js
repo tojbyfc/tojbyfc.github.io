@@ -759,10 +759,18 @@ randomizeConfirmBtn.addEventListener('click', async (e) => {
     }
 });
 
+// football-data.org's free tier randomly serves stale data: a finished match
+// can report FINISHED with null scores (or even regress to TIMED) for hours
+// after full time. A scoreless FINISHED is not a presentable result — treat it
+// as "not finished yet" everywhere instead of rendering a "– : –" card.
+function isFinishedWithResult(m) {
+    return m.status === 'FINISHED' && m.home_score != null && m.away_score != null;
+}
+
 function renderResults() {
     const container = document.getElementById('results-list');
     container.innerHTML = '';
-    const finished = state.matches.filter(m => m.status === 'FINISHED' || isLiveStatus(m.status));
+    const finished = state.matches.filter(m => isFinishedWithResult(m) || isLiveStatus(m.status));
     if (finished.length === 0) {
         container.innerHTML = '<p class="muted">Inga matcher spelade ännu.</p>';
         return;
@@ -795,12 +803,12 @@ function renderResults() {
 function renderUpcoming() {
     const container = document.getElementById('upcoming-list');
     container.innerHTML = '';
-    // Not finished, not live — i.e. still waiting for kickoff. A match that
-    // has kicked off but where the API still says TIMED (scores are delayed
-    // on the free tier) stays here, flagged "startad", instead of vanishing
-    // from both lists.
+    // Everything that doesn't yet have a presentable result and isn't live.
+    // A match that has kicked off but where the API still reports TIMED or a
+    // scoreless FINISHED (scores are delayed on the free tier) stays here,
+    // flagged "startad", instead of vanishing from both lists.
     const upcoming = state.matches
-        .filter(m => m.status !== 'FINISHED' && !isLiveStatus(m.status))
+        .filter(m => !isFinishedWithResult(m) && !isLiveStatus(m.status))
         .filter(m => m.home_team !== 'TBD' && m.away_team !== 'TBD')
         .sort((a, b) => new Date(a.utc_kickoff) - new Date(b.utc_kickoff));
     if (upcoming.length === 0) {
@@ -963,7 +971,7 @@ function renderTipsPerMatch(view) {
         .filter(b => b.match_id === match.id)
         .sort((a, b) => (a.display_name || a.username).localeCompare(b.display_name || b.username, 'sv'));
 
-    const finished = match.status === 'FINISHED';
+    const finished = isFinishedWithResult(match);
     const live = isLiveStatus(match.status);
     const resultText = (finished || live)
         ? `${match.home_score ?? '–'} : ${match.away_score ?? '–'}${live ? (match.status === 'PAUSED' ? ' (paus)' : ' (pågår)') : ''}`
@@ -1024,7 +1032,7 @@ function renderTipsPerPlayer(view) {
     let totalPts = 0;
     const rows = bets.map(b => {
         const m = matchesById.get(b.match_id);
-        const finished = m.status === 'FINISHED';
+        const finished = isFinishedWithResult(m);
         const pts = finished ? scoreMatchBet(b, m) : null;
         if (pts) totalPts += pts;
         const kickoff = new Date(m.utc_kickoff).toLocaleString('sv-SE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
