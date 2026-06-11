@@ -39,6 +39,22 @@ export async function loadBetsForPlayer({ username, password }) {
     };
 }
 
+// PostgREST caps every response at 1000 rows; with 27 players × 72 matches the
+// bets table blows past that, so page through with .range() until a short page.
+// The order() columns make pagination deterministic.
+async function fetchAllRows(table, select, orderCols) {
+    const PAGE = 1000;
+    const all = [];
+    for (let from = 0; ; from += PAGE) {
+        let q = supabase.from(table).select(select).eq('is_submitted', true).range(from, from + PAGE - 1);
+        for (const col of orderCols) q = q.order(col, { ascending: true });
+        const { data, error } = await q;
+        if (error) throw error;
+        all.push(...(data ?? []));
+        if (!data || data.length < PAGE) return all;
+    }
+}
+
 export async function loadAllBets() {
     // Public standings see *submitted* bets only, and RLS additionally hides
     // everything until the deadline has passed — before that this returns
@@ -46,17 +62,15 @@ export async function loadAllBets() {
     // We join `players` so each bet carries the human-readable display_name —
     // the standings group by username but render display_name.
     const [matchBets, bonusBets] = await Promise.all([
-        supabase.from('bets').select('*, players(display_name)').eq('is_submitted', true),
-        supabase.from('bonus_bets').select('*, players(display_name)').eq('is_submitted', true),
+        fetchAllRows('bets', '*, players(display_name)', ['username', 'match_id']),
+        fetchAllRows('bonus_bets', '*, players(display_name)', ['username']),
     ]);
-    if (matchBets.error) throw matchBets.error;
-    if (bonusBets.error) throw bonusBets.error;
-    const flatten = (rows) => (rows ?? []).map(r => ({
+    const flatten = (rows) => rows.map(r => ({
         ...r,
         display_name: r.players?.display_name ?? null,
         players: undefined,
     }));
-    return { matchBets: flatten(matchBets.data), bonusBets: flatten(bonusBets.data) };
+    return { matchBets: flatten(matchBets), bonusBets: flatten(bonusBets) };
 }
 
 // Pre-deadline participant list: who has submitted, without their picks.

@@ -773,6 +773,111 @@
         }
         .muted { color: var(--color-text-muted); text-align: center; font-style: italic; }
 
+        /* Allas tips */
+        #all-tips { background: var(--color-bg-alt); }
+        .tips-wrap { max-width: 860px; margin: 0 auto; }
+        .tips-controls {
+            display: flex; gap: 1rem; margin-bottom: 1.5rem;
+            flex-wrap: wrap; align-items: center;
+        }
+        .tips-toggle {
+            display: inline-flex; border: 1.5px solid var(--color-border);
+            border-radius: 10px; overflow: hidden; background: var(--color-bg);
+            flex-shrink: 0;
+        }
+        .tips-mode {
+            padding: 0.6rem 1.2rem; border: none; background: transparent;
+            font-family: inherit; font-size: 0.95rem; font-weight: 500;
+            color: var(--color-text-muted); cursor: pointer; transition: all 0.15s ease;
+        }
+        .tips-mode:hover:not(.active) { color: var(--color-accent); }
+        .tips-mode.active { background: var(--color-accent); color: white; }
+        .tips-controls .search-select-wrap { flex: 1; min-width: 240px; }
+        #tips-search {
+            width: 100%; padding: 0.6rem 0.9rem;
+            border: 1.5px solid var(--color-border); border-radius: 10px;
+            font-family: inherit; font-size: 1rem; background: var(--color-bg);
+        }
+        #tips-search:focus { outline: none; border-color: var(--color-accent); }
+        .tips-card {
+            background: var(--color-bg); border: 1px solid var(--color-border);
+            border-radius: 16px; overflow: hidden;
+        }
+        .tips-card-head {
+            padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg-alt);
+            display: flex; justify-content: space-between; align-items: baseline;
+            gap: 1rem; flex-wrap: wrap;
+        }
+        .tips-card-head h3 {
+            font-family: var(--font-display); font-size: 1.6rem; font-weight: 400;
+        }
+        .tips-card-head .meta { color: var(--color-text-muted); font-size: 0.9rem; }
+        .tips-card-head .meta strong {
+            font-family: var(--font-display); font-size: 1.3rem; font-weight: 400;
+            color: var(--color-accent-deep);
+        }
+        .bonus-chips {
+            display: flex; gap: 0.5rem; flex-wrap: wrap;
+            padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-border);
+        }
+        .bonus-chip {
+            background: var(--color-highlight); color: var(--color-accent-deep);
+            padding: 0.25rem 0.8rem; border-radius: 100px;
+            font-size: 0.85rem; font-weight: 500;
+        }
+        .bonus-chip small {
+            font-weight: 400; opacity: 0.75; margin-right: 0.3em;
+            text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.7rem;
+        }
+        .dist-wrap { padding: 1rem 1.5rem 0.75rem; border-bottom: 1px solid var(--color-border); }
+        .dist-bar {
+            display: flex; height: 10px; border-radius: 100px; overflow: hidden;
+            background: var(--color-border);
+        }
+        .dist-bar .d1 { background: var(--color-accent); }
+        .dist-bar .dx { background: var(--color-warn); }
+        .dist-bar .d2 { background: var(--color-accent-deep); }
+        .dist-legend {
+            display: flex; gap: 1.25rem; margin-top: 0.5rem;
+            font-size: 0.85rem; color: var(--color-text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+        .dist-legend .dot {
+            display: inline-block; width: 8px; height: 8px;
+            border-radius: 50%; margin-right: 0.35em; vertical-align: middle;
+        }
+        table.tips-table { width: 100%; border-collapse: collapse; }
+        table.tips-table th {
+            text-align: left; padding: 0.8rem 1.5rem;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--color-text-muted); font-weight: 600;
+            border-bottom: 1px solid var(--color-border);
+        }
+        table.tips-table td {
+            padding: 0.7rem 1.5rem; border-bottom: 1px solid var(--color-border);
+            font-variant-numeric: tabular-nums;
+        }
+        table.tips-table tr:last-child td { border-bottom: none; }
+        table.tips-table .num { text-align: right; }
+        table.tips-table th.num { text-align: right; }
+        table.tips-table .tip-score { font-weight: 600; white-space: nowrap; }
+        table.tips-table .tip-sign { color: var(--color-text-muted); }
+        table.tips-table .sub {
+            display: block; font-size: 0.8rem; color: var(--color-text-muted);
+        }
+        table.tips-table tr.hit-exact td { background: var(--color-highlight); }
+        table.tips-table .pts { font-weight: 600; color: var(--color-accent-deep); }
+        table.tips-table .pts.zero { font-weight: 400; color: var(--color-text-muted); }
+        .tips-empty {
+            padding: 2.5rem 1.5rem; text-align: center;
+            color: var(--color-text-muted); font-style: italic;
+        }
+        @media (max-width: 600px) {
+            .tips-card-head, .bonus-chips, .dist-wrap { padding-left: 1rem; padding-right: 1rem; }
+            table.tips-table th, table.tips-table td { padding-left: 1rem; padding-right: 1rem; }
+        }
+
         /* Footer */
         footer {
             background: var(--color-text); color: white;
@@ -813,6 +918,7 @@
             <li><a href="#betting">Tippa</a></li>
             <li><a href="#standings">Ställning</a></li>
             <li><a href="#results">Resultat</a></li>
+            <li><a href="#all-tips">Allas tips</a></li>
         </ul>
     </div>
 </nav>
@@ -1109,9 +1215,28 @@
     <div class="container">
         <div class="section-header">
             <h2>Senaste resultaten</h2>
-            <p>Pågående och färdigspelade matcher. Resultaten synkas automatiskt varje timme från football-data.org.</p>
+            <p>Pågående och färdigspelade matcher. Resultaten synkas automatiskt var 15:e minut från football-data.org.</p>
         </div>
         <div id="results-list"></div>
+    </div>
+</section>
+
+<section id="all-tips">
+    <div class="container">
+        <div class="section-header">
+            <h2>Allas tips</h2>
+            <p>Efter deadline är alla inskickade tips offentliga. Bläddra en spelares hela tipsrad, eller se vad alla tippade på en enskild match.</p>
+        </div>
+        <div class="tips-wrap">
+            <div class="tips-controls">
+                <div class="tips-toggle" role="tablist">
+                    <button type="button" id="tips-mode-match" class="tips-mode active">Per match</button>
+                    <button type="button" id="tips-mode-player" class="tips-mode">Per spelare</button>
+                </div>
+                <input type="text" id="tips-search" placeholder="Sök match…">
+            </div>
+            <div id="tips-view"></div>
+        </div>
     </div>
 </section>
 

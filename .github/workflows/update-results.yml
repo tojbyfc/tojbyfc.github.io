@@ -1,12 +1,13 @@
 name: Update results
 
-# Runs hourly during the tournament window and on manual dispatch.
-# Schedule cost: GitHub Actions is free on public repos, and 24 runs/day fits
-# inside the free quota on private repos too.
+# Runs every 15 minutes during the tournament window and on manual dispatch,
+# so live scores on the site lag at most a quarter hour. Schedule cost:
+# GitHub Actions is free on public repos (96 short runs/day is nothing), and
+# football-data.org's free tier (10 calls/min) doesn't notice one call/15 min.
 
 on:
   schedule:
-    - cron: '7 * * * *'   # 7 past the hour — avoid the busy top-of-hour
+    - cron: '7,22,37,52 * * * *'   # off-minutes — avoid the busy :00/:15/:30/:45
   workflow_dispatch:
 
 jobs:

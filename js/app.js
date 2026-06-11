@@ -197,6 +197,7 @@ function attachTeamSearchSelects() {
     attachSearchSelect(document.getElementById('bonus-champion'), teamOptions);
     attachSearchSelect(document.getElementById('bonus-runner-up'), teamOptions);
     attachSearchSelect(document.getElementById('bonus-top-scorer'), playerOptions);
+    attachSearchSelect(document.getElementById('tips-search'), tipsOptions);
 }
 
 // =============================================================================
@@ -258,6 +259,7 @@ async function refreshLive() {
         state.submittedPlayers = submitted;
         renderStandings();
         renderResults();
+        renderTipsView();
     } catch (err) {
         console.warn('Background refresh failed:', err);
     }
@@ -273,6 +275,7 @@ function renderAll() {
     renderSubmitStatus();
     renderStandings();
     renderResults();
+    renderTipsView();
 }
 
 function renderSession() {
@@ -757,7 +760,7 @@ randomizeConfirmBtn.addEventListener('click', async (e) => {
 function renderResults() {
     const container = document.getElementById('results-list');
     container.innerHTML = '';
-    const finished = state.matches.filter(m => m.status === 'FINISHED' || m.status === 'IN_PLAY');
+    const finished = state.matches.filter(m => m.status === 'FINISHED' || isLiveStatus(m.status));
     if (finished.length === 0) {
         container.innerHTML = '<p class="muted">Inga matcher spelade ännu.</p>';
         return;
@@ -771,11 +774,11 @@ function renderResults() {
         const date = new Date(m.utc_kickoff).toLocaleString('sv-SE', {
             month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
         });
-        const live = m.status === 'IN_PLAY';
+        const live = isLiveStatus(m.status);
         card.innerHTML = `
             <div class="result-meta">
-                ${escapeHtml(date)}${m.group_name ? ' · Grupp ' + escapeHtml(m.group_name) : ''}
-                ${live ? '<span class="live-pill">DIREKT</span>' : ''}
+                ${escapeHtml(date)}${stageLabel(m) ? ' · ' + escapeHtml(stageLabel(m)) : ''}
+                ${live ? `<span class="live-pill">${m.status === 'PAUSED' ? 'PAUS' : 'DIREKT'}</span>` : ''}
             </div>
             <div class="result-teams">
                 <span class="team">${escapeHtml(m.home_team)}</span>
@@ -784,6 +787,259 @@ function renderResults() {
             </div>
         `;
         container.appendChild(card);
+    }
+}
+
+// =============================================================================
+// Allas tips — post-deadline browsing of everyone's published bets.
+// One shared typeahead serves both modes; tipsOptions() switches the option
+// list on tipsState.mode. Selection is stored by stable key (match id /
+// username) so background refreshes re-render the same view.
+// =============================================================================
+const tipsState = { mode: 'match', matchId: null, username: null };
+
+// football-data.org reports several "match is happening right now" statuses:
+// plain IN_PLAY, PAUSED during half-time, and EXTRA_TIME / PENALTY_SHOOTOUT in
+// the knockouts. Treat them all as live, or matches vanish during the break.
+function isLiveStatus(s) {
+    return s === 'IN_PLAY' || s === 'PAUSED' || s === 'EXTRA_TIME' || s === 'PENALTY_SHOOTOUT';
+}
+
+const STAGE_LABELS = {
+    LAST_32: 'Sextondelsfinal',
+    LAST_16: 'Åttondelsfinal',
+    QUARTER_FINALS: 'Kvartsfinal',
+    SEMI_FINALS: 'Semifinal',
+    THIRD_PLACE: 'Bronsmatch',
+    FINAL: 'Final',
+};
+
+function stageLabel(m) {
+    if (m.group_name) return `Grupp ${m.group_name}`;
+    return STAGE_LABELS[m.stage] ?? '';
+}
+
+function bettableMatches() {
+    return state.matches.filter(m => m.home_team !== 'TBD' && m.away_team !== 'TBD');
+}
+
+// Matches worth browsing in the per-match view: only those someone actually
+// bet on. Knockout fixtures get real team names once the bracket is drawn,
+// but betting closed before that — showing them would just be empty tables.
+function tipsSelectableMatches() {
+    const withBets = new Set(state.allBets.matchBets.map(b => b.match_id));
+    return bettableMatches().filter(m => withBets.has(m.id));
+}
+
+function tipsMatchLabel(m) {
+    const d = new Date(m.utc_kickoff).toLocaleString('sv-SE', {
+        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+    });
+    return `${m.home_team} – ${m.away_team} · ${d}`;
+}
+
+function tipsPlayers() {
+    const map = new Map();
+    for (const b of [...state.allBets.matchBets, ...state.allBets.bonusBets]) {
+        if (!map.has(b.username)) map.set(b.username, b.display_name || b.username);
+    }
+    return [...map.entries()]
+        .map(([username, display]) => ({ username, display }))
+        .sort((a, b) => a.display.localeCompare(b.display, 'sv'));
+}
+
+function tipsOptions() {
+    if (tipsState.mode === 'player') {
+        return tipsPlayers().map(p => ({
+            label: p.display, value: p.display,
+            search: `${p.display} ${p.username}`.toLowerCase(),
+        }));
+    }
+    return tipsSelectableMatches().map(m => ({
+        label: tipsMatchLabel(m), value: tipsMatchLabel(m),
+        hint: stageLabel(m),
+        search: `${m.home_team} ${m.away_team}`.toLowerCase(),
+    }));
+}
+
+function resolveTipsSelection(value) {
+    if (tipsState.mode === 'player') {
+        const p = tipsPlayers().find(p => p.display === value);
+        if (p) tipsState.username = p.username;
+    } else {
+        const m = tipsSelectableMatches().find(m => tipsMatchLabel(m) === value);
+        if (m) tipsState.matchId = m.id;
+    }
+}
+
+// Default to the most interesting match: the latest one that has started,
+// otherwise the next one to kick off.
+function defaultTipsMatch() {
+    const ms = tipsSelectableMatches();
+    if (ms.length === 0) return null;
+    const now = new Date();
+    const started = ms.filter(m => new Date(m.utc_kickoff) <= now);
+    return started.length > 0 ? started[started.length - 1] : ms[0];
+}
+
+function renderTipsView() {
+    const view = document.getElementById('tips-view');
+    if (!view) return;
+
+    if (!isLocked()) {
+        view.innerHTML = '<div class="tips-card"><div class="tips-empty">Alla tips är hemliga tills tippningen låses — kom tillbaka efter deadline.</div></div>';
+        return;
+    }
+    if (state.allBets.matchBets.length === 0) {
+        view.innerHTML = '<div class="tips-card"><div class="tips-empty">Inga inskickade tips att visa.</div></div>';
+        return;
+    }
+
+    if (tipsState.mode === 'match') {
+        if (tipsState.matchId == null) {
+            const m = defaultTipsMatch();
+            if (m) {
+                tipsState.matchId = m.id;
+                document.getElementById('tips-search').value = tipsMatchLabel(m);
+            }
+        }
+        renderTipsPerMatch(view);
+    } else {
+        renderTipsPerPlayer(view);
+    }
+}
+
+function renderTipsPerMatch(view) {
+    const match = state.matches.find(m => m.id === tipsState.matchId);
+    if (!match) {
+        view.innerHTML = '<div class="tips-card"><div class="tips-empty">Välj en match ovan.</div></div>';
+        return;
+    }
+    const bets = state.allBets.matchBets
+        .filter(b => b.match_id === match.id)
+        .sort((a, b) => (a.display_name || a.username).localeCompare(b.display_name || b.username, 'sv'));
+
+    const finished = match.status === 'FINISHED';
+    const live = isLiveStatus(match.status);
+    const resultText = (finished || live)
+        ? `${match.home_score ?? '–'} : ${match.away_score ?? '–'}${live ? (match.status === 'PAUSED' ? ' (paus)' : ' (pågår)') : ''}`
+        : new Date(match.utc_kickoff).toLocaleString('sv-SE', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+    const counts = { '1': 0, 'X': 0, '2': 0 };
+    for (const b of bets) counts[b.sign] = (counts[b.sign] ?? 0) + 1;
+    const total = bets.length || 1;
+
+    const rows = bets.map(b => {
+        const pts = finished ? scoreMatchBet(b, match) : null;
+        const exact = pts === 4;
+        return `<tr class="${exact ? 'hit-exact' : ''}">
+            <td>${escapeHtml(b.display_name || b.username)}</td>
+            <td class="num tip-score">${b.home_score}–${b.away_score}</td>
+            <td class="tip-sign">${escapeHtml(b.sign)}</td>
+            <td class="num">${pts == null ? '<span class="tip-sign">–</span>' : `<span class="pts ${pts === 0 ? 'zero' : ''}">${pts} p</span>`}</td>
+        </tr>`;
+    }).join('');
+
+    view.innerHTML = `
+        <div class="tips-card">
+            <div class="tips-card-head">
+                <h3>${escapeHtml(match.home_team)} – ${escapeHtml(match.away_team)}</h3>
+                <div class="meta">${stageLabel(match) ? escapeHtml(stageLabel(match)) + ' · ' : ''}<strong>${escapeHtml(resultText)}</strong></div>
+            </div>
+            <div class="dist-wrap">
+                <div class="dist-bar">
+                    <span class="d1" style="width:${(counts['1'] / total) * 100}%"></span>
+                    <span class="dx" style="width:${(counts['X'] / total) * 100}%"></span>
+                    <span class="d2" style="width:${(counts['2'] / total) * 100}%"></span>
+                </div>
+                <div class="dist-legend">
+                    <span><span class="dot" style="background:var(--color-accent)"></span>1 — ${counts['1']} st</span>
+                    <span><span class="dot" style="background:var(--color-warn)"></span>X — ${counts['X']} st</span>
+                    <span><span class="dot" style="background:var(--color-accent-deep)"></span>2 — ${counts['2']} st</span>
+                </div>
+            </div>
+            <table class="tips-table">
+                <thead><tr><th>Spelare</th><th class="num">Tips</th><th>Tecken</th><th class="num">Poäng</th></tr></thead>
+                <tbody>${rows || '<tr><td colspan="4" class="tips-empty">Inga tips på denna match.</td></tr>'}</tbody>
+            </table>
+        </div>`;
+}
+
+function renderTipsPerPlayer(view) {
+    if (!tipsState.username) {
+        view.innerHTML = '<div class="tips-card"><div class="tips-empty">Välj en spelare ovan.</div></div>';
+        return;
+    }
+    const display = tipsPlayers().find(p => p.username === tipsState.username)?.display ?? tipsState.username;
+    const matchesById = new Map(state.matches.map(m => [m.id, m]));
+    const bets = state.allBets.matchBets
+        .filter(b => b.username === tipsState.username && matchesById.has(b.match_id))
+        .sort((a, b) => new Date(matchesById.get(a.match_id).utc_kickoff) - new Date(matchesById.get(b.match_id).utc_kickoff));
+    const bonus = state.allBets.bonusBets.find(b => b.username === tipsState.username);
+
+    let totalPts = 0;
+    const rows = bets.map(b => {
+        const m = matchesById.get(b.match_id);
+        const finished = m.status === 'FINISHED';
+        const pts = finished ? scoreMatchBet(b, m) : null;
+        if (pts) totalPts += pts;
+        const kickoff = new Date(m.utc_kickoff).toLocaleString('sv-SE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        const result = (finished || isLiveStatus(m.status)) ? `${m.home_score ?? '–'}:${m.away_score ?? '–'}` : '–';
+        return `<tr class="${pts === 4 ? 'hit-exact' : ''}">
+            <td>${escapeHtml(m.home_team)} – ${escapeHtml(m.away_team)}<span class="sub">${escapeHtml(kickoff)}${stageLabel(m) ? ' · ' + escapeHtml(stageLabel(m)) : ''}</span></td>
+            <td class="num tip-score">${b.home_score}–${b.away_score} <span class="tip-sign">(${escapeHtml(b.sign)})</span></td>
+            <td class="num">${escapeHtml(result)}</td>
+            <td class="num">${pts == null ? '<span class="tip-sign">–</span>' : `<span class="pts ${pts === 0 ? 'zero' : ''}">${pts} p</span>`}</td>
+        </tr>`;
+    }).join('');
+
+    const chips = bonus ? `
+        <div class="bonus-chips">
+            <span class="bonus-chip"><small>Guld</small>${escapeHtml(bonus.champion ?? '–')}</span>
+            <span class="bonus-chip"><small>Silver</small>${escapeHtml(bonus.runner_up ?? '–')}</span>
+            <span class="bonus-chip"><small>Skyttekung</small>${escapeHtml(bonus.top_scorer ?? '–')}</span>
+        </div>` : '';
+
+    view.innerHTML = `
+        <div class="tips-card">
+            <div class="tips-card-head">
+                <h3>${escapeHtml(display)}</h3>
+                <div class="meta">${bets.length} matchtips · matchpoäng hittills: <strong>${totalPts} p</strong></div>
+            </div>
+            ${chips}
+            <table class="tips-table">
+                <thead><tr><th>Match</th><th class="num">Tips</th><th class="num">Resultat</th><th class="num">Poäng</th></tr></thead>
+                <tbody>${rows || '<tr><td colspan="4" class="tips-empty">Inga tips från denna spelare.</td></tr>'}</tbody>
+            </table>
+        </div>`;
+}
+
+{
+    const input = document.getElementById('tips-search');
+    input.addEventListener('change', () => {
+        resolveTipsSelection(input.value.trim());
+        renderTipsView();
+    });
+    const modeButtons = {
+        match: document.getElementById('tips-mode-match'),
+        player: document.getElementById('tips-mode-player'),
+    };
+    for (const [mode, btn] of Object.entries(modeButtons)) {
+        btn.addEventListener('click', () => {
+            if (tipsState.mode === mode) return;
+            tipsState.mode = mode;
+            modeButtons.match.classList.toggle('active', mode === 'match');
+            modeButtons.player.classList.toggle('active', mode === 'player');
+            input.placeholder = mode === 'match' ? 'Sök match…' : 'Sök spelare…';
+            input.value = '';
+            if (mode === 'match' && tipsState.matchId != null) {
+                const m = state.matches.find(m => m.id === tipsState.matchId);
+                if (m) input.value = tipsMatchLabel(m);
+            } else if (mode === 'player' && tipsState.username) {
+                input.value = tipsPlayers().find(p => p.username === tipsState.username)?.display ?? '';
+            }
+            renderTipsView();
+        });
     }
 }
 

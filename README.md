@@ -27,7 +27,7 @@ hour and standings update automatically.
   other players' picks beforehand, not even with direct API calls. Players read
   their own drafts back through a password-checked RPC, and a public view
   (`submitted_players`) exposes *who* has submitted — but not what.
-- **Live scores** — a GitHub Action runs `scripts/update-results.mjs` hourly,
+- **Live scores** — a GitHub Action runs `scripts/update-results.mjs` every 15 minutes,
   pulling from football-data.org with a private API key (stored as a GitHub
   secret) and upserting into Supabase.
 
@@ -36,7 +36,7 @@ hour and standings update automatically.
 You'll need three accounts (all free):
 1. **Supabase** — for the database.
 2. **football-data.org** — for live match data.
-3. **GitHub** — to host the page and run the hourly cron.
+3. **GitHub** — to host the page and run the results-sync cron.
 
 ### 1. Create the Supabase project
 
@@ -99,7 +99,7 @@ npm run seed
 You should see `Upserted N matches.` (104 for World Cup 2026) along with a
 rate-limit summary like `9 requests left this minute`.
 
-### 5. Set up the hourly cron
+### 5. Set up the results-sync cron
 
 In the GitHub repo for this project, go to **Settings → Secrets and variables →
 Actions** and add three repository secrets:
