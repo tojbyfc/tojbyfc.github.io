@@ -491,6 +491,68 @@
         #profile-section input:focus { outline: none; border-color: var(--color-accent); }
         #profile-status { font-size: 0.85rem; min-width: 100px; }
 
+        /* Randomize all bets */
+        #randomize-section {
+            margin-bottom: 2rem; padding: 1.25rem 1.5rem;
+            background: var(--color-bg); border: 1px solid var(--color-border);
+            border-radius: 14px;
+        }
+        #randomize-section h4 {
+            font-family: var(--font-display); font-size: 1.3rem;
+            font-weight: 400; margin-bottom: 0.25rem; color: var(--color-accent-deep);
+        }
+        #randomize-section .randomize-hint {
+            color: var(--color-text-muted); font-size: 0.9rem;
+            line-height: 1.5; margin-bottom: 0.85rem;
+        }
+        #randomize-section .randomize-row {
+            display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+        }
+        #randomize-section .randomize-action-wrap {
+            position: relative;
+            display: flex; align-items: center;
+        }
+        #randomize-status { min-width: 100px; }
+        .randomize-popover {
+            position: absolute;
+            top: calc(100% + 0.75rem);
+            left: 0;
+            width: min(380px, calc(100vw - 3rem));
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            padding: 1.25rem;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
+            z-index: 50;
+            text-align: left;
+        }
+        .randomize-popover[hidden] { display: none; }
+        .randomize-popover::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: 32px;
+            width: 14px; height: 14px;
+            background: var(--color-bg-alt);
+            border-left: 1px solid var(--color-border);
+            border-top: 1px solid var(--color-border);
+            transform: rotate(45deg);
+        }
+        .randomize-popover .popover-title {
+            font-family: var(--font-display); font-size: 1.25rem;
+            font-weight: 400; color: var(--color-text); margin-bottom: 0.4rem;
+        }
+        .randomize-popover .popover-text {
+            color: var(--color-text-muted); font-size: 0.95rem;
+            margin-bottom: 0.85rem; line-height: 1.5;
+        }
+        .randomize-popover .popover-text strong { color: var(--color-text); }
+        .randomize-popover .popover-actions {
+            display: flex; gap: 0.5rem; justify-content: flex-end;
+        }
+        .randomize-popover .popover-actions .btn {
+            padding: 0.55rem 1rem; font-size: 0.92rem;
+        }
+
         /* Bonus */
         #bonus-section {
             margin-top: 2.5rem; padding-top: 2rem;
@@ -936,6 +998,25 @@
                 <div class="profile-row">
                     <input type="text" id="profile-display-name" placeholder="t.ex. Anna Andersson" autocomplete="name" maxlength="60">
                     <span id="profile-status" class="save-status"></span>
+                </div>
+            </div>
+
+            <div id="randomize-section">
+                <h4>Vill du bara vara med i potten?</h4>
+                <p class="randomize-hint">Inte så insatt i fotboll? Slumpa fram alla matchtips och bonustips med ett klick. Du kan ändra enskilda tips efteråt — och du behöver fortfarande skicka in dem nedan.</p>
+                <div class="randomize-row">
+                    <div class="randomize-action-wrap">
+                        <button type="button" id="randomize-all" class="btn btn-secondary">🎲 Slumpa alla tips</button>
+                        <div id="randomize-popover" class="randomize-popover" role="dialog" aria-label="Bekräfta slumpning" hidden>
+                            <h3 class="popover-title">Slumpa alla tips</h3>
+                            <p class="popover-text">Detta ersätter <strong>alla</strong> dina nuvarande matchtips och bonustips med slumpade. Det går inte att ångra.</p>
+                            <div class="popover-actions">
+                                <button type="button" id="randomize-cancel" class="btn btn-secondary">Avbryt</button>
+                                <button type="button" id="randomize-confirm" class="btn btn-primary">Slumpa allt</button>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="randomize-status" class="save-status"></span>
                 </div>
             </div>
 

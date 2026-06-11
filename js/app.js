@@ -603,6 +603,157 @@ deleteConfirmBtn.addEventListener('click', async (e) => {
     }
 });
 
+// =============================================================================
+// Randomize all bets — for people who want to join the pool without caring
+// about the football. Saves drafts through the same RPCs as manual entry, so
+// the normal "Skicka in" step is still required to publish.
+// =============================================================================
+const randomizePopover = document.getElementById('randomize-popover');
+const randomizeConfirmBtn = document.getElementById('randomize-confirm');
+const randomizeBtn = document.getElementById('randomize-all');
+
+function openRandomizePopover() {
+    if (!state.session?.username || isLocked()) return;
+    randomizeConfirmBtn.disabled = false;
+    randomizePopover.hidden = false;
+    setTimeout(() => {
+        document.addEventListener('click', handleRandomizeOutsideClick);
+        document.addEventListener('keydown', handleRandomizeEscapeKey);
+    }, 0);
+}
+
+function closeRandomizePopover() {
+    randomizePopover.hidden = true;
+    document.removeEventListener('click', handleRandomizeOutsideClick);
+    document.removeEventListener('keydown', handleRandomizeEscapeKey);
+}
+
+function handleRandomizeOutsideClick(e) {
+    if (randomizePopover.contains(e.target) || e.target === randomizeBtn) return;
+    closeRandomizePopover();
+}
+
+function handleRandomizeEscapeKey(e) {
+    if (e.key === 'Escape') closeRandomizePopover();
+}
+
+randomizeBtn.addEventListener('click', (e) => {
+    if (randomizePopover.hidden) {
+        e.stopPropagation();
+        openRandomizePopover();
+    } else {
+        closeRandomizePopover();
+    }
+});
+
+document.getElementById('randomize-cancel').addEventListener('click', () => {
+    closeRandomizePopover();
+});
+
+// Weighted towards low goal counts so randomized picks look like plausible
+// football results rather than uniform noise.
+function randomGoals() {
+    const weights = [[0, 24], [1, 34], [2, 22], [3, 12], [4, 6], [5, 2]];
+    let r = Math.random() * weights.reduce((sum, [, w]) => sum + w, 0);
+    for (const [goals, w] of weights) {
+        r -= w;
+        if (r < 0) return goals;
+    }
+    return 0;
+}
+
+function pickRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+randomizeConfirmBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!state.session?.username || isLocked()) return;
+    closeRandomizePopover();
+    randomizeBtn.disabled = true;
+    const status = document.getElementById('randomize-status');
+
+    const bettable = state.matches.filter(m => m.home_team !== 'TBD' && m.away_team !== 'TBD');
+    const picks = bettable.map(m => {
+        const h = randomGoals();
+        const a = randomGoals();
+        return { match: m, h, a, sign: signFromScore(h, a) };
+    });
+    const teams = teamOptions();
+    const champion = teams.length > 0 ? pickRandom(teams) : '';
+    const runnerUp = teams.length > 1 ? pickRandom(teams.filter(t => t !== champion)) : '';
+    const topScorer = state.players.length > 0 ? pickRandom(state.players).name : '';
+
+    const total = picks.length + 1;   // +1 for the bonus bet
+    let done = 0;
+    let failed = 0;
+    const tick = () => {
+        status.textContent = `slumpar… ${done}/${total}`;
+        status.className = 'save-status saving';
+    };
+    tick();
+
+    const tasks = picks.map(p => async () => {
+        try {
+            await submitBet({
+                password: state.session.password,
+                username: state.session.username,
+                matchId: p.match.id,
+                sign: p.sign,
+                homeScore: p.h,
+                awayScore: p.a,
+            });
+            const rec = { username: state.session.username, match_id: p.match.id, sign: p.sign, home_score: p.h, away_score: p.a, is_submitted: false };
+            const idx = state.myBets.matchBets.findIndex(b => b.match_id === p.match.id);
+            if (idx === -1) state.myBets.matchBets.push(rec);
+            else state.myBets.matchBets[idx] = rec;
+        } catch (err) {
+            console.error('Randomize: saving match bet failed:', p.match.id, err);
+            failed += 1;
+        }
+        done += 1;
+        tick();
+    });
+    tasks.push(async () => {
+        try {
+            await submitBonusBet({
+                password: state.session.password,
+                username: state.session.username,
+                champion, runnerUp, topScorer,
+            });
+            state.myBets.bonusBet = {
+                username: state.session.username,
+                champion: champion || null,
+                runner_up: runnerUp || null,
+                top_scorer: topScorer || null,
+                is_submitted: false,
+            };
+        } catch (err) {
+            console.error('Randomize: saving bonus bet failed:', err);
+            failed += 1;
+        }
+        done += 1;
+        tick();
+    });
+
+    // One RPC per match (~70 of them) — a few workers at a time keeps it quick
+    // without hammering the connection.
+    const queue = [...tasks];
+    await Promise.all(Array.from({ length: Math.min(6, queue.length) }, async () => {
+        while (queue.length > 0) await queue.shift()();
+    }));
+
+    renderBetForm();   // also re-enables the button (unless locked)
+    renderSubmitStatus();
+    if (failed > 0) {
+        status.textContent = `⚠ ${failed} av ${total} tips kunde inte sparas — försök igen`;
+        status.className = 'save-status error';
+    } else {
+        status.textContent = '✓ alla tips slumpade och sparade (utkast)';
+        status.className = 'save-status saved';
+    }
+});
+
 function renderResults() {
     const container = document.getElementById('results-list');
     container.innerHTML = '';
