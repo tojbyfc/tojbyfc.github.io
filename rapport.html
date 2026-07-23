@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VM-tipset 2026 — Slutrapport</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f7f8f5;
+    --surface-1: #fcfcfb;
+    --ink: #10130f;
+    --ink-2: #50544e;
+    --muted: #8a8d85;
+    --grid: #e2e3da;
+    --baseline: #c4c5bc;
+    --border: rgba(16, 19, 15, 0.10);
+    --accent: #1c6b40;
+    --accent-ink: #14532d;
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --series-3: #1baf7a;
+    --series-4: #eda100;
+    --de-emph: #cfcec6;
+    --gold: #b98a1c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #8a8d85;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --accent: #4cae7c;
+      --accent-ink: #6ecb9a;
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --series-4: #c98500;
+      --de-emph: #3a3a37;
+      --gold: #d3a53a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #8a8d85;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --accent: #4cae7c;
+    --accent-ink: #6ecb9a;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --de-emph: #3a3a37;
+    --gold: #d3a53a;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 20px 80px; }
+
+  header.masthead { padding: 56px 0 8px; }
+  .eyebrow {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 10px;
+  }
+  h1 {
+    font-size: clamp(2rem, 5.5vw, 3.1rem); font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.08; margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .lede { color: var(--ink-2); max-width: 62ch; margin: 0; font-size: 1.05rem; }
+
+  section { margin-top: 64px; }
+  section > h2 {
+    font-size: 1.45rem; font-weight: 800; letter-spacing: -0.01em;
+    margin: 0 0 6px; text-wrap: balance;
+  }
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 6px;
+  }
+  .section-lede { color: var(--ink-2); max-width: 68ch; margin: 0 0 20px; }
+  section p { max-width: 68ch; }
+
+  /* KPI row */
+  .kpis {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin-top: 36px;
+  }
+  .kpi {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .kpi .v { font-size: 1.55rem; font-weight: 700; line-height: 1.15; }
+  .kpi .l { font-size: 0.8rem; color: var(--ink-2); margin-top: 2px; }
+
+  /* Podium */
+  .podium { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .podium-tile {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px 16px; position: relative;
+  }
+  .podium-tile.first { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+  .podium-tile .place { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .podium-tile .who { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.01em; margin: 4px 0 2px; }
+  .podium-tile .pts { color: var(--ink-2); font-size: 0.92rem; }
+  .podium-tile .money { font-size: 1.9rem; font-weight: 700; margin-top: 10px; color: var(--accent-ink); }
+
+  /* Chart cards */
+  .chart-card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 20px 14px; margin-top: 18px;
+  }
+  .chart-title { font-weight: 700; font-size: 1rem; margin: 0 0 2px; }
+  .chart-sub { color: var(--ink-2); font-size: 0.85rem; margin: 0 0 14px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 10px; font-size: 0.82rem; color: var(--ink-2); }
+  .legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .swatch-rect { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .legend .swatch-line { width: 16px; height: 0; border-top: 2.5px solid; border-radius: 2px; display: inline-block; }
+  .chart-scroll { overflow-x: auto; }
+  svg { display: block; }
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .axis-txt { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+  .bar-name { font-size: 12px; fill: var(--ink); }
+  .bar-val { font-size: 11.5px; font-weight: 600; fill: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .end-label { font-size: 12px; font-weight: 700; fill: var(--ink); }
+  .stage-label { font-size: 10px; fill: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  details.table-view { margin-top: 10px; }
+  details.table-view summary { cursor: pointer; font-size: 0.82rem; color: var(--ink-2); }
+  details.table-view summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .data-table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 0.85rem; }
+  .data-table th, .data-table td { text-align: left; padding: 5px 10px 5px 0; border-bottom: 1px solid var(--grid); }
+  .data-table th { color: var(--ink-2); font-weight: 600; font-size: 0.78rem; }
+  .data-table td.num, .data-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Tooltip */
+  #tip {
+    position: fixed; pointer-events: none; z-index: 10;
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 11px; font-size: 0.8rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.14); max-width: 260px;
+    display: none;
+  }
+  #tip .tt-title { font-weight: 600; color: var(--ink-2); margin-bottom: 3px; font-size: 0.75rem; }
+  #tip .tt-row { display: flex; align-items: center; gap: 7px; margin-top: 2px; }
+  #tip .tt-key { width: 14px; height: 0; border-top: 2.5px solid; border-radius: 2px; flex: none; }
+  #tip .tt-val { font-weight: 700; font-variant-numeric: tabular-nums; }
+  #tip .tt-name { color: var(--ink-2); }
+
+  /* Fact lists */
+  .fact-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 18px; }
+  .fact-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .fact-card h3 { margin: 0 0 4px; font-size: 1rem; font-weight: 700; }
+  .fact-card .hint { color: var(--ink-2); font-size: 0.83rem; margin: 0 0 12px; }
+  .fact-list { list-style: none; margin: 0; padding: 0; }
+  .fact-list li {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    padding: 7px 0; border-bottom: 1px solid var(--grid); font-size: 0.9rem;
+  }
+  .fact-list li:last-child { border-bottom: none; }
+  .fact-list .n { color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .fact-list.two-col { columns: 2; column-gap: 32px; }
+  @media (max-width: 640px) { .fact-list.two-col { columns: 1; } }
+  .chip {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    border-radius: 99px; padding: 1px 9px; white-space: nowrap;
+    background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-ink);
+  }
+  .chip.zero { background: color-mix(in srgb, var(--series-2) 14%, transparent); color: var(--series-2); }
+
+  /* Payment section */
+  .pay-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 18px; }
+  .pay-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .pay-card h3 { margin: 0; font-size: 0.95rem; font-weight: 700; }
+  .pay-card .sum { color: var(--accent-ink); font-weight: 700; }
+  .pay-card ul { list-style: none; margin: 10px 0 0; padding: 0; column-gap: 24px; font-size: 0.88rem; }
+  .pay-card ul.two-col { columns: 2; }
+  .pay-card li { padding: 3px 0; break-inside: avoid; }
+  .pay-note { color: var(--ink-2); font-size: 0.85rem; max-width: 68ch; }
+
+  footer { margin-top: 72px; padding-top: 18px; border-top: 1px solid var(--grid); color: var(--muted); font-size: 0.82rem; }
+  footer a { color: var(--accent-ink); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .podium-tile, .kpi { transition: transform 0.15s ease; }
+  }
+</style>
+</head>
+<body>
+<style>
+  /* Password gate — same soft gate as the app: content unlocks after the team
+     password verifies against the server-side hash. */
+  #gate {
+    min-height: 60vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .gate-card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 28px 24px; max-width: 400px; width: 100%;
+  }
+  .gate-card h1 { font-size: 1.35rem; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .gate-card p { color: var(--ink-2); font-size: 0.9rem; margin: 0 0 16px; }
+  .gate-card label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
+  .gate-card input {
+    width: 100%; padding: 10px 12px; font-size: 1rem; border-radius: 8px;
+    border: 1px solid var(--baseline); background: var(--page); color: var(--ink);
+  }
+  .gate-card input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .gate-card button {
+    margin-top: 14px; width: 100%; padding: 10px 14px; font-size: 0.95rem; font-weight: 600;
+    border: none; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer;
+  }
+  .gate-card button:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+  .gate-card button[disabled] { opacity: 0.6; cursor: wait; }
+  .gate-error { color: #d03b3b; font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+  .back-link { display: inline-block; margin: 20px 0 0 20px; font-size: 0.88rem; color: var(--accent-ink); }
+</style>
+<a class="back-link" href="index.html">← Tillbaka till tipset</a>
+<div id="gate">
+  <form class="gate-card" id="gate-form">
+    <h1>Slutrapport — VM-tipset 2026</h1>
+    <p>Sidan är bara för deltagarna. Ange lagets lösenord — samma som du tippade med.</p>
+    <label for="gate-password">Lagets lösenord</label>
+    <input type="password" id="gate-password" autocomplete="current-password" required>
+    <button type="submit" id="gate-submit">Visa rapporten</button>
+    <p class="gate-error" id="gate-error" role="alert"></p>
+  </form>
+</div>
+<script type="module">
+  import { verifyPassword } from './js/supabase-client.js';
+
+  const gate = document.getElementById('gate');
+  const report = document.getElementById('report');
+  const form = document.getElementById('gate-form');
+  const input = document.getElementById('gate-password');
+  const submit = document.getElementById('gate-submit');
+  const errEl = document.getElementById('gate-error');
+
+  function unlock() {
+    gate.remove();
+    report.hidden = false;
+  }
+
+  // Already signed in on this device? The app keeps {username, password} in
+  // localStorage — verify it server-side and skip the prompt.
+  try {
+    const s = JSON.parse(localStorage.getItem('wcbet.session.v2') ?? 'null');
+    if (s?.password && await verifyPassword(s.password)) unlock();
+  } catch { /* fall through to the prompt */ }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errEl.textContent = '';
+    submit.disabled = true;
+    try {
+      if (await verifyPassword(input.value)) {
+        unlock();
+      } else {
+        errEl.textContent = 'Fel lösenord — försök igen.';
+      }
+    } catch {
+      errEl.textContent = 'Kunde inte nå servern. Försök igen om en stund.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+</script>
+
+<div id="report" hidden>
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Tojby FC · VM 2026 · 11 juni – 19 juli</p>
+    <h1>VM-tipset är avgjort — så gick det</h1>
+    <p class="lede">104 matcher, 1 944 matchtips och 333 mål senare har potten hittat sina ägare.
+    Spanien tog guldet, Mbappé sköt flest mål — och bonuspoängen stöpte om hela pallen på mållinjen.
+    Här är hela historien i siffror.</p>
+    <div class="kpis" id="kpis"></div>
+  </header>
+
+  <section>
+    <p class="section-eyebrow">Pallen</p>
+    <h2>Grattis Sjösse, Pawel och Smith</h2>
+    <p class="section-lede">Potten på 270 € (27 deltagare × 10 €) delas 80 / 15 / 5 enligt reglerna.</p>
+    <div class="podium" id="podium"></div>
+  </section>
+
+  <section>
+    <p class="section-eyebrow">Slutställning</p>
+    <h2>Alla 27 — poäng för poäng</h2>
+    <p class="section-lede">Matchpoäng (1 p för rätt tecken, 4 p för exakt resultat) plus bonuspoäng
+    (5 p vardera för rätt mästare, tvåa och skyttekung). Tony M var tvåa på ren matchform men
+    blev utan bonus — det kostade pallplatsen.</p>
+    <div class="chart-card">
+      <p class="chart-title">Totalpoäng per spelare</p>
+      <p class="chart-sub">Sorterat efter slutplacering · vid lika poäng avgör flest exakta, därefter flest rätta tecken</p>
+      <div class="legend">
+        <span class="key"><span class="swatch-rect" style="background: var(--series-1)"></span>Matchpoäng</span>
+        <span class="key"><span class="swatch-rect" style="background: var(--series-2)"></span>Bonuspoäng</span>
+      </div>
+      <div class="chart-scroll" id="standings-chart"></div>
+      <details class="table-view">
+        <summary>Visa som tabell</summary>
+        <div class="chart-scroll" id="standings-table"></div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-eyebrow">Poängracet</p>
+    <h2>Sjösse ryckte i match 70 — och släppte aldrig taget</h2>
+    <p class="section-lede">Ledningen bytte händer 18 gånger. Tio olika spelare har burit ledartröjan,
+    men efter Kongo–Uzbekistan i sista gruppspelsomgången var det Sjösse hela vägen hem.
+    Notera Pawels mållinjesprint: fyra i matchpoäng, men Spanien + Argentina i bonustipsen lyfte
+    honom till silverplatsen.</p>
+    <div class="chart-card">
+      <p class="chart-title">Ackumulerade matchpoäng, match för match</p>
+      <p class="chart-sub">Topp 4 i färg, övriga 23 i grått · bonuspoängen läggs på efter finalen och syns inte i kurvorna</p>
+      <div class="legend" id="race-legend"></div>
+      <div class="chart-scroll" id="race-chart"></div>
+      <details class="table-view">
+        <summary>Visa som tabell (poängläget efter varje slutspelsrunda)</summary>
+        <div class="chart-scroll" id="race-table"></div>
+      </details>
+    </div>
+    <div class="chart-card">
+      <p class="chart-title">Flest matcher i ledningen</p>
+      <p class="chart-sub">Antal matcher (av 104) då spelaren toppade tabellen, delad ledning räknas för alla i topp</p>
+      <div class="chart-scroll" id="leader-chart"></div>
+      <details class="table-view">
+        <summary>Visa som tabell</summary>
+        <div class="chart-scroll" id="leader-table"></div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-eyebrow">Matcherna</p>
+    <h2>Lättast, svårast och elva ensamvargar</h2>
+    <div class="fact-cols">
+      <div class="fact-card">
+        <h3>Ingen såg det komma</h3>
+        <p class="hint">Matcher där inte en enda av 27 hade rätt tecken</p>
+        <ul class="fact-list" id="hardest-list"></ul>
+      </div>
+      <div class="fact-card">
+        <h3>Hela gänget prickade rätt</h3>
+        <p class="hint">Matcher där alla 27 hade rätt tecken — ett urval</p>
+        <ul class="fact-list" id="easiest-list"></ul>
+      </div>
+      <div class="fact-card" style="grid-column: 1 / -1;">
+        <h3>Ensam om exakt rätt</h3>
+        <p class="hint">Elva gånger var en enda spelare ensam om att pricka slutresultatet — Odin gjorde det tre gånger, Henke två</p>
+        <ul class="fact-list two-col" id="solo-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-eyebrow">Bonustipsen</p>
+    <h2>Tio trodde på Spanien — elva på Mbappé</h2>
+    <p class="section-lede">Mästartipset och skyttekungen var gruppens starkaste grenar. Värre gick det
+    med tvåan: bara tre av 27 hade Argentina som finalförlorare, och nio satsade på Frankrike —
+    som England petade ur bronsmatchen med 6–4.</p>
+    <div class="fact-cols">
+      <div class="chart-card" style="margin-top: 0;">
+        <p class="chart-title">Vem vinner VM?</p>
+        <p class="chart-sub">Antal spelare per tips · rätt svar i blått</p>
+        <div class="chart-scroll" id="champ-chart"></div>
+        <details class="table-view"><summary>Visa som tabell</summary><div id="champ-table"></div></details>
+      </div>
+      <div class="chart-card" style="margin-top: 0;">
+        <p class="chart-title">Vem blir skyttekung?</p>
+        <p class="chart-sub">Antal spelare per tips · rätt svar i blått</p>
+        <div class="chart-scroll" id="scorer-chart"></div>
+        <details class="table-view"><summary>Visa som tabell</summary><div id="scorer-table"></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-eyebrow">Kollektivet</p>
+    <h2>27 hjärnor = en perfekt kalibrerad kristallkula</h2>
+    <p class="section-lede">Slå ihop alla 1 944 matchtips och gruppen visste exakt hur VM skulle
+    fördela sig: 19,2 % av tipsen var kryss — och exakt 19,2 % av matcherna slutade oavgjort.
+    Hemmasegrar och bortasegrar låg också inom en dryg procentenhet. Individuellt? En annan femma.</p>
+    <div class="chart-card">
+      <p class="chart-title">Tippad andel vs verklig andel per tecken</p>
+      <p class="chart-sub">1 944 tips mot facit i 104 matcher</p>
+      <div class="legend">
+        <span class="key"><span class="swatch-rect" style="background: var(--series-1)"></span>Tippat</span>
+        <span class="key"><span class="swatch-rect" style="background: var(--series-2)"></span>Verkligt</span>
+      </div>
+      <div class="chart-scroll" id="sign-chart"></div>
+      <details class="table-view"><summary>Visa som tabell</summary><div id="sign-table"></div></details>
+    </div>
+    <p style="color: var(--ink-2); font-size: 0.9rem;">Mest tippade exakta resultat: 1–1 (221 gånger), 2–1 (210) och 2–0 (191).
+    Verklighetens vanligaste: 2–1 och 1–1 (9 matcher var). Gruppen kan sin fotboll — på aggregerad nivå.</p>
+  </section>
+
+  <section>
+    <p class="section-eyebrow">Pengarna</p>
+    <h2>Vem betalar vem?</h2>
+    <p class="pay-note">Alla utom pallen betalar exakt sin insats på 10 €. Vinnarnas egna insatser är
+    redan avräknade — de betalar ingenting. Så här går summorna jämnt ut med så få
+    överföringar som möjligt:</p>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <h3>10 € till <span class="sum">Sjösse</span></h3>
+        <ul class="two-col">
+          <li>Henke</li><li>Nätrassel</li><li>Pontus</li><li>Hannes Rönnholm</li><li>Odin</li>
+          <li>Daniel G</li><li>Edis</li><li>Van Aarle</li><li>Wille P</li><li>M.Salo</li>
+          <li>Molpin</li><li>Sebastian Molnå</li><li>Strand</li><li>Adrian</li><li>Jonatan P</li>
+          <li>Wille W</li><li>Kalle</li><li>JeYrjans</li><li>Grillin</li><li>Jere</li>
+        </ul>
+      </div>
+      <div class="pay-card">
+        <h3>10 € till <span class="sum">Pawel</span></h3>
+        <ul>
+          <li>Henric</li>
+          <li>Sebastian Pada</li>
+        </ul>
+        <h3 style="margin-top: 16px;">Delade betalningar</h3>
+        <ul>
+          <li>Tony M → 6 € till Sjösse + 4 € till Pawel</li>
+          <li>Jens L → 6,50 € till Pawel + 3,50 € till Smith</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pay-note" style="margin-top: 14px;">Kontroll: Sjösse får 206 €, Pawel 30,50 € och Smith 3,50 € netto
+    utöver sina egna insatser — totalt 240 € = 24 × 10 €. Med de egna insatserna inräknade blir
+    utbetalningarna 216 / 40,50 / 13,50 €.</p>
+  </section>
+
+  <footer>
+    Tojby FC:s VM-tips 2026 · <a href="https://tojbyfc.github.io/">tojbyfc.github.io</a> ·
+    Sammanställt 23 juli 2026 · Resultatdata från football-data.org
+  </footer>
+</div>
+
+<div id="tip" role="status"></div>
+
+<script>
+const DATA = {"standings":[{"rank":1,"name":"Sjösse","total":87,"match":82,"bonus":5,"exact":11,"signs":49},{"rank":2,"name":"Pawel","total":85,"match":75,"bonus":10,"exact":10,"signs":45},{"rank":3,"name":"Smith","total":81,"match":76,"bonus":5,"exact":10,"signs":46},{"rank":4,"name":"Tony M","total":80,"match":80,"bonus":0,"exact":11,"signs":47},{"rank":5,"name":"Henke","total":78,"match":73,"bonus":5,"exact":10,"signs":43},{"rank":6,"name":"Pontus","total":75,"match":65,"bonus":10,"exact":7,"signs":44},{"rank":7,"name":"Nätrassel","total":75,"match":65,"bonus":10,"exact":7,"signs":44},{"rank":8,"name":"Hannes Rönnholm","total":74,"match":69,"bonus":5,"exact":8,"signs":45},{"rank":9,"name":"Odin","total":73,"match":73,"bonus":0,"exact":11,"signs":40},{"rank":10,"name":"Daniel G","total":72,"match":67,"bonus":5,"exact":9,"signs":40},{"rank":11,"name":"Edis","total":70,"match":65,"bonus":5,"exact":7,"signs":44},{"rank":12,"name":"Van Aarle","total":67,"match":67,"bonus":0,"exact":7,"signs":46},{"rank":13,"name":"Wille P","total":66,"match":66,"bonus":0,"exact":8,"signs":42},{"rank":14,"name":"M.Salo","total":64,"match":59,"bonus":5,"exact":5,"signs":44},{"rank":15,"name":"Molpin","total":64,"match":54,"bonus":10,"exact":5,"signs":39},{"rank":16,"name":"Sebastian Molnå","total":63,"match":58,"bonus":5,"exact":6,"signs":40},{"rank":17,"name":"Strand","total":62,"match":52,"bonus":10,"exact":4,"signs":40},{"rank":18,"name":"Adrian","total":61,"match":61,"bonus":0,"exact":6,"signs":43},{"rank":19,"name":"Jens L","total":58,"match":58,"bonus":0,"exact":7,"signs":37},{"rank":20,"name":"Jonatan P","total":58,"match":58,"bonus":0,"exact":6,"signs":40},{"rank":21,"name":"Wille W","total":58,"match":53,"bonus":5,"exact":6,"signs":35},{"rank":22,"name":"Kalle","total":58,"match":53,"bonus":5,"exact":5,"signs":38},{"rank":23,"name":"JeYrjans","total":58,"match":53,"bonus":5,"exact":4,"signs":41},{"rank":24,"name":"Grillin","total":54,"match":49,"bonus":5,"exact":3,"signs":40},{"rank":25,"name":"Jere","total":52,"match":47,"bonus":5,"exact":2,"signs":41},{"rank":26,"name":"Henric","total":48,"match":43,"bonus":5,"exact":3,"signs":34},{"rank":27,"name":"Sebastian Pada","total":45,"match":45,"bonus":0,"exact":3,"signs":36}],"series":[{"name":"Sjösse","pts":[4,8,8,9,9,9,13,13,14,14,14,15,15,15,15,15,16,17,18,19,19,20,21,22,22,23,24,24,25,29,30,30,31,35,35,36,37,37,37,38,39,43,43,44,45,45,46,47,51,52,53,54,55,55,59,59,60,60,60,61,62,63,64,65,66,70,74,78,79,80,81,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82]},{"name":"Pawel","pts":[1,1,5,6,6,6,7,7,8,8,8,8,8,8,8,9,10,11,12,13,13,13,17,18,22,23,24,28,29,30,31,31,32,36,36,37,38,38,38,38,39,40,44,45,46,46,47,48,48,52,53,53,54,54,55,59,63,63,63,64,64,65,66,67,68,68,69,73,74,74,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75]},{"name":"Smith","pts":[1,5,9,10,10,10,11,11,12,12,12,13,13,17,17,18,22,22,23,24,24,24,25,26,26,27,28,28,29,29,30,31,32,36,36,37,38,38,38,39,43,47,47,48,49,49,50,50,51,52,53,54,55,55,59,59,60,64,65,65,66,67,67,71,72,72,73,73,73,74,75,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76]},{"name":"Tony M","pts":[4,5,5,6,6,6,7,7,8,8,8,9,9,9,9,9,13,14,15,16,16,17,17,18,18,19,20,24,25,29,30,30,31,32,32,33,34,34,34,35,39,43,44,45,46,46,47,51,55,56,57,58,59,59,63,63,64,64,64,68,69,70,71,75,76,77,78,79,79,79,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80]},{"name":"Henke","pts":[0,0,0,1,1,1,2,2,3,3,3,3,3,3,3,4,5,6,7,8,8,8,8,9,9,10,11,11,15,16,20,20,21,22,22,23,24,24,25,26,30,34,35,35,36,36,37,41,41,42,43,47,47,51,52,52,53,53,54,55,55,56,57,58,59,63,64,68,68,68,72,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73]},{"name":"Pontus","pts":[4,4,4,4,4,4,5,5,6,6,7,8,8,8,8,8,9,10,14,15,15,16,17,18,18,18,19,20,21,21,22,22,23,27,27,28,29,29,29,30,31,35,35,36,37,37,38,39,40,41,42,46,47,47,51,51,52,53,54,58,59,60,61,61,62,62,63,63,63,64,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65]},{"name":"Nätrassel","pts":[1,2,2,3,3,3,7,7,8,8,8,9,9,9,9,10,14,15,19,23,23,24,28,29,29,30,31,31,32,33,34,34,35,36,36,37,38,38,38,39,40,41,42,42,43,43,44,45,45,46,47,48,48,49,49,49,53,53,54,55,56,57,58,58,59,59,60,64,64,64,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65]},{"name":"Hannes Rönnholm","pts":[1,1,1,1,1,1,5,5,6,6,6,7,7,7,7,8,9,10,11,12,12,13,17,18,18,19,19,20,24,28,32,32,33,34,35,36,37,37,37,38,39,43,44,45,46,46,47,51,52,53,54,55,55,56,60,60,61,61,61,61,61,62,63,63,64,65,66,66,66,67,68,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69]},{"name":"Odin","pts":[4,4,4,5,5,5,9,9,10,10,10,10,10,10,10,10,11,12,16,17,17,18,18,19,20,20,21,22,23,23,24,24,24,25,25,25,26,26,30,34,35,36,36,36,37,37,38,39,39,43,43,44,45,46,46,46,47,48,52,56,60,61,62,62,63,67,71,72,72,72,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73]},{"name":"Daniel G","pts":[4,4,4,5,5,5,9,10,11,11,11,11,11,11,15,15,19,20,24,24,24,25,29,30,31,31,32,32,33,34,35,36,36,37,37,37,37,37,37,38,38,39,40,41,42,42,46,46,47,48,49,50,50,50,50,50,54,54,55,55,55,56,57,57,58,59,63,64,65,66,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67]},{"name":"Edis","pts":[1,1,5,6,6,6,7,7,8,12,12,13,13,13,13,13,17,18,19,20,20,20,21,22,26,27,28,29,30,30,31,31,31,32,32,33,34,34,34,35,36,37,37,37,38,38,39,40,41,45,46,47,48,48,49,49,49,53,53,54,55,56,56,56,57,57,58,62,63,63,64,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65]},{"name":"Van Aarle","pts":[1,2,2,3,3,3,4,4,5,5,5,6,6,6,6,6,7,8,9,10,10,10,10,10,14,15,16,17,18,19,20,20,21,22,22,23,27,27,27,27,31,32,33,37,38,38,39,40,44,45,46,47,47,47,48,48,49,53,54,55,56,57,58,59,60,60,61,65,65,65,66,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,67]},{"name":"Wille P","pts":[4,4,4,4,4,4,5,5,6,6,6,7,7,11,11,12,16,17,21,22,22,23,27,28,28,29,30,34,35,36,37,37,38,39,39,40,41,41,41,41,42,46,47,47,48,48,49,49,49,50,51,52,52,52,53,53,54,54,55,56,57,58,58,58,59,59,63,64,64,64,65,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66]},{"name":"M.Salo","pts":[1,1,1,2,2,2,3,3,4,5,5,6,6,6,6,6,10,11,12,13,13,13,14,15,15,16,17,18,19,19,20,20,21,22,22,23,24,24,24,24,25,29,30,34,35,35,36,37,41,41,42,43,44,44,45,45,46,50,50,51,52,53,54,55,56,56,57,58,58,58,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59]},{"name":"Molpin","pts":[1,1,1,2,2,2,3,3,4,4,4,5,5,5,5,5,6,7,11,12,12,12,12,13,14,14,14,15,16,17,18,18,19,20,20,21,22,22,22,23,24,25,25,26,27,27,28,32,32,32,33,34,35,35,35,35,36,40,40,40,41,42,43,43,44,48,52,53,53,53,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54]},{"name":"Sebastian Molnå","pts":[4,4,4,4,4,4,5,5,6,6,6,7,7,11,11,12,13,14,15,16,17,18,19,20,20,20,21,21,22,22,23,23,23,24,24,25,29,29,29,33,34,35,39,39,40,40,41,41,45,46,47,48,48,48,49,49,50,50,50,50,51,52,53,54,55,55,56,56,56,57,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58]},{"name":"Strand","pts":[1,1,1,2,2,2,3,3,4,8,8,9,9,9,9,10,11,12,13,14,14,14,15,15,19,20,21,21,21,21,22,22,23,24,24,25,29,29,29,29,30,31,32,33,34,34,35,36,37,38,39,40,40,40,44,44,45,45,46,46,47,48,49,49,50,50,51,51,51,51,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52]},{"name":"Adrian","pts":[1,2,6,7,7,7,8,8,9,9,9,10,10,10,10,11,11,15,19,20,20,21,21,22,22,23,24,25,25,25,26,26,27,28,28,29,30,30,30,34,38,39,39,40,41,41,42,43,44,45,46,47,48,48,48,48,49,53,53,54,55,56,57,57,58,58,59,60,60,60,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61]},{"name":"Jens L","pts":[1,2,2,2,2,2,3,3,4,4,4,4,4,5,5,6,7,8,9,9,10,10,11,12,12,12,12,12,12,13,14,14,15,16,16,16,20,20,20,21,25,29,33,33,34,34,35,35,39,40,41,42,42,42,42,42,43,47,47,47,47,48,49,53,54,54,55,55,56,56,57,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58]},{"name":"Jonatan P","pts":[1,1,1,1,1,1,2,2,3,3,4,5,5,6,6,7,11,12,13,14,14,15,16,17,17,18,19,20,20,20,24,24,24,28,28,29,30,30,30,31,32,36,36,36,37,37,41,45,46,47,48,49,49,49,50,50,51,51,51,51,52,53,54,55,56,56,57,57,57,57,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58]},{"name":"Wille W","pts":[4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,6,10,11,12,13,13,13,13,14,15,16,17,17,17,18,19,19,20,21,21,22,23,23,23,24,24,25,25,26,27,27,28,28,32,32,33,34,35,35,36,36,40,44,44,44,45,45,46,46,47,47,48,52,52,52,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53]},{"name":"Kalle","pts":[1,1,5,5,5,5,6,6,7,7,7,7,7,7,7,7,11,15,16,17,17,17,17,18,18,19,20,20,20,21,22,22,23,24,24,25,26,26,26,26,27,31,32,32,33,33,34,35,39,39,40,41,42,42,43,43,44,44,44,45,46,47,48,48,49,49,50,50,51,51,52,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53]},{"name":"JeYrjans","pts":[1,1,1,2,2,2,3,3,4,4,4,5,5,5,5,6,7,8,9,10,10,11,12,13,14,15,16,16,16,16,20,20,20,21,22,23,27,27,27,27,28,32,33,33,34,34,35,36,36,37,38,39,39,39,40,40,41,41,42,43,43,44,45,46,46,47,48,52,52,52,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53]},{"name":"Grillin","pts":[0,0,0,0,0,0,1,1,2,2,2,3,3,3,3,4,5,6,7,8,8,8,9,9,9,10,11,11,11,12,16,17,18,19,19,20,21,21,21,22,23,24,24,25,26,26,27,28,29,30,31,32,32,32,33,33,34,34,34,34,35,36,37,38,39,39,40,44,44,48,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49]},{"name":"Jere","pts":[1,1,1,2,2,2,3,3,4,4,5,6,6,7,7,8,9,10,11,12,12,12,12,13,13,13,14,15,15,16,17,17,18,19,19,20,24,24,24,25,26,27,27,28,32,32,33,34,34,35,36,37,38,38,39,39,40,40,40,41,41,42,43,43,44,44,45,46,46,46,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47]},{"name":"Henric","pts":[1,2,2,2,6,6,7,7,8,8,8,9,9,9,9,13,14,14,15,15,15,15,16,16,16,16,16,16,17,17,18,19,20,21,21,22,26,26,26,27,28,29,29,29,30,30,31,31,31,31,32,33,34,34,35,35,36,36,36,36,36,37,38,39,40,40,41,42,42,42,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43]},{"name":"Sebastian Pada","pts":[0,0,0,0,0,0,1,1,2,2,2,3,3,3,3,7,8,9,10,11,11,12,13,14,14,15,15,15,16,16,17,17,18,19,19,20,21,21,21,22,23,24,25,29,30,30,31,31,32,33,34,35,35,35,35,35,36,36,36,36,37,37,38,38,39,39,40,44,44,44,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45]}],"matchLabels":["Mexico 2–0 South Africa","South Korea 2–1 Czechia","Canada 1–1 Bosnia-Herzegovina","United States 4–1 Paraguay","Qatar 1–1 Switzerland","Brazil 1–1 Morocco","Haiti 0–1 Scotland","Australia 2–0 Turkey","Germany 7–1 Curaçao","Netherlands 2–2 Japan","Ivory Coast 1–0 Ecuador","Sweden 5–1 Tunisia","Spain 0–0 Cape Verde Islands","Belgium 1–1 Egypt","Saudi Arabia 1–1 Uruguay","Iran 2–2 New Zealand","France 3–1 Senegal","Iraq 1–4 Norway","Argentina 3–0 Algeria","Austria 3–1 Jordan","Portugal 1–1 Congo DR","England 4–2 Croatia","Ghana 1–0 Panama","Uzbekistan 1–3 Colombia","Czechia 1–1 South Africa","Switzerland 4–1 Bosnia-Herzegovina","Canada 6–0 Qatar","Mexico 1–0 South Korea","United States 2–0 Australia","Scotland 0–1 Morocco","Brazil 3–0 Haiti","Turkey 0–1 Paraguay","Netherlands 5–1 Sweden","Germany 2–1 Ivory Coast","Ecuador 0–0 Curaçao","Tunisia 0–4 Japan","Spain 4–0 Saudi Arabia","Belgium 0–0 Iran","Uruguay 2–2 Cape Verde Islands","New Zealand 1–3 Egypt","Argentina 2–0 Austria","France 3–0 Iraq","Norway 3–2 Senegal","Jordan 1–2 Algeria","Portugal 5–0 Uzbekistan","England 0–0 Ghana","Panama 0–1 Croatia","Colombia 1–0 Congo DR","Switzerland 2–1 Canada","Bosnia-Herzegovina 3–1 Qatar","Morocco 4–2 Haiti","Scotland 0–3 Brazil","Czechia 0–3 Mexico","South Africa 1–0 South Korea","Curaçao 0–2 Ivory Coast","Ecuador 2–1 Germany","Tunisia 1–3 Netherlands","Japan 1–1 Sweden","Turkey 3–2 United States","Paraguay 0–0 Australia","Norway 1–4 France","Senegal 5–0 Iraq","Uruguay 0–1 Spain","Cape Verde Islands 0–0 Saudi Arabia","New Zealand 1–5 Belgium","Egypt 1–1 Iran","Panama 0–2 England","Croatia 2–1 Ghana","Colombia 0–0 Portugal","Congo DR 3–1 Uzbekistan","Jordan 1–3 Argentina","Algeria 3–3 Austria","South Africa 0–1 Canada","Brazil 2–1 Japan","Germany 4–5 Paraguay","Netherlands 3–4 Morocco","Ivory Coast 1–2 Norway","France 3–0 Sweden","Mexico 2–0 Ecuador","England 2–1 Congo DR","Belgium 3–2 Senegal","United States 2–0 Bosnia-Herzegovina","Spain 3–0 Austria","Portugal 2–1 Croatia","Switzerland 2–0 Algeria","Australia 3–5 Egypt","Argentina 3–2 Cape Verde Islands","Colombia 1–0 Ghana","Canada 0–3 Morocco","Paraguay 0–1 France","Brazil 1–2 Norway","Mexico 2–3 England","Portugal 0–1 Spain","United States 1–4 Belgium","Argentina 3–2 Egypt","Switzerland 4–3 Colombia","France 2–0 Morocco","Spain 2–1 Belgium","Norway 1–2 England","Argentina 3–1 Switzerland","France 0–2 Spain","England 1–2 Argentina","France 4–6 England","Spain 1–0 Argentina"],"matchStages":["GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","GROUP_STAGE","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_32","LAST_16","LAST_16","LAST_16","LAST_16","LAST_16","LAST_16","LAST_16","LAST_16","QUARTER_FINALS","QUARTER_FINALS","QUARTER_FINALS","QUARTER_FINALS","SEMI_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"],"ledCount":[["Sjösse",45],["Tony M",22],["Smith",20],["Wille P",15],["Daniel G",10],["Odin",1],["Wille W",1],["Sebastian Molnå",1],["Pontus",1],["Hannes Rönnholm",1]],"hardest":[{"id":537339,"stage":"GROUP_STAGE","date":"2026-06-13T22:00:00+00:00","label":"Brazil 1–1 Morocco","signHits":0,"exactHits":0,"exactWho":[],"n":27},{"id":537369,"stage":"GROUP_STAGE","date":"2026-06-15T16:00:00+00:00","label":"Spain 0–0 Cape Verde Islands","signHits":0,"exactHits":0,"exactWho":[],"n":27},{"id":537365,"stage":"GROUP_STAGE","date":"2026-06-21T19:00:00+00:00","label":"Belgium 0–0 Iran","signHits":0,"exactHits":0,"exactWho":[],"n":27},{"id":537411,"stage":"GROUP_STAGE","date":"2026-06-23T20:00:00+00:00","label":"England 0–0 Ghana","signHits":0,"exactHits":0,"exactWho":[],"n":27},{"id":537417,"stage":"LAST_32","date":"2026-06-28T19:00:00+00:00","label":"South Africa 0–1 Canada","signHits":0,"exactHits":0,"exactWho":[],"n":0}],"easiest":[{"id":537351,"stage":"GROUP_STAGE","date":"2026-06-14T17:00:00+00:00","label":"Germany 7–1 Curaçao","signHits":27,"exactHits":0,"exactWho":[],"n":27},{"id":537397,"stage":"GROUP_STAGE","date":"2026-06-17T01:00:00+00:00","label":"Argentina 3–0 Algeria","signHits":27,"exactHits":7,"exactWho":["Odin","Wille P","Pontus","Nätrassel","Molpin","Daniel G","Adrian"],"n":27},{"id":537341,"stage":"GROUP_STAGE","date":"2026-06-20T00:30:00+00:00","label":"Brazil 3–0 Haiti","signHits":27,"exactHits":5,"exactWho":["JeYrjans","Jonatan P","Hannes Rönnholm","Henke","Grillin"],"n":27},{"id":537353,"stage":"GROUP_STAGE","date":"2026-06-20T20:00:00+00:00","label":"Germany 2–1 Ivory Coast","signHits":27,"exactHits":5,"exactWho":["Smith","Pawel","Jonatan P","Sjösse","Pontus"],"n":27},{"id":537393,"stage":"GROUP_STAGE","date":"2026-06-22T21:00:00+00:00","label":"France 3–0 Iraq","signHits":27,"exactHits":12,"exactWho":["Henke","Wille P","JeYrjans","Jonatan P","Kalle","Sjösse","Smith","Tony M","Jens L","Hannes Rönnholm","Pontus","M.Salo"],"n":27}],"soloExacts":[{"label":"Qatar 1–1 Switzerland","stage":"GROUP_STAGE","who":"Henric"},{"label":"Saudi Arabia 1–1 Uruguay","stage":"GROUP_STAGE","who":"Daniel G"},{"label":"Austria 3–1 Jordan","stage":"GROUP_STAGE","who":"Nätrassel"},{"label":"Uruguay 2–2 Cape Verde Islands","stage":"GROUP_STAGE","who":"Odin"},{"label":"Portugal 5–0 Uzbekistan","stage":"GROUP_STAGE","who":"Jere"},{"label":"South Africa 1–0 South Korea","stage":"GROUP_STAGE","who":"Henke"},{"label":"Ecuador 2–1 Germany","stage":"GROUP_STAGE","who":"Pawel"},{"label":"Turkey 3–2 United States","stage":"GROUP_STAGE","who":"Odin"},{"label":"Norway 1–4 France","stage":"GROUP_STAGE","who":"Odin"},{"label":"Congo DR 3–1 Uzbekistan","stage":"GROUP_STAGE","who":"Grillin"},{"label":"Jordan 1–3 Argentina","stage":"GROUP_STAGE","who":"Henke"}],"soloByPlayer":{"Henric":1,"Daniel G":1,"Nätrassel":1,"Odin":3,"Jere":1,"Henke":2,"Pawel":1,"Grillin":1},"championDist":[["Spain",10],["France",9],["Brazil",3],["Argentina",1],["Portugal",1],["Germany",1],["England",1],["Netherlands",1]],"topScorerDist":[["Kylian Mbappé",11],["Harry Kane",6],["Erling Haaland",5],["Vinicius Junior",2],["Ferrán Torres",1],["Mikel Oyarzabal",1],["Cody Gakpo",1]],"runnerUpDist":[["France",9],["Spain",7],["England",3],["Argentina",3],["Brazil",2],["Germany",1],["Sweden",1],["Portugal",1]],"signCount":{"1":938,"2":632,"X":374},"actualSignCount":{"1":51,"2":33,"X":20},"nBets":1944,"nMatches":104,"predLines":[["1–1",221],["2–1",210],["2–0",191],["0–2",165],["1–2",140],["3–0",132],["3–1",126],["1–0",112],["0–3",84],["1–3",84],["2–2",83],["0–1",79]],"actualLines":[["2–1",9],["1–1",9],["2–0",8],["0–1",8],["1–0",7],["0–0",7],["3–1",5],["3–0",5],["3–2",5],["1–2",5],["1–3",4],["2–2",3]],"totalGoals":333,"nPlayers":27};
+
+const SVG = 'http://www.w3.org/2000/svg';
+function el(name, attrs = {}, parent) {
+  const e = document.createElementNS(SVG, name);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function txt(node, s) { node.appendChild(document.createTextNode(s)); return node; }
+const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+// ---------- tooltip ----------
+const tip = document.getElementById('tip');
+function showTip(x, y, title, rows) {
+  tip.textContent = '';
+  const t = document.createElement('div'); t.className = 'tt-title'; t.textContent = title; tip.appendChild(t);
+  for (const r of rows) {
+    const row = document.createElement('div'); row.className = 'tt-row';
+    const key = document.createElement('span'); key.className = 'tt-key'; key.style.borderTopColor = r.color; row.appendChild(key);
+    const val = document.createElement('span'); val.className = 'tt-val'; val.textContent = r.value; row.appendChild(val);
+    const nm = document.createElement('span'); nm.className = 'tt-name'; nm.textContent = r.name; row.appendChild(nm);
+    tip.appendChild(row);
+  }
+  tip.style.display = 'block';
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let px = x + 14, py = y + 14;
+  if (px + w > innerWidth - 8) px = x - w - 14;
+  if (py + h > innerHeight - 8) py = y - h - 14;
+  tip.style.left = px + 'px'; tip.style.top = py + 'px';
+}
+function hideTip() { tip.style.display = 'none'; }
+
+// ---------- KPI row ----------
+{
+  const kpis = [
+    [DATA.nPlayers, 'deltagare'],
+    [DATA.nMatches, 'matcher'],
+    [fmt(DATA.nBets), 'matchtips'],
+    [DATA.totalGoals, 'mål i turneringen'],
+    ['270 €', 'i potten'],
+  ];
+  const host = document.getElementById('kpis');
+  for (const [v, l] of kpis) {
+    const d = document.createElement('div'); d.className = 'kpi';
+    const dv = document.createElement('div'); dv.className = 'v'; dv.textContent = v;
+    const dl = document.createElement('div'); dl.className = 'l'; dl.textContent = l;
+    d.append(dv, dl); host.appendChild(d);
+  }
+}
+
+// ---------- Podium ----------
+{
+  const podium = [
+    ['1:a', 'Sjösse', '87 poäng · 11 exakta resultat', '216 €', 'first'],
+    ['2:a', 'Pawel', '85 poäng · rätt mästare och tvåa', '40,50 €', ''],
+    ['3:e', 'Smith', '81 poäng · ledde i 20 matcher', '13,50 €', ''],
+  ];
+  const host = document.getElementById('podium');
+  for (const [place, who, pts, money, cls] of podium) {
+    const d = document.createElement('div'); d.className = 'podium-tile ' + cls;
+    for (const [c, t] of [['place', place + ' plats'], ['who', who], ['pts', pts], ['money', money]]) {
+      const e = document.createElement('div'); e.className = c; e.textContent = t; d.appendChild(e);
+    }
+    host.appendChild(d);
+  }
+}
+
+// ---------- generic table builder ----------
+function buildTable(host, headers, rows, numericFrom = 1) {
+  const tbl = document.createElement('table'); tbl.className = 'data-table';
+  const thead = document.createElement('thead'); const trh = document.createElement('tr');
+  headers.forEach((h, i) => {
+    const th = document.createElement('th'); if (i >= numericFrom) th.className = 'num';
+    th.textContent = h; trh.appendChild(th);
+  });
+  thead.appendChild(trh); tbl.appendChild(thead);
+  const tbody = document.createElement('tbody');
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    r.forEach((c, i) => {
+      const td = document.createElement('td'); if (i >= numericFrom) td.className = 'num';
+      td.textContent = c; tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  }
+  tbl.appendChild(tbody); host.appendChild(tbl);
+}
+
+// ---------- Standings: horizontal stacked bars ----------
+{
+  const rows = DATA.standings;
+  const NAME_W = 150, VAL_W = 46, W = 900, ROW_H = 26, BAR_H = 15, PAD_T = 22, PAD_B = 6;
+  const H = PAD_T + rows.length * ROW_H + PAD_B;
+  const maxV = Math.max(...rows.map(r => r.total));
+  const plotW = W - NAME_W - VAL_W;
+  const x = v => NAME_W + v / maxV * plotW;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', style: `min-width: 640px; aspect-ratio: ${W}/${H};`, role: 'img', 'aria-label': 'Stapeldiagram: totalpoäng per spelare' });
+
+  for (const g of [0, 20, 40, 60, 80]) {
+    el('line', { x1: x(g), x2: x(g), y1: PAD_T - 8, y2: H - PAD_B, stroke: 'var(--grid)', 'stroke-width': 1 }, svg);
+    txt(el('text', { x: x(g), y: PAD_T - 12, 'text-anchor': 'middle', class: 'axis-txt' }, svg), String(g));
+  }
+  el('line', { x1: NAME_W, x2: NAME_W, y1: PAD_T - 8, y2: H - PAD_B, stroke: 'var(--baseline)', 'stroke-width': 1 }, svg);
+
+  rows.forEach((r, i) => {
+    const y = PAD_T + i * ROW_H + (ROW_H - BAR_H) / 2;
+    const g = el('g', { tabindex: 0, role: 'img', 'aria-label': `${r.rank}. ${r.name}: ${r.total} poäng (${r.match} match, ${r.bonus} bonus)` }, svg);
+    txt(el('text', { x: NAME_W - 8, y: y + BAR_H - 3, 'text-anchor': 'end', class: 'bar-name', 'font-weight': r.rank <= 3 ? 700 : 400 }, g), `${r.rank}. ${r.name}`);
+    // match segment: square at baseline, rounded only if it's also the data end
+    const mw = r.match / maxV * plotW;
+    const bw = r.bonus / maxV * plotW;
+    const rEnd = 4;
+    el('path', { d: roundRightRect(NAME_W, y, r.bonus ? mw - 2 : mw, BAR_H, r.bonus ? 0 : rEnd), fill: 'var(--series-1)' }, g);
+    if (r.bonus) el('path', { d: roundRightRect(NAME_W + mw, y, bw, BAR_H, rEnd), fill: 'var(--series-2)' }, g);
+    txt(el('text', { x: x(r.total) + 6, y: y + BAR_H - 3, class: 'bar-val' }, g), String(r.total));
+    const hover = ev => showTip(ev.clientX ?? 0, ev.clientY ?? 0, `${r.rank}. ${r.name}`, [
+      { color: 'var(--series-1)', value: r.match + ' p', name: 'matchpoäng' },
+      { color: 'var(--series-2)', value: r.bonus + ' p', name: 'bonuspoäng' },
+      { color: 'transparent', value: r.exact, name: 'exakta resultat' },
+    ]);
+    g.addEventListener('pointermove', hover);
+    g.addEventListener('pointerleave', hideTip);
+    g.addEventListener('focus', ev => { const b = g.getBoundingClientRect(); showTip(b.right, b.top, `${r.rank}. ${r.name}`, [
+      { color: 'var(--series-1)', value: r.match + ' p', name: 'matchpoäng' },
+      { color: 'var(--series-2)', value: r.bonus + ' p', name: 'bonuspoäng' },
+    ]); });
+    g.addEventListener('blur', hideTip);
+  });
+  document.getElementById('standings-chart').appendChild(svg);
+
+  buildTable(document.getElementById('standings-table'),
+    ['#', 'Spelare', 'Totalt', 'Matchpoäng', 'Bonus', 'Exakta', 'Rätt tecken'],
+    rows.map(r => [r.rank, r.name, r.total, r.match, r.bonus, r.exact, r.signs]), 2);
+}
+
+function roundRightRect(x, y, w, h, r) {
+  w = Math.max(w, r + 0.5);
+  return `M ${x} ${y} H ${x + w - r} ` +
+    (r ? `A ${r} ${r} 0 0 1 ${x + w} ${y + r} V ${y + h - r} A ${r} ${r} 0 0 1 ${x + w - r} ${y + h} ` : `V ${y + h} `) +
+    `H ${x} Z`;
+}
+
+// ---------- Race chart ----------
+{
+  const HIGHLIGHT = [
+    { name: 'Sjösse', color: 'var(--series-1)' },
+    { name: 'Pawel', color: 'var(--series-2)' },
+    { name: 'Smith', color: 'var(--series-3)' },
+    { name: 'Tony M', color: 'var(--series-4)' },
+  ];
+  const hiNames = HIGHLIGHT.map(h => h.name);
+  const W = 900, H = 380, PAD_L = 34, PAD_R = 84, PAD_T = 12, PAD_B = 40;
+  const n = DATA.matchLabels.length;
+  const maxV = Math.max(...DATA.series.map(s => s.pts[n - 1]));
+  const x = i => PAD_L + i / (n - 1) * (W - PAD_L - PAD_R);
+  const y = v => H - PAD_B - v / maxV * (H - PAD_T - PAD_B);
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', style: `min-width: 640px; aspect-ratio: ${W}/${H}; touch-action: pan-y;`, role: 'img', 'aria-label': 'Linjediagram: ackumulerade matchpoäng per spelare över 104 matcher' });
+
+  for (const g of [0, 20, 40, 60, 80]) {
+    el('line', { x1: PAD_L, x2: W - PAD_R, y1: y(g), y2: y(g), stroke: 'var(--grid)', 'stroke-width': 1 }, svg);
+    txt(el('text', { x: PAD_L - 6, y: y(g) + 4, 'text-anchor': 'end', class: 'axis-txt' }, svg), String(g));
+  }
+  // stage boundaries
+  const stages = DATA.matchStages;
+  const stageNames = { GROUP_STAGE: 'Gruppspel', LAST_32: 'Sextondelar', LAST_16: 'Åttondelar', QUARTER_FINALS: 'Kvart', SEMI_FINALS: 'Semi', THIRD_PLACE: '', FINAL: 'Final' };
+  let prevStage = stages[0], stageStart = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i === n || stages[i] !== prevStage) {
+      const label = stageNames[prevStage];
+      const segW = x(i - 1) - x(stageStart);
+      // Only label stages wide enough for their text — the short knockout
+      // rounds collide otherwise; the tooltip still names every match.
+      if (label && segW > label.length * 7) txt(el('text', { x: (x(stageStart) + x(i - 1)) / 2, y: H - PAD_B + 16, 'text-anchor': 'middle', class: 'stage-label' }, svg), label);
+      if (i < n) el('line', { x1: x(i - 0.5), x2: x(i - 0.5), y1: PAD_T, y2: H - PAD_B, stroke: 'var(--grid)', 'stroke-width': 1 }, svg);
+      prevStage = stages[i]; stageStart = i;
+    }
+  }
+  el('line', { x1: PAD_L, x2: W - PAD_R, y1: y(0), y2: y(0), stroke: 'var(--baseline)', 'stroke-width': 1 }, svg);
+  txt(el('text', { x: PAD_L, y: H - PAD_B + 30, class: 'axis-txt' }, svg), 'Match 1');
+  txt(el('text', { x: W - PAD_R, y: H - PAD_B + 30, 'text-anchor': 'end', class: 'axis-txt' }, svg), 'Match 104');
+
+  const path = pts => pts.map((v, i) => `${i ? 'L' : 'M'} ${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  for (const s of DATA.series) {
+    if (hiNames.includes(s.name)) continue;
+    el('path', { d: path(s.pts), fill: 'none', stroke: 'var(--de-emph)', 'stroke-width': 1.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+  }
+  const hiSeries = HIGHLIGHT.map(h => ({ ...h, pts: DATA.series.find(s => s.name === h.name).pts }));
+  for (const s of hiSeries) {
+    el('path', { d: path(s.pts), fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+  }
+  // end dots + collision-resolved end labels with leader lines
+  const labels = hiSeries.map(s => ({ ...s, ly: y(s.pts[n - 1]) })).sort((a, b) => a.ly - b.ly);
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].ly - labels[i - 1].ly < 15) labels[i].ly = labels[i - 1].ly + 15;
+  }
+  for (const s of labels) {
+    const ex = x(n - 1), ey = y(s.pts[n - 1]);
+    el('circle', { cx: ex, cy: ey, r: 4.5, fill: s.color, stroke: 'var(--surface-1)', 'stroke-width': 2 }, svg);
+    if (Math.abs(s.ly - ey) > 6) el('line', { x1: ex + 6, y1: ey, x2: ex + 16, y2: s.ly, stroke: 'var(--baseline)', 'stroke-width': 1 }, svg);
+    txt(el('text', { x: ex + 19, y: s.ly + 4, class: 'end-label' }, svg), `${s.name} ${s.pts[n - 1]}`);
+  }
+  // crosshair + hover
+  const cross = el('line', { y1: PAD_T, y2: H - PAD_B, stroke: 'var(--baseline)', 'stroke-width': 1, visibility: 'hidden' }, svg);
+  const overlay = el('rect', { x: PAD_L, y: PAD_T, width: W - PAD_L - PAD_R, height: H - PAD_T - PAD_B, fill: 'transparent' }, svg);
+  overlay.addEventListener('pointermove', ev => {
+    const box = svg.getBoundingClientRect();
+    const mx = (ev.clientX - box.left) / box.width * W;
+    const i = Math.max(0, Math.min(n - 1, Math.round((mx - PAD_L) / (W - PAD_L - PAD_R) * (n - 1))));
+    cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i));
+    cross.setAttribute('visibility', 'visible');
+    const rows = hiSeries.map(s => ({ color: s.color, value: s.pts[i] + ' p', name: s.name }));
+    const leaderPts = Math.max(...DATA.series.map(s => s.pts[i]));
+    const leader = DATA.series.filter(s => s.pts[i] === leaderPts).map(s => s.name).join(', ');
+    rows.push({ color: 'transparent', value: '', name: 'I ledning: ' + leader });
+    showTip(ev.clientX, ev.clientY, `Match ${i + 1} · ${DATA.matchLabels[i]}`, rows);
+  });
+  overlay.addEventListener('pointerleave', () => { cross.setAttribute('visibility', 'hidden'); hideTip(); });
+  document.getElementById('race-chart').appendChild(svg);
+
+  // legend
+  const lg = document.getElementById('race-legend');
+  for (const h of HIGHLIGHT) {
+    const k = document.createElement('span'); k.className = 'key';
+    const sw = document.createElement('span'); sw.className = 'swatch-line'; sw.style.borderTopColor = h.color;
+    k.append(sw, document.createTextNode(h.name)); lg.appendChild(k);
+  }
+  const k = document.createElement('span'); k.className = 'key';
+  const sw = document.createElement('span'); sw.className = 'swatch-line'; sw.style.borderTopColor = 'var(--de-emph)';
+  k.append(sw, document.createTextNode('Övriga 23')); lg.appendChild(k);
+
+  // table twin: points at each stage boundary
+  const marks = [];
+  let ps = stages[0];
+  for (let i = 1; i <= n; i++) if (i === n || stages[i] !== ps) { marks.push(i - 1); if (i < n) ps = stages[i]; }
+  const headers = ['Spelare', ...marks.map(i => 'M' + (i + 1))];
+  const rows = DATA.series.map(s => [s.name, ...marks.map(i => s.pts[i])]);
+  buildTable(document.getElementById('race-table'), headers, rows, 1);
+}
+
+// ---------- Leader bars ----------
+{
+  const rows = DATA.ledCount;
+  const NAME_W = 150, VAL_W = 40, W = 640, ROW_H = 26, BAR_H = 15, PAD_T = 6, PAD_B = 6;
+  const H = PAD_T + rows.length * ROW_H + PAD_B;
+  const maxV = Math.max(...rows.map(r => r[1]));
+  const plotW = W - NAME_W - VAL_W;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', style: `max-width: 640px; aspect-ratio: ${W}/${H};`, role: 'img', 'aria-label': 'Stapeldiagram: antal matcher i ledningen per spelare' });
+  rows.forEach(([name, v], i) => {
+    const yy = PAD_T + i * ROW_H + (ROW_H - BAR_H) / 2;
+    const g = el('g', { tabindex: 0, role: 'img', 'aria-label': `${name}: i ledning efter ${v} matcher` }, svg);
+    txt(el('text', { x: NAME_W - 8, y: yy + BAR_H - 3, 'text-anchor': 'end', class: 'bar-name' }, g), name);
+    el('path', { d: roundRightRect(NAME_W, yy, v / maxV * plotW, BAR_H, 4), fill: 'var(--series-1)' }, g);
+    txt(el('text', { x: NAME_W + v / maxV * plotW + 6, y: yy + BAR_H - 3, class: 'bar-val' }, g), String(v));
+    const hover = ev => showTip(ev.clientX, ev.clientY, name, [{ color: 'var(--series-1)', value: v + ' av 104', name: 'matcher i ledning' }]);
+    g.addEventListener('pointermove', hover); g.addEventListener('pointerleave', hideTip);
+    g.addEventListener('focus', () => { const b = g.getBoundingClientRect(); showTip(b.right, b.top, name, [{ color: 'var(--series-1)', value: v + ' av 104', name: 'matcher i ledning' }]); });
+    g.addEventListener('blur', hideTip);
+  });
+  el('line', { x1: NAME_W, x2: NAME_W, y1: PAD_T, y2: H - PAD_B, stroke: 'var(--baseline)', 'stroke-width': 1 }, svg);
+  document.getElementById('leader-chart').appendChild(svg);
+  buildTable(document.getElementById('leader-table'), ['Spelare', 'Matcher i ledning'], rows, 1);
+}
+
+// ---------- Fact lists ----------
+{
+  const hardest = document.getElementById('hardest-list');
+  for (const m of DATA.hardest.filter(m => m.signHits === 0)) {
+    const li = document.createElement('li');
+    const s = document.createElement('span'); s.textContent = m.label;
+    const c = document.createElement('span'); c.className = 'chip zero'; c.textContent = '0 av 27';
+    li.append(s, c); hardest.appendChild(li);
+  }
+  const easiest = document.getElementById('easiest-list');
+  for (const m of DATA.easiest.slice(0, 5)) {
+    const li = document.createElement('li');
+    const s = document.createElement('span'); s.textContent = m.label;
+    const c = document.createElement('span'); c.className = 'chip'; c.textContent = '27 av 27';
+    li.append(s, c); easiest.appendChild(li);
+  }
+  const solo = document.getElementById('solo-list');
+  solo.classList.add('two-col');
+  for (const m of DATA.soloExacts) {
+    const li = document.createElement('li');
+    const s = document.createElement('span'); s.textContent = m.label;
+    const c = document.createElement('span'); c.className = 'n'; c.textContent = m.who;
+    li.append(s, c); solo.appendChild(li);
+  }
+}
+
+// ---------- Bonus pick bars (emphasis) ----------
+function pickBars(hostId, tableId, dist, correct) {
+  const NAME_W = 130, VAL_W = 34, W = 420, ROW_H = 24, BAR_H = 14, PAD_T = 4, PAD_B = 4;
+  const H = PAD_T + dist.length * ROW_H + PAD_B;
+  const maxV = Math.max(...dist.map(d => d[1]));
+  const plotW = W - NAME_W - VAL_W;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', style: `max-width: 420px; aspect-ratio: ${W}/${H};`, role: 'img', 'aria-label': 'Stapeldiagram över bonustips' });
+  dist.forEach(([name, v], i) => {
+    const yy = PAD_T + i * ROW_H + (ROW_H - BAR_H) / 2;
+    const isRight = name === correct;
+    const g = el('g', { tabindex: 0, role: 'img', 'aria-label': `${name}: ${v} tips${isRight ? ' (rätt svar)' : ''}` }, svg);
+    txt(el('text', { x: NAME_W - 8, y: yy + BAR_H - 2, 'text-anchor': 'end', class: 'bar-name', 'font-weight': isRight ? 700 : 400 }, g), name);
+    el('path', { d: roundRightRect(NAME_W, yy, v / maxV * plotW, BAR_H, 4), fill: isRight ? 'var(--series-1)' : 'var(--de-emph)' }, g);
+    txt(el('text', { x: NAME_W + v / maxV * plotW + 6, y: yy + BAR_H - 2, class: 'bar-val' }, g), String(v));
+    const hover = ev => showTip(ev.clientX, ev.clientY, name + (isRight ? ' · rätt svar' : ''), [{ color: isRight ? 'var(--series-1)' : 'var(--de-emph)', value: v + ' av 27', name: 'tips' }]);
+    g.addEventListener('pointermove', hover); g.addEventListener('pointerleave', hideTip);
+    g.addEventListener('focus', () => { const b = g.getBoundingClientRect(); showTip(b.right, b.top, name, [{ color: 'var(--series-1)', value: v + ' av 27', name: 'tips' }]); });
+    g.addEventListener('blur', hideTip);
+  });
+  el('line', { x1: NAME_W, x2: NAME_W, y1: PAD_T, y2: H - PAD_B, stroke: 'var(--baseline)', 'stroke-width': 1 }, svg);
+  document.getElementById(hostId).appendChild(svg);
+  buildTable(document.getElementById(tableId), ['Tips', 'Antal'], dist, 1);
+}
+const teamSv = { Spain: 'Spanien', France: 'Frankrike', Brazil: 'Brasilien', Argentina: 'Argentina', Portugal: 'Portugal', Germany: 'Tyskland', England: 'England', Netherlands: 'Nederländerna', Sweden: 'Sverige' };
+pickBars('champ-chart', 'champ-table', DATA.championDist.map(([n, v]) => [teamSv[n] ?? n, v]), 'Spanien');
+pickBars('scorer-chart', 'scorer-table', DATA.topScorerDist, 'Kylian Mbappé');
+
+// ---------- Sign calibration grouped bars ----------
+{
+  const total = DATA.nBets, totalM = DATA.nMatches;
+  const cats = [
+    ['1 (hemmaseger)', DATA.signCount['1'] / total * 100, DATA.actualSignCount['1'] / totalM * 100],
+    ['X (oavgjort)', DATA.signCount['X'] / total * 100, DATA.actualSignCount['X'] / totalM * 100],
+    ['2 (bortaseger)', DATA.signCount['2'] / total * 100, DATA.actualSignCount['2'] / totalM * 100],
+  ];
+  const W = 640, H = 240, PAD_L = 40, PAD_R = 10, PAD_T = 14, PAD_B = 30;
+  const maxV = 55;
+  const y = v => H - PAD_B - v / maxV * (H - PAD_T - PAD_B);
+  const bandW = (W - PAD_L - PAD_R) / cats.length;
+  const BW = 42;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', style: `max-width: 640px; aspect-ratio: ${W}/${H};`, role: 'img', 'aria-label': 'Stapeldiagram: tippad andel mot verklig andel per tecken' });
+  for (const g of [0, 10, 20, 30, 40, 50]) {
+    el('line', { x1: PAD_L, x2: W - PAD_R, y1: y(g), y2: y(g), stroke: 'var(--grid)', 'stroke-width': 1 }, svg);
+    txt(el('text', { x: PAD_L - 6, y: y(g) + 4, 'text-anchor': 'end', class: 'axis-txt' }, svg), g + '%');
+  }
+  cats.forEach(([label, pred, act], i) => {
+    const cx = PAD_L + bandW * i + bandW / 2;
+    const pairs = [[pred, 'var(--series-1)', 'Tippat'], [act, 'var(--series-2)', 'Verkligt']];
+    pairs.forEach(([v, color, nm], j) => {
+      const bx = cx - BW - 1 + j * (BW + 2);
+      const g = el('g', { tabindex: 0, role: 'img', 'aria-label': `${label} ${nm}: ${v.toFixed(1)} %` }, svg);
+      el('path', { d: roundTopRect(bx, y(v), BW, H - PAD_B - y(v), 4), fill: color }, g);
+      txt(el('text', { x: bx + BW / 2, y: y(v) - 5, 'text-anchor': 'middle', class: 'bar-val' }, g), v.toFixed(1).replace('.', ',') + '%');
+      const hover = ev => showTip(ev.clientX, ev.clientY, label, [{ color, value: v.toFixed(1).replace('.', ',') + ' %', name: nm.toLowerCase() }]);
+      g.addEventListener('pointermove', hover); g.addEventListener('pointerleave', hideTip);
+      g.addEventListener('focus', () => { const b = g.getBoundingClientRect(); showTip(b.right, b.top, label, [{ color, value: v.toFixed(1) + ' %', name: nm.toLowerCase() }]); });
+      g.addEventListener('blur', hideTip);
+    });
+    txt(el('text', { x: cx, y: H - PAD_B + 18, 'text-anchor': 'middle', class: 'axis-txt' }, svg), label);
+  });
+  el('line', { x1: PAD_L, x2: W - PAD_R, y1: y(0), y2: y(0), stroke: 'var(--baseline)', 'stroke-width': 1 }, svg);
+  document.getElementById('sign-chart').appendChild(svg);
+  buildTable(document.getElementById('sign-table'), ['Tecken', 'Tippad andel', 'Verklig andel'],
+    cats.map(([l, p, a]) => [l, p.toFixed(1).replace('.', ',') + ' %', a.toFixed(1).replace('.', ',') + ' %']), 1);
+}
+function roundTopRect(x, y, w, h, r) {
+  h = Math.max(h, r + 0.5);
+  return `M ${x} ${y + h} V ${y + r} A ${r} ${r} 0 0 1 ${x + r} ${y} H ${x + w - r} A ${r} ${r} 0 0 1 ${x + w} ${y + r} V ${y + h} Z`;
+}
+</script>
+</div>
+</body>
+</html>
